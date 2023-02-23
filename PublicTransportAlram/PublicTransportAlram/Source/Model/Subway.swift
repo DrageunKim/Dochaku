@@ -6,12 +6,12 @@
 //
 
 struct Subway: Decodable {
-    let errorMessage: [errorMessage]
+    let errorMessage: errorMessage
     let realtimeArrivalList: [realtimeArrivalList]
 }
 
 struct errorMessage: Decodable {
-    let state: Int
+    let status: Int
     let code: String
     let message: String
     let link: String
