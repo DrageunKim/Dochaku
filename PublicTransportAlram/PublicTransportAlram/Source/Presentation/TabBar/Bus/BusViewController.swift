@@ -1,5 +1,5 @@
 //
-//  MainViewController.swift
+//  BusViewController.swift
 //  PublicTransportAlram
 //
 //  Created by yonggeun Kim on 2023/02/23.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-class MainViewController: UIViewController {
-    
+class BusViewController: UIViewController {
+
     private let nowStationLabel: UILabel = {
         let label = UILabel()
-        label.text = "현재역 :"
+        label.text = "버스번호 :"
         label.font = .preferredFont(forTextStyle: .headline)
         label.numberOfLines = 1
         label.textAlignment = .right
@@ -20,7 +20,7 @@ class MainViewController: UIViewController {
     }()
     private let targetStationLabel: UILabel = {
         let label = UILabel()
-        label.text = "도착역 :"
+        label.text = "도착위치 :"
         label.font = .preferredFont(forTextStyle: .headline)
         label.numberOfLines = 1
         label.textAlignment = .right
@@ -30,17 +30,20 @@ class MainViewController: UIViewController {
     private let nowStationBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.backgroundColor = .systemBackground
+        searchBar.placeholder = "버스번호"
         return searchBar
     }()
     private let targetStationBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.backgroundColor = .systemBackground
+        searchBar.placeholder = "버스역"
         return searchBar
     }()
     private let okButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .label
         button.setTitle("설정", for: .normal)
+        button.setTitleColor(.label, for: .normal)
         button.layer.backgroundColor = UIColor.systemMint.cgColor
         button.layer.borderWidth = 0.5
         button.layer.cornerRadius = 10
@@ -50,6 +53,7 @@ class MainViewController: UIViewController {
         let button = UIButton()
         button.backgroundColor = .label
         button.setTitle("초기화", for: .normal)
+        button.setTitleColor(.label, for: .normal)
         button.layer.backgroundColor = UIColor.systemMint.cgColor
         button.layer.borderWidth = 0.5
         button.layer.cornerRadius = 10
@@ -98,13 +102,32 @@ class MainViewController: UIViewController {
     }
 }
 
+
+// MARK: - Button Action Configure
+
+extension BusViewController {
+    private func configureButtonAction() {
+        okButton.addTarget(self, action: #selector(tappedOkButton), for: .touchDown)
+        initButton.addTarget(self, action: #selector(tappedInitButton), for: .touchDown)
+    }
+    
+    @objc
+    private func tappedOkButton() {
+    }
+    
+    @objc
+    private func tappedInitButton() {
+    }
+}
+
+
 // MARK: - View & Layout Configure
 
-extension MainViewController {
+extension BusViewController {
     private func configureView() {
         view.backgroundColor = .systemBackground
         
-        navigationItem.title = "🔔   도착 알림   🔔"
+        navigationItem.title = "🔔   버스 도착 알림   🔔"
     }
     
     private func configureStackView() {

@@ -9,19 +9,27 @@
 /* Begin PBXBuildFile section */
 		D081668D29A77CA700A67C1C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081668C29A77CA700A67C1C /* AppDelegate.swift */; };
 		D081668F29A77CA700A67C1C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081668E29A77CA700A67C1C /* SceneDelegate.swift */; };
-		D081669129A77CA700A67C1C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081669029A77CA700A67C1C /* MainViewController.swift */; };
+		D081669129A77CA700A67C1C /* SubwayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081669029A77CA700A67C1C /* SubwayViewController.swift */; };
 		D081669629A77CA900A67C1C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D081669529A77CA900A67C1C /* Assets.xcassets */; };
 		D081669929A77CA900A67C1C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D081669729A77CA900A67C1C /* LaunchScreen.storyboard */; };
+		D08166A929A78A3100A67C1C /* SubwayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08166A829A78A3100A67C1C /* SubwayViewModel.swift */; };
+		D08166AD29A78BF300A67C1C /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08166AC29A78BF300A67C1C /* CustomTabBarController.swift */; };
+		D08166B129A78E7100A67C1C /* BusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08166B029A78E7100A67C1C /* BusViewController.swift */; };
+		D08166B329A78E7B00A67C1C /* BusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08166B229A78E7B00A67C1C /* BusViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		D081668929A77CA700A67C1C /* PublicTransportAlram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PublicTransportAlram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D081668C29A77CA700A67C1C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D081668E29A77CA700A67C1C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		D081669029A77CA700A67C1C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		D081669029A77CA700A67C1C /* SubwayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayViewController.swift; sourceTree = "<group>"; };
 		D081669529A77CA900A67C1C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D081669829A77CA900A67C1C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D081669A29A77CA900A67C1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D08166A829A78A3100A67C1C /* SubwayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayViewModel.swift; sourceTree = "<group>"; };
+		D08166AC29A78BF300A67C1C /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
+		D08166B029A78E7100A67C1C /* BusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusViewController.swift; sourceTree = "<group>"; };
+		D08166B229A78E7B00A67C1C /* BusViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,7 +83,7 @@
 			children = (
 				D08166A429A77DD100A67C1C /* App */,
 				D08166A229A77DC100A67C1C /* Model */,
-				D08166A329A77DC500A67C1C /* Scene */,
+				D08166A329A77DC500A67C1C /* Presentation */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -87,12 +95,12 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		D08166A329A77DC500A67C1C /* Scene */ = {
+		D08166A329A77DC500A67C1C /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				D081669029A77CA700A67C1C /* MainViewController.swift */,
+				D08166A629A78A1400A67C1C /* TabBar */,
 			);
-			path = Scene;
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 		D08166A429A77DD100A67C1C /* App */ = {
@@ -102,6 +110,34 @@
 				D081668E29A77CA700A67C1C /* SceneDelegate.swift */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		D08166A629A78A1400A67C1C /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				D08166AC29A78BF300A67C1C /* CustomTabBarController.swift */,
+				D08166A729A78A1A00A67C1C /* Subway */,
+				D08166AF29A78D4600A67C1C /* Bus */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		D08166A729A78A1A00A67C1C /* Subway */ = {
+			isa = PBXGroup;
+			children = (
+				D081669029A77CA700A67C1C /* SubwayViewController.swift */,
+				D08166A829A78A3100A67C1C /* SubwayViewModel.swift */,
+			);
+			path = Subway;
+			sourceTree = "<group>";
+		};
+		D08166AF29A78D4600A67C1C /* Bus */ = {
+			isa = PBXGroup;
+			children = (
+				D08166B029A78E7100A67C1C /* BusViewController.swift */,
+				D08166B229A78E7B00A67C1C /* BusViewModel.swift */,
+			);
+			path = Bus;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -174,9 +210,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D081669129A77CA700A67C1C /* MainViewController.swift in Sources */,
+				D081669129A77CA700A67C1C /* SubwayViewController.swift in Sources */,
 				D081668D29A77CA700A67C1C /* AppDelegate.swift in Sources */,
+				D08166AD29A78BF300A67C1C /* CustomTabBarController.swift in Sources */,
+				D08166B329A78E7B00A67C1C /* BusViewModel.swift in Sources */,
 				D081668F29A77CA700A67C1C /* SceneDelegate.swift in Sources */,
+				D08166A929A78A3100A67C1C /* SubwayViewModel.swift in Sources */,
+				D08166B129A78E7100A67C1C /* BusViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
