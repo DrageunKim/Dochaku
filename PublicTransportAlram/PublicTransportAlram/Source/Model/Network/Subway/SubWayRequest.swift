@@ -9,10 +9,12 @@
 struct SubwayRequest: Request {
     typealias Response = [Subway]
     
-    init(station: String) {
-        self.path = "subway/74795961676b696f3130334a514c4f75/json/realtimeStationArrival/0/5/\(station)"
-    }
-    
+    let key: String = "74795961676b696f3130334a514c4f75"
+    let type: String = "json"
     var path: String
     var method: HTTPMethod = .get
+    
+    init(station: String) {
+        self.path = "subway/\(key)/\(type)/realtimeStationArrival/0/5/\(station)"
+    }
 }

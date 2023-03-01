@@ -26,6 +26,7 @@
 		D08166D229A7A66F00A67C1C /* JSONDecoder +.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08166D129A7A66F00A67C1C /* JSONDecoder +.swift */; };
 		D081681929AF78ED00A67C1C /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081681829AF78ED00A67C1C /* NetworkError.swift */; };
 		D081681B29AF7E6800A67C1C /* JSONError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081681A29AF7E6800A67C1C /* JSONError.swift */; };
+		D081681E29AF82AF00A67C1C /* RealtimeStationArrival.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081681D29AF82AF00A67C1C /* RealtimeStationArrival.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		D08166D129A7A66F00A67C1C /* JSONDecoder +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONDecoder +.swift"; sourceTree = "<group>"; };
 		D081681829AF78ED00A67C1C /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		D081681A29AF7E6800A67C1C /* JSONError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONError.swift; sourceTree = "<group>"; };
+		D081681D29AF82AF00A67C1C /* RealtimeStationArrival.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimeStationArrival.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,8 +192,7 @@
 				D08166B429A793C600A67C1C /* NetworkManager.swift */,
 				D08166B829A7973400A67C1C /* HTTPMethod.swift */,
 				D08166BA29A7978C00A67C1C /* Request.swift */,
-				D08166C029A79DC400A67C1C /* RequestError.swift */,
-				D08166BC29A79A7900A67C1C /* SubWayRequest.swift */,
+				D081681C29AF827600A67C1C /* Subway */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -225,8 +226,18 @@
 			children = (
 				D081681829AF78ED00A67C1C /* NetworkError.swift */,
 				D081681A29AF7E6800A67C1C /* JSONError.swift */,
+				D08166C029A79DC400A67C1C /* RequestError.swift */,
 			);
 			path = Error;
+			sourceTree = "<group>";
+		};
+		D081681C29AF827600A67C1C /* Subway */ = {
+			isa = PBXGroup;
+			children = (
+				D08166BC29A79A7900A67C1C /* SubWayRequest.swift */,
+				D081681D29AF82AF00A67C1C /* RealtimeStationArrival.swift */,
+			);
+			path = Subway;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -344,6 +355,7 @@
 				D08166A929A78A3100A67C1C /* SubwayViewModel.swift in Sources */,
 				D08166BF29A79B0D00A67C1C /* Subway.swift in Sources */,
 				D081681B29AF7E6800A67C1C /* JSONError.swift in Sources */,
+				D081681E29AF82AF00A67C1C /* RealtimeStationArrival.swift in Sources */,
 				D08166B129A78E7100A67C1C /* BusViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

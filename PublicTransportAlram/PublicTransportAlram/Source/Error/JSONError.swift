@@ -12,9 +12,9 @@ enum JSONError {
     var errorDescription: String? {
         switch self {
         case .decodeAssetError:
-            return "에셋데이터 JSONDecode에러입니다."
+            return "JSONDecode: 에셋데이터 에러입니다."
         case .decodeDataError:
-            return "데이터 JSONDecode에러입니다."
+            return "JSONDecode: 데이터 에러입니다."
         }
     }
 }

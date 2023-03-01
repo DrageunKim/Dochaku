@@ -17,7 +17,7 @@ struct NetworkManager {
     func dataTask<R: Request>(_ request: R, completion: @escaping (Result<R.Response, NetworkError>) -> Void) {
         let urlRequest = request.create()
         urlSession.dataTask(with: urlRequest) { data, response, error in
-            if let _ = error {
+            if error != nil {
                 completion(.failure(.dataTaskError))
             }
             
@@ -40,10 +40,10 @@ struct NetworkManager {
             
             guard let wrappedData = data else { return completion(.failure(.invalidDataError)) }
             let decodedData = JSONDecoder.decodeData(data: wrappedData, to: R.Response.self)
-            guard let data = decodedData else { return completion(.failure(.parsingError)) }
             
-            return completion(.success(data))
-        }
-        .resume()
+            if let data = decodedData {
+                return completion(.success(data))
+            }
+        }.resume()
     }
 }
