@@ -24,6 +24,8 @@
 		D08166C129A79DC400A67C1C /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08166C029A79DC400A67C1C /* RequestError.swift */; };
 		D08166CA29A7A4C700A67C1C /* JSONParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08166C929A7A4C700A67C1C /* JSONParsingTests.swift */; };
 		D08166D229A7A66F00A67C1C /* JSONDecoder +.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08166D129A7A66F00A67C1C /* JSONDecoder +.swift */; };
+		D081681929AF78ED00A67C1C /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081681829AF78ED00A67C1C /* NetworkError.swift */; };
+		D081681B29AF7E6800A67C1C /* JSONError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081681A29AF7E6800A67C1C /* JSONError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,8 @@
 		D08166C729A7A4C700A67C1C /* JSONParsingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSONParsingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D08166C929A7A4C700A67C1C /* JSONParsingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParsingTests.swift; sourceTree = "<group>"; };
 		D08166D129A7A66F00A67C1C /* JSONDecoder +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONDecoder +.swift"; sourceTree = "<group>"; };
+		D081681829AF78ED00A67C1C /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		D081681A29AF7E6800A67C1C /* JSONError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +123,7 @@
 			children = (
 				D08166A429A77DD100A67C1C /* App */,
 				D08166A229A77DC100A67C1C /* Model */,
+				D081681729AF78E100A67C1C /* Error */,
 				D08166A329A77DC500A67C1C /* Presentation */,
 			);
 			path = Source;
@@ -129,7 +134,7 @@
 			children = (
 				D08166D029A7A65200A67C1C /* Extension */,
 				D08166C229A79DF500A67C1C /* Network */,
-				D08166BE29A79B0D00A67C1C /* Subway.swift */,
+				D081681629AF787600A67C1C /* DTO */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -205,6 +210,23 @@
 				D08166D129A7A66F00A67C1C /* JSONDecoder +.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		D081681629AF787600A67C1C /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				D08166BE29A79B0D00A67C1C /* Subway.swift */,
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
+		D081681729AF78E100A67C1C /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				D081681829AF78ED00A67C1C /* NetworkError.swift */,
+				D081681A29AF7E6800A67C1C /* JSONError.swift */,
+			);
+			path = Error;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -316,10 +338,12 @@
 				D08166B529A793C600A67C1C /* NetworkManager.swift in Sources */,
 				D081668F29A77CA700A67C1C /* SceneDelegate.swift in Sources */,
 				D08166BB29A7978C00A67C1C /* Request.swift in Sources */,
+				D081681929AF78ED00A67C1C /* NetworkError.swift in Sources */,
 				D08166BD29A79A7900A67C1C /* SubWayRequest.swift in Sources */,
 				D08166C129A79DC400A67C1C /* RequestError.swift in Sources */,
 				D08166A929A78A3100A67C1C /* SubwayViewModel.swift in Sources */,
 				D08166BF29A79B0D00A67C1C /* Subway.swift in Sources */,
+				D081681B29AF7E6800A67C1C /* JSONError.swift in Sources */,
 				D08166B129A78E7100A67C1C /* BusViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

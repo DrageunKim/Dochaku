@@ -100,6 +100,24 @@ class SubwayViewController: UIViewController {
         configureStackView()
         configureLayout()
     }
+    
+    private func testDataTask() {
+        let urlString = "http://swopenapi.seoul.go.kr/api/subway/sample/json/realtimeStationArrival/0/5/단대오거리"
+        if let encodedString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
+            if let url = URL(string: encodedString) {
+                var request = URLRequest(url: url)
+                request.httpMethod = "GET"
+                
+                let _ = URLSession.shared.dataTask(with: request) { data, response, error in
+                    guard let data = data else {
+                        print(String(describing: error))
+                        return
+                    }
+                    print(String(data: data, encoding: .utf8)!)
+                }.resume()
+            }
+        }
+    }
 }
 
 

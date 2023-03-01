@@ -15,8 +15,20 @@ extension JSONDecoder {
             do {
                 decodedData = try JSONDecoder().decode(type, from: dataAsset)
             } catch {
-                print(error.localizedDescription)
+                debugPrint(JSONError.decodeAssetError.errorDescription ?? String())
             }
+        }
+        
+        return decodedData
+    }
+    
+    static func decodeData<T: Decodable>(data: Data, to type: T.Type) -> T? {
+        var decodedData: T?
+        
+        do {
+            decodedData = try JSONDecoder().decode(type, from: data)
+        } catch {
+            debugPrint(JSONError.decodeDataError.errorDescription ?? String())
         }
         
         return decodedData
