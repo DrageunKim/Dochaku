@@ -42,7 +42,7 @@ class SubwayViewController: UIViewController {
     private let okButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .label
-        button.setTitle("설정", for: .normal)
+        button.setTitle("조회", for: .normal)
         button.setTitleColor(.label, for: .normal)
         button.layer.backgroundColor = UIColor.systemMint.cgColor
         button.layer.borderWidth = 0.5
@@ -99,6 +99,7 @@ class SubwayViewController: UIViewController {
         configureView()
         configureStackView()
         configureLayout()
+        configureButtonAction()
     }
     
     private func testDataTask() {
@@ -131,6 +132,9 @@ extension SubwayViewController {
     
     @objc
     private func tappedOkButton() {
+        let presentViewController = ListViewController()
+        
+        navigationController?.present(presentViewController, animated: true)
     }
     
     @objc
