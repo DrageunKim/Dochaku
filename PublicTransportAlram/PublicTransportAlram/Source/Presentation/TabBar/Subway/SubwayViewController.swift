@@ -62,8 +62,9 @@ class SubwayViewController: UIViewController {
         button.backgroundColor = .label
         button.setTitle("조회", for: .normal)
         button.setTitleColor(.label, for: .normal)
+        button.titleLabel?.font = .preferredFont(forTextStyle: .headline)
         button.layer.backgroundColor = UIColor.systemBlue.cgColor
-        button.layer.borderWidth = 0.5
+        button.layer.borderWidth = 1
         button.layer.cornerRadius = 10
         return button
     }()
@@ -72,8 +73,9 @@ class SubwayViewController: UIViewController {
         button.backgroundColor = .label
         button.setTitle("초기화", for: .normal)
         button.setTitleColor(.label, for: .normal)
+        button.titleLabel?.font = .preferredFont(forTextStyle: .headline)
         button.layer.backgroundColor = UIColor.systemRed.cgColor
-        button.layer.borderWidth = 0.5
+        button.layer.borderWidth = 1
         button.layer.cornerRadius = 10
         return button
     }()
@@ -98,7 +100,7 @@ class SubwayViewController: UIViewController {
     
     private let arrivalTimeGuideLabel: UILabel = {
         let label = UILabel()
-        label.text = "[도착 예정 시간]   -   "
+        label.text = "[도착 예정 시간]   -  "
         label.numberOfLines = 1
         label.font = .preferredFont(forTextStyle: .headline).withSize(20)
         label.textColor = .label
@@ -121,7 +123,7 @@ class SubwayViewController: UIViewController {
     }()
     private let arrivalTimePickerGuideLabel: UILabel = {
         let label = UILabel()
-        label.text = "필요시 원하시는 시간에 타이머를 맞춰주세요 😃"
+        label.text = "필요시 원하시는 시간으로 변경해주세요 ⏰"
         label.numberOfLines = 1
         label.font = .preferredFont(forTextStyle: .subheadline)
         label.textColor = .label
@@ -134,8 +136,6 @@ class SubwayViewController: UIViewController {
         button.setTitle("타이머 시작", for: .normal)
         button.setTitleColor(.systemBackground, for: .normal)
         button.titleLabel?.font = .preferredFont(forTextStyle: .headline)
-        button.layer.backgroundColor = UIColor.label.cgColor
-        button.layer.borderWidth = 0.5
         button.layer.cornerRadius = 10
         return button
     }()
@@ -151,6 +151,24 @@ class SubwayViewController: UIViewController {
         stackView.layer.borderWidth = 3
         stackView.layer.borderColor = UIColor.systemMint.cgColor
         stackView.layer.cornerRadius = 10
+        return stackView
+    }()
+    
+    private let timerFirstGuideLabel: UILabel = {
+        let label = UILabel()
+        label.text = "✅  표시된 시간에서 -1분으로 타이머를 설정합니다."
+        label.numberOfLines = 1
+        label.font = .preferredFont(forTextStyle: .subheadline)
+        label.textColor = .label
+        return label
+    }()
+    private let timerGuideLineStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.alignment = .fill
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.spacing = 15
         return stackView
     }()
     
@@ -226,6 +244,8 @@ extension SubwayViewController {
         settingStackView.addArrangedSubview(targetStackView)
         settingStackView.addArrangedSubview(buttonStackView)
         
+        timerGuideLineStackView.addArrangedSubview(timerFirstGuideLabel)
+        
         arrivalTimeStackView.addArrangedSubview(arrivalTimeGuideLabel)
         arrivalTimeStackView.addArrangedSubview(arrivalTimePicker)
         
@@ -237,6 +257,7 @@ extension SubwayViewController {
     private func configureLayout() {
         view.addSubview(settingStackView)
         view.addSubview(arrivalStackView)
+        view.addSubview(timerGuideLineStackView)
         
         NSLayoutConstraint.activate([
             nowStackView.widthAnchor.constraint(equalTo: settingStackView.widthAnchor),
@@ -257,6 +278,15 @@ extension SubwayViewController {
             arrivalStackView.topAnchor.constraint(
                 equalTo: settingStackView.bottomAnchor,
                 constant: view.bounds.height * 0.1
+            ),
+            
+            timerGuideLineStackView.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor,
+                constant: view.bounds.width * 0.1
+            ),
+            timerGuideLineStackView.topAnchor.constraint(
+                equalTo: arrivalStackView.bottomAnchor,
+                constant: view.bounds.height * 0.03
             )
         ])
     }
