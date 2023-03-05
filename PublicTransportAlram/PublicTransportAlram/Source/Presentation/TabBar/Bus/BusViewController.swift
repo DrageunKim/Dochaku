@@ -156,7 +156,7 @@ class BusViewController: UIViewController {
     
     private let timerFirstGuideLabel: UILabel = {
         let label = UILabel()
-        label.text = "✅  표시된 시간에서 -1분으로 타이머를 설정합니다."
+        label.text = "✅  설정된 시간에서 -1분으로 타이머를 설정합니다."
         label.numberOfLines = 1
         label.font = .preferredFont(forTextStyle: .subheadline)
         label.textColor = .label
@@ -189,6 +189,7 @@ extension BusViewController {
     private func configureButtonAction() {
         okButton.addTarget(self, action: #selector(tappedOkButton), for: .touchDown)
         initButton.addTarget(self, action: #selector(tappedInitButton), for: .touchDown)
+        timerStartButton.addTarget(self, action: #selector(tappedTimerStartButton), for: .touchDown)
     }
     
     @objc
@@ -200,6 +201,12 @@ extension BusViewController {
     
     @objc
     private func tappedInitButton() {
+        nowStationBar.text = nil
+        targetStationBar.text = nil
+    }
+    
+    @objc
+    private func tappedTimerStartButton() {
     }
 }
 
