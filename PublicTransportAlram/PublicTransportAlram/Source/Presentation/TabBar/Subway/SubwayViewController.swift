@@ -9,6 +9,8 @@ import UIKit
 
 class SubwayViewController: UIViewController {
     
+    // MARK: Private Properties
+    
     private let nowStationLabel: UILabel = {
         let label = UILabel()
         label.text = "현재역 :"
@@ -172,6 +174,8 @@ class SubwayViewController: UIViewController {
         return stackView
     }()
     
+    // MARK: Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -179,22 +183,19 @@ class SubwayViewController: UIViewController {
         configureStackView()
         configureLayout()
         configureButtonAction()
+        testNetwork()
     }
     
-    private func testDataTask() {
-        let urlString = "http://swopenapi.seoul.go.kr/api/subway/sample/json/realtimeStationArrival/0/5/단대오거리"
-        if let encodedString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
-            if let url = URL(string: encodedString) {
-                var request = URLRequest(url: url)
-                request.httpMethod = "GET"
-                
-                let _ = URLSession.shared.dataTask(with: request) { data, response, error in
-                    guard let data = data else {
-                        print(String(describing: error))
-                        return
-                    }
-                    print(String(data: data, encoding: .utf8)!)
-                }.resume()
+    private func testNetwork() {
+        let networkManager = NetworkManager(urlSession: .shared)
+        let request = SubwayRequest(station: "단대오거리")
+        
+        networkManager.dataTask(request) { result in
+            switch result {
+            case .success(let data):
+                print(data)
+            case .failure(_):
+                break
             }
         }
     }

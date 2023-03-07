@@ -160,10 +160,10 @@
 		D08166A229A77DC100A67C1C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D0FE2C1B29B4EEC2001C83F7 /* Protocol */,
 				D08166D029A7A65200A67C1C /* Extension */,
 				D08166C229A79DF500A67C1C /* Network */,
 				D081681629AF787600A67C1C /* DTO */,
-				D0FE2C1929B4CE28001C83F7 /* Identifiable.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -283,6 +283,14 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D0FE2C1B29B4EEC2001C83F7 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				D0FE2C1929B4CE28001C83F7 /* Identifiable.swift */,
+			);
+			path = Protocol;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

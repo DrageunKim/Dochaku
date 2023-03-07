@@ -26,7 +26,7 @@ final class JSONParsingTests: XCTestCase {
         let result = JSONDecoder.decodeAsset(
             name: fileName,
             to: errorMessage.self
-        )?.status
+        )!.status
         
         // Then
         XCTAssertEqual(result, 200)
@@ -40,7 +40,7 @@ final class JSONParsingTests: XCTestCase {
         let result = JSONDecoder.decodeAsset(
             name: fileName,
             to: realtimeArrivalList.self
-        )?.statnNm
+        )!.statnNm
         
         // Then
         XCTAssertEqual(result, "단대오거리")
@@ -54,7 +54,7 @@ final class JSONParsingTests: XCTestCase {
         let result = JSONDecoder.decodeAsset(
             name: fileName,
             to: Subway.self
-        )?.realtimeArrivalList.first?.subwayList
+        )!.realtimeArrivalList.first!.subwayList
 
         // Then
         XCTAssertEqual(result, "1008")
