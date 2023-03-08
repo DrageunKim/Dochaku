@@ -13,16 +13,33 @@ protocol Request {
     var baseURL: URL? { get }
     var path: String { get }
     var method: HTTPMethod { get }
+    var queryList: [String: String] { get }
 }
 
 extension Request {
     var baseURL: URL? {
-        return URL(string: "https://api.odsay.com/v1/api/subwayPath")
+        return URL(string: "https://api.odsay.com/v1/api")
+    }
+    
+    var url: URL? {
+        if let url = baseURL?.appendingPathComponent(path) {
+            var components = URLComponents(string: url.absoluteString)
+            let queries: [URLQueryItem] = queryList.map { key, value -> URLQueryItem in
+                return URLQueryItem(name: key, value: value)
+            }
+            
+            components?.queryItems = queries
+            
+            return components?.url
+        }
+        
+        return nil
     }
     
     func create() -> URLRequest {
-        if let baseURL = baseURL {
-            var urlRequest = URLRequest(url: baseURL.appendingPathComponent(path))
+        if let url = url {
+            var urlRequest = URLRequest(url: url)
+            
             urlRequest.httpMethod = method.rawValue
             
             return urlRequest

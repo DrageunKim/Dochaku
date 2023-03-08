@@ -5,25 +5,25 @@
 //  Created by yonggeun Kim on 2023/02/23.
 //
 
+import Foundation
 
 struct SubwayRequest: Request {
     typealias Response = SubwayRouteSearch
     
     let method: HTTPMethod = .get
-    let key: String = "?apiKey=" + "DnMRoATHlXeGpeewYG0b6A"
-    let sopt: String = "&Sopt=" + "2"
-    let lang: String = "&lang=" + "0"
-    let cid: String
-    let sid: String
-    let eid: String
-    let path: String
+    var queryList: [String: String] = [:]
+    var path: String = "/subwayPath"
+    let apiKey: String = "DnMRoATHlXeGpeewYG0b6A"
+    let lang: String = String(Lang.korean.rawValue)
+    let sopt: String = "2"
     
     init(city: CID, start: Int, end: Int) {
-        self.cid = "&CID=" + "\(city.rawValue)"
-        self.sid = "&SID=" + "\(start)"
-        self.eid = "&EID=" + "\(end)"
-        
-        self.path = key + lang + cid + sid + eid + sopt
+        queryList.updateValue(apiKey, forKey: "apiKey")
+        queryList.updateValue(lang, forKey: "lang")
+        queryList.updateValue(String(city.rawValue), forKey: "CID")
+        queryList.updateValue(String(start), forKey: "SID")
+        queryList.updateValue(String(end), forKey: "EID")
+        queryList.updateValue(sopt, forKey: "Sopt")
     }
 }
 

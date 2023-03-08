@@ -74,7 +74,7 @@ final class JSONParsingTests: XCTestCase {
         XCTAssertEqual(result, "강남")
     }
 
-    func test_파일명을SubwayJSON를주었을때_dataAsset을실행하면_realtimeArrivalList첫번째배열의subwayList은1008이다() {
+    func test_파일명을SubwayRouteSearchJSON를주었을때_dataAsset을실행하면_result의fare은1350이다() {
         // Given
         let fileName = "SubwayRouteSearchJSON"
 
@@ -85,6 +85,6 @@ final class JSONParsingTests: XCTestCase {
         )?.result.fare
 
         // Then
-        XCTAssertEqual(result, 1850)
+        XCTAssertEqual(result, 1350)
     }
 }

@@ -17,9 +17,9 @@ struct SearchResult: Decodable {
     let globalStationCount: Int
     let fare: Int
     let cashFare: Int
-    let driveInfoSet: DriveInfoSet
-    let exChangeInfoSet: ExChangeInfoSet
-    let stationSet: StationSet
+    let driveInfoSet: DriveInfoSet?
+    let exChangeInfoSet: ExChangeInfoSet?
+    let stationSet: StationSet?
 }
 
 struct DriveInfoSet: Decodable {

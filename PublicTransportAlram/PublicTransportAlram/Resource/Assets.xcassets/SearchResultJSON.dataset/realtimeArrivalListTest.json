@@ -1,58 +1,20 @@
 {
     "globalStartName": "시청",
     "globalEndName": "강남",
-    "globalTravelTime": 26,
-    "globalDistance": 11.3,
-    "globalStationCount": 12,
-    "fare": 1850,
-    "cashFare": 1950,
+    "globalTravelTime": 39,
+    "globalDistance": 21.8,
+    "globalStationCount": 21,
+    "fare": 1350,
+    "cashFare": 1450,
     "driveInfoSet": {
         "driveInfo": [
             {
                 "laneID": "2",
                 "laneName": "2호선",
                 "startName": "시청",
-                "stationCount": 2,
+                "stationCount": 21,
                 "wayCode": 2,
                 "wayName": "내선순환"
-            },
-            {
-                "laneID": "3",
-                "laneName": "3호선",
-                "startName": "을지로3가",
-                "stationCount": 7,
-                "wayCode": 2,
-                "wayName": "오금"
-            },
-            {
-                "laneID": "109",
-                "laneName": "신분당선",
-                "startName": "신사",
-                "stationCount": 3,
-                "wayCode": 2,
-                "wayName": "광교(경기대)"
-            }
-        ]
-    },
-    "exChangeInfoSet": {
-        "exChangeInfo": [
-            {
-                "laneName": "2호선",
-                "startName": "시청",
-                "exName": "을지로3가",
-                "exSID": 330,
-                "fastTrain": 1,
-                "fastDoor": 1,
-                "exWalkTime": 120
-            },
-            {
-                "laneName": "3호선",
-                "startName": "을지로3가",
-                "exName": "신사",
-                "exSID": 1907,
-                "fastTrain": 2,
-                "fastDoor": 1,
-                "exWalkTime": 135
             }
         ]
     },
@@ -73,74 +35,137 @@
                 "travelTime": 4
             },
             {
-                "startID": 330,
+                "startID": 203,
                 "startName": "을지로3가",
-                "endSID": 331,
-                "endName": "충무로",
+                "endSID": 204,
+                "endName": "을지로4가",
+                "travelTime": 5
+            },
+            {
+                "startID": 204,
+                "startName": "을지로4가",
+                "endSID": 205,
+                "endName": "동대문역사문화공원",
                 "travelTime": 7
             },
             {
-                "startID": 331,
-                "startName": "충무로",
-                "endSID": 332,
-                "endName": "동대입구",
-                "travelTime": 10
+                "startID": 205,
+                "startName": "동대문역사문화공원",
+                "endSID": 206,
+                "endName": "신당",
+                "travelTime": 9
             },
             {
-                "startID": 332,
-                "startName": "동대입구",
-                "endSID": 333,
-                "endName": "약수",
+                "startID": 206,
+                "startName": "신당",
+                "endSID": 207,
+                "endName": "상왕십리",
                 "travelTime": 11
             },
             {
-                "startID": 333,
-                "startName": "약수",
-                "endSID": 334,
-                "endName": "금호",
+                "startID": 207,
+                "startName": "상왕십리",
+                "endSID": 208,
+                "endName": "왕십리",
                 "travelTime": 12
             },
             {
-                "startID": 334,
-                "startName": "금호",
-                "endSID": 335,
-                "endName": "옥수",
+                "startID": 208,
+                "startName": "왕십리",
+                "endSID": 209,
+                "endName": "한양대",
                 "travelTime": 14
             },
             {
-                "startID": 335,
-                "startName": "옥수",
-                "endSID": 336,
-                "endName": "압구정",
+                "startID": 209,
+                "startName": "한양대",
+                "endSID": 210,
+                "endName": "뚝섬",
                 "travelTime": 16
             },
             {
-                "startID": 336,
-                "startName": "압구정",
-                "endSID": 337,
-                "endName": "신사",
+                "startID": 210,
+                "startName": "뚝섬",
+                "endSID": 211,
+                "endName": "성수",
+                "travelTime": 17
+            },
+            {
+                "startID": 211,
+                "startName": "성수",
+                "endSID": 212,
+                "endName": "건대입구",
                 "travelTime": 19
             },
             {
-                "startID": 1907,
-                "startName": "신사",
-                "endSID": 1908,
-                "endName": "논현",
+                "startID": 212,
+                "startName": "건대입구",
+                "endSID": 213,
+                "endName": "구의",
+                "travelTime": 22
+            },
+            {
+                "startID": 213,
+                "startName": "구의",
+                "endSID": 214,
+                "endName": "강변",
                 "travelTime": 23
             },
             {
-                "startID": 1908,
-                "startName": "논현",
-                "endSID": 1909,
-                "endName": "신논현",
-                "travelTime": 24
+                "startID": 214,
+                "startName": "강변",
+                "endSID": 215,
+                "endName": "잠실나루",
+                "travelTime": 25
             },
             {
-                "startID": 1909,
-                "startName": "신논현",
-                "endSID": 1910,
+                "startID": 215,
+                "startName": "잠실나루",
+                "endSID": 216,
+                "endName": "잠실",
+                "travelTime": 28
+            },
+            {
+                "startID": 216,
+                "startName": "잠실",
+                "endSID": 217,
+                "endName": "잠실새내",
+                "travelTime": 30
+            },
+            {
+                "startID": 217,
+                "startName": "잠실새내",
+                "endSID": 218,
+                "endName": "종합운동장",
+                "travelTime": 32
+            },
+            {
+                "startID": 218,
+                "startName": "종합운동장",
+                "endSID": 219,
+                "endName": "삼성",
+                "travelTime": 34
+            },
+            {
+                "startID": 219,
+                "startName": "삼성",
+                "endSID": 220,
+                "endName": "선릉",
+                "travelTime": 36
+            },
+            {
+                "startID": 220,
+                "startName": "선릉",
+                "endSID": 221,
+                "endName": "역삼",
+                "travelTime": 38
+            },
+            {
+                "startID": 221,
+                "startName": "역삼",
+                "endSID": 222,
                 "endName": "강남",
-                "travelTime": 26
+                "travelTime": 39
             }
         ]
     }
