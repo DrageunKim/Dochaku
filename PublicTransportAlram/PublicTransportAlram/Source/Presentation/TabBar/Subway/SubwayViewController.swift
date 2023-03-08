@@ -183,21 +183,9 @@ class SubwayViewController: UIViewController {
         configureStackView()
         configureLayout()
         configureButtonAction()
-        testNetwork()
     }
     
     private func testNetwork() {
-        let networkManager = NetworkManager(urlSession: .shared)
-        let request = SubwayRequest(station: "단대오거리")
-        
-        networkManager.dataTask(request) { result in
-            switch result {
-            case .success(let data):
-                print(data)
-            case .failure(_):
-                break
-            }
-        }
     }
 }
 

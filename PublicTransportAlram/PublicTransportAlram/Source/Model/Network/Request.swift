@@ -17,7 +17,7 @@ protocol Request {
 
 extension Request {
     var baseURL: URL? {
-        return URL(string: "http://swopenAPI.seoul.go.kr/api/")
+        return URL(string: "https://api.odsay.com/v1/api/subwayPath")
     }
     
     func create() -> URLRequest {

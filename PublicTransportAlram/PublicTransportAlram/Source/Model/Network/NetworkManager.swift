@@ -45,6 +45,8 @@ struct NetworkManager {
             if let data = decodedData {
                 return completion(.success(data))
             }
+            
+            return completion(.failure(.unknownError))
         }.resume()
     }
 }
