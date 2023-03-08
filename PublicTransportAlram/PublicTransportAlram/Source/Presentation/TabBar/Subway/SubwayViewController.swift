@@ -182,13 +182,25 @@ class SubwayViewController: UIViewController {
         configureView()
         configureStackView()
         configureLayout()
+        configureDelegate()
         configureButtonAction()
+        testSearch()
         testNetwork()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        nowStationBar.resignFirstResponder()
+        targetStationBar.resignFirstResponder()
+    }
+    
+    private func configureDelegate() {
+        nowStationBar.delegate = self
+        targetStationBar.delegate = self
     }
     
     private func testNetwork() {
         let manager = NetworkManager(urlSession: .shared)
-        let request = SubwayRequest(city: CID.capital, start: 201, end: 222)
+        let request = SubwayRequest(city: CID.capital, start: 201, end: 0222)
         
         manager.dataTask(request) { result in
             switch result {
@@ -198,6 +210,13 @@ class SubwayViewController: UIViewController {
                 break
             }
         }
+    }
+    
+    private func testSearch() {
+        let test = JSONDecoder.decodeAsset(name: "SubwayCodeJSON", to: SubwayCodeInfo.self)
+        let stringTest = test?.data.filter { $0.stationNm == "강남" }
+        
+        print(stringTest!.first!.stationCd)
     }
 }
 
@@ -218,12 +237,20 @@ extension SubwayViewController {
     
     @objc
     private func tappedInitButton() {
-        nowStationBar.text = nil
-        targetStationBar.text = nil
+        nowStationBar.text = .init()
+        targetStationBar.text = .init()
     }
     
     @objc
     private func tappedTimerStartButton() {
+    }
+}
+
+// MARK: - UISearchBarDelegate
+
+extension SubwayViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
 }
 
