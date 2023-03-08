@@ -12,7 +12,6 @@ protocol Request {
     
     var baseURL: URL? { get }
     var path: String { get }
-    var encodedPath: String { get }
     var method: HTTPMethod { get }
 }
 
@@ -23,7 +22,7 @@ extension Request {
     
     func create() -> URLRequest {
         if let baseURL = baseURL {
-            var urlRequest = URLRequest(url: baseURL.appendingPathComponent(encodedPath))
+            var urlRequest = URLRequest(url: baseURL.appendingPathComponent(path))
             urlRequest.httpMethod = method.rawValue
             
             return urlRequest

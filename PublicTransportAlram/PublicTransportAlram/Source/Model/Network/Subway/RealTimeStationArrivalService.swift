@@ -5,6 +5,6 @@
 //  Created by yonggeun Kim on 2023/03/01.
 //
 
-class RealtimeStationArrival {
+class RealTimeStationArrivalService {
     private let manager = NetworkManager(urlSession: .shared)
 }

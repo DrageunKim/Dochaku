@@ -7,18 +7,14 @@
 
 
 struct SubwayRequest: Request {
-    typealias Response = Subway
+    typealias Response = RealTimeStationArrival
     
     let key: String = "74795961676b696f3130334a514c4f75"
     let type: String = "json"
-    var path: String
-    var encodedPath: String
     var method: HTTPMethod = .get
+    var path: String
     
     init(station: String) {
         self.path = "subway/\(key)/\(type)/realtimeStationArrival/0/5/\(station)"
-        self.encodedPath = path.addingPercentEncoding(
-            withAllowedCharacters: .urlQueryAllowed
-        ) ?? String()
     }
 }

@@ -25,7 +25,7 @@ final class JSONParsingTests: XCTestCase {
         // When
         let result = JSONDecoder.decodeAsset(
             name: fileName,
-            to: errorMessage.self
+            to: ErrorMessage.self
         )!.status
         
         // Then
@@ -39,7 +39,7 @@ final class JSONParsingTests: XCTestCase {
         // When
         let result = JSONDecoder.decodeAsset(
             name: fileName,
-            to: realtimeArrivalList.self
+            to: RealTimeArrival.self
         )!.statnNm
         
         // Then
