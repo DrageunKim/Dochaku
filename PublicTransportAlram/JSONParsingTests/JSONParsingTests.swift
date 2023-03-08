@@ -87,4 +87,18 @@ final class JSONParsingTests: XCTestCase {
         // Then
         XCTAssertEqual(result, 1350)
     }
+    
+    func test_파일명을SubwayCodeJSON를주었을때_dataAsset을실행하면_result의fare은1350이다() {
+        // Given
+        let fileName = "SubwayCodeJSON"
+
+        // When
+        let result = JSONDecoder.decodeAsset(
+            name: fileName,
+            to: SubwayCodeInfo.self
+        )?.data.first?.stationNm
+
+        // Then
+        XCTAssertEqual(result, "용답")
+    }
 }

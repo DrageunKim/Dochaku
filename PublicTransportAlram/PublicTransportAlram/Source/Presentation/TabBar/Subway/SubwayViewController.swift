@@ -213,9 +213,7 @@ extension SubwayViewController {
     
     @objc
     private func tappedOkButton() {
-        let presentViewController = ListViewController()
-        
-        navigationController?.present(presentViewController, animated: true)
+        navigationController?.present(ListViewController(), animated: true)
     }
     
     @objc

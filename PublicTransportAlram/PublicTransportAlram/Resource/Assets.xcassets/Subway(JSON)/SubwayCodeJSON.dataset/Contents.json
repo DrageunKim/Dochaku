@@ -1,0 +1,12 @@
+{
+  "data" : [
+    {
+      "filename" : "서울시 지하철역 정보 검색 (역명).json",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
