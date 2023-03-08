@@ -1,0 +1,147 @@
+{
+    "globalStartName": "시청",
+    "globalEndName": "강남",
+    "globalTravelTime": 26,
+    "globalDistance": 11.3,
+    "globalStationCount": 12,
+    "fare": 1850,
+    "cashFare": 1950,
+    "driveInfoSet": {
+        "driveInfo": [
+            {
+                "laneID": "2",
+                "laneName": "2호선",
+                "startName": "시청",
+                "stationCount": 2,
+                "wayCode": 2,
+                "wayName": "내선순환"
+            },
+            {
+                "laneID": "3",
+                "laneName": "3호선",
+                "startName": "을지로3가",
+                "stationCount": 7,
+                "wayCode": 2,
+                "wayName": "오금"
+            },
+            {
+                "laneID": "109",
+                "laneName": "신분당선",
+                "startName": "신사",
+                "stationCount": 3,
+                "wayCode": 2,
+                "wayName": "광교(경기대)"
+            }
+        ]
+    },
+    "exChangeInfoSet": {
+        "exChangeInfo": [
+            {
+                "laneName": "2호선",
+                "startName": "시청",
+                "exName": "을지로3가",
+                "exSID": 330,
+                "fastTrain": 1,
+                "fastDoor": 1,
+                "exWalkTime": 120
+            },
+            {
+                "laneName": "3호선",
+                "startName": "을지로3가",
+                "exName": "신사",
+                "exSID": 1907,
+                "fastTrain": 2,
+                "fastDoor": 1,
+                "exWalkTime": 135
+            }
+        ]
+    },
+    "stationSet": {
+        "stations": [
+            {
+                "startID": 201,
+                "startName": "시청",
+                "endSID": 202,
+                "endName": "을지로입구",
+                "travelTime": 2
+            },
+            {
+                "startID": 202,
+                "startName": "을지로입구",
+                "endSID": 203,
+                "endName": "을지로3가",
+                "travelTime": 4
+            },
+            {
+                "startID": 330,
+                "startName": "을지로3가",
+                "endSID": 331,
+                "endName": "충무로",
+                "travelTime": 7
+            },
+            {
+                "startID": 331,
+                "startName": "충무로",
+                "endSID": 332,
+                "endName": "동대입구",
+                "travelTime": 10
+            },
+            {
+                "startID": 332,
+                "startName": "동대입구",
+                "endSID": 333,
+                "endName": "약수",
+                "travelTime": 11
+            },
+            {
+                "startID": 333,
+                "startName": "약수",
+                "endSID": 334,
+                "endName": "금호",
+                "travelTime": 12
+            },
+            {
+                "startID": 334,
+                "startName": "금호",
+                "endSID": 335,
+                "endName": "옥수",
+                "travelTime": 14
+            },
+            {
+                "startID": 335,
+                "startName": "옥수",
+                "endSID": 336,
+                "endName": "압구정",
+                "travelTime": 16
+            },
+            {
+                "startID": 336,
+                "startName": "압구정",
+                "endSID": 337,
+                "endName": "신사",
+                "travelTime": 19
+            },
+            {
+                "startID": 1907,
+                "startName": "신사",
+                "endSID": 1908,
+                "endName": "논현",
+                "travelTime": 23
+            },
+            {
+                "startID": 1908,
+                "startName": "논현",
+                "endSID": 1909,
+                "endName": "신논현",
+                "travelTime": 24
+            },
+            {
+                "startID": 1909,
+                "startName": "신논현",
+                "endSID": 1910,
+                "endName": "강남",
+                "travelTime": 26
+            }
+        ]
+    }
+}

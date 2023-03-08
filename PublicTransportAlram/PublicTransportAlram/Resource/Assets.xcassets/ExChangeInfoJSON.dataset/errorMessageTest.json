@@ -1,0 +1,9 @@
+{
+    "laneName": "2호선",
+    "startName": "시청",
+    "exName": "을지로3가",
+    "exSID": 330,
+    "fastTrain": 1,
+    "fastDoor": 1,
+    "exWalkTime": 120
+}

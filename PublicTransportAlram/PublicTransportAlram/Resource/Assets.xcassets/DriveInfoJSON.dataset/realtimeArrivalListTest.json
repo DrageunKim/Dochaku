@@ -1,0 +1,8 @@
+{
+    "laneID": "2",
+    "laneName": "2호선",
+    "startName": "시청",
+    "stationCount": 2,
+    "wayCode": 2,
+    "wayName": "내선순환"
+}

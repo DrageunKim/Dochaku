@@ -18,45 +18,73 @@ final class JSONParsingTests: XCTestCase {
         try super.tearDownWithError()
     }
 
-    func test_파일명을ErrorMessageJSON주었을때_dataAsset을실행하면_status는200이다() {
+    func test_파일명을DriveInfoJSON주었을때_dataAsset을실행하면_startName는시청이다() {
         // Given
-        let fileName = "ErrorMessageJSON"
+        let fileName = "DriveInfoJSON"
         
         // When
         let result = JSONDecoder.decodeAsset(
             name: fileName,
-            to: ErrorMessage.self
-        )!.status
+            to: DriveInfo.self
+        )?.startName
         
         // Then
-        XCTAssertEqual(result, 200)
+        XCTAssertEqual(result, "시청")
     }
     
-    func test_파일명을RealtimeArrivalListJSON주었을때_dataAsset을실행하면_statnNm은단대오거리이다() {
+    func test_파일명을ExChangeInfoJSON주었을때_dataAsset을실행하면_fastTrain은1이다() {
         // Given
-        let fileName = "RealtimeArrivalListJSON"
+        let fileName = "ExChangeInfoJSON"
         
         // When
         let result = JSONDecoder.decodeAsset(
             name: fileName,
-            to: RealTimeArrival.self
-        )!.statnNm
+            to: ExChangeInfo.self
+        )?.fastTrain
         
         // Then
-        XCTAssertEqual(result, "단대오거리")
+        XCTAssertEqual(result, 1)
     }
     
+    func test_파일명을StationsJSON를주었을때_dataAsset을실행하면_endSID은202이다() {
+        // Given
+        let fileName = "StationsJSON"
+
+        // When
+        let result = JSONDecoder.decodeAsset(
+            name: fileName,
+            to: Stations.self
+        )?.endSID
+
+        // Then
+        XCTAssertEqual(result, 202)
+    }
+    
+    func test_파일명을SearchResultJSON를주었을때_dataAsset을실행하면_globalEndName은강남이다() {
+        // Given
+        let fileName = "SearchResultJSON"
+
+        // When
+        let result = JSONDecoder.decodeAsset(
+            name: fileName,
+            to: SearchResult.self
+        )?.globalEndName
+
+        // Then
+        XCTAssertEqual(result, "강남")
+    }
+
     func test_파일명을SubwayJSON를주었을때_dataAsset을실행하면_realtimeArrivalList첫번째배열의subwayList은1008이다() {
         // Given
-        let fileName = "SubwayJSON"
+        let fileName = "SubwayRouteSearchJSON"
 
         // When
         let result = JSONDecoder.decodeAsset(
             name: fileName,
-            to: Subway.self
-        )!.realtimeArrivalList.first!.subwayList
+            to: SubwayRouteSearch.self
+        )?.result.fare
 
         // Then
-        XCTAssertEqual(result, "1008")
+        XCTAssertEqual(result, 1850)
     }
 }

@@ -13,13 +13,25 @@ struct SearchResult: Decodable {
     let globalStartName: String
     let globalEndName: String
     let globalTravelTime: Int
-    let globalDistance: Int
+    let globalDistance: Double
     let globalStationCount: Int
     let fare: Int
     let cashFare: Int
-    let driveInfoSet: [DriveInfo]
-    let exChangeInfoSet: [ExChangeInfo]
-    let stationSet: [Stations]
+    let driveInfoSet: DriveInfoSet
+    let exChangeInfoSet: ExChangeInfoSet
+    let stationSet: StationSet
+}
+
+struct DriveInfoSet: Decodable {
+    let driveInfo: [DriveInfo]
+}
+
+struct ExChangeInfoSet: Decodable {
+    let exChangeInfo: [ExChangeInfo]
+}
+
+struct StationSet: Decodable {
+    let stations: [Stations]
 }
 
 struct DriveInfo: Decodable {
