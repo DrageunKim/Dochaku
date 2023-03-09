@@ -6,10 +6,15 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class SubwayViewController: UIViewController {
     
     // MARK: Private Properties
+    
+    private let viewModel: SubwayViewModel = SubwayViewModel()
+    private let disposeBag: DisposeBag = DisposeBag()
     
     private let nowStationLabel: UILabel = {
         let label = UILabel()
@@ -184,8 +189,7 @@ class SubwayViewController: UIViewController {
         configureLayout()
         configureDelegate()
         configureButtonAction()
-        testSearch()
-        testNetwork()
+        configureBindings()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -197,52 +201,31 @@ class SubwayViewController: UIViewController {
         nowStationBar.delegate = self
         targetStationBar.delegate = self
     }
-    
-    private func testNetwork() {
-        let manager = NetworkManager(urlSession: .shared)
-        let request = SubwayRequest(city: CID.capital, start: 201, end: 0222)
+
+    private func configureBindings() {
+        okButton.rx.tap
+            .bind(to: viewModel.fetchSubwayInfo)
+            .disposed(by: disposeBag)
         
-        manager.dataTask(request) { result in
-            switch result {
-            case .success(let data):
-                print(data)
-            case .failure(_):
-                break
+        initButton.rx.tap
+            .subscribe { _ in
+                self.nowStationBar.text = .init()
+                self.targetStationBar.text = .init()
             }
-        }
-    }
-    
-    private func testSearch() {
-        let test = JSONDecoder.decodeAsset(name: "SubwayCodeJSON", to: SubwayCodeInfo.self)
-        let stringTest = test?.data.filter { $0.stationNm == "강남" }
+            .disposed(by: disposeBag)
         
-        print(stringTest!.first!.stationCd)
-    }
-}
-
-
-// MARK: - Button Action Configure
-
-extension SubwayViewController {
-    private func configureButtonAction() {
-        okButton.addTarget(self, action: #selector(tappedOkButton), for: .touchDown)
-        initButton.addTarget(self, action: #selector(tappedInitButton), for: .touchDown)
-        timerStartButton.addTarget(self, action: #selector(tappedTimerStartButton), for: .touchDown)
-    }
-    
-    @objc
-    private func tappedOkButton() {
-        navigationController?.present(ListViewController(), animated: true)
-    }
-    
-    @objc
-    private func tappedInitButton() {
-        nowStationBar.text = .init()
-        targetStationBar.text = .init()
-    }
-    
-    @objc
-    private func tappedTimerStartButton() {
+        nowStationBar.rx.text.orEmpty
+            .bind(to: viewModel.nowStationText)
+            .disposed(by: disposeBag)
+        targetStationBar.rx.text.orEmpty
+            .bind(to: viewModel.targetStationText)
+            .disposed(by: disposeBag)
+        
+        viewModel.subwayInfo
+            .subscribe(onNext: { data in
+                print(data)
+            })
+            .disposed(by: disposeBag)
     }
 }
 

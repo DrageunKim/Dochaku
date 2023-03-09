@@ -1,5 +1,5 @@
 //
-//  SubWayRequest.swift
+//  SubwayRequest.swift
 //  PublicTransportAlram
 //
 //  Created by yonggeun Kim on 2023/02/23.
@@ -17,12 +17,12 @@ struct SubwayRequest: Request {
     let lang: String = String(Lang.korean.rawValue)
     let sopt: String = "2"
     
-    init(city: CID, start: Int, end: Int) {
+    init(city: CID, now: String, target: String) {
         queryList.updateValue(apiKey, forKey: "apiKey")
         queryList.updateValue(lang, forKey: "lang")
         queryList.updateValue(String(city.rawValue), forKey: "CID")
-        queryList.updateValue(String(start), forKey: "SID")
-        queryList.updateValue(String(end), forKey: "EID")
+        queryList.updateValue(now, forKey: "SID")
+        queryList.updateValue(target, forKey: "EID")
         queryList.updateValue(sopt, forKey: "Sopt")
     }
 }
