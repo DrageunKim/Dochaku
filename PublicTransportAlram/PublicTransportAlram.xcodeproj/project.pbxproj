@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D08122BA29B88DFD00CA5664 /* SubwayCodeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08122B929B88DFD00CA5664 /* SubwayCodeInfo.swift */; };
+		D08122D329BAECC400CA5664 /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = D08122D229BAECC400CA5664 /* NMapsMap */; };
 		D081668D29A77CA700A67C1C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081668C29A77CA700A67C1C /* AppDelegate.swift */; };
 		D081668F29A77CA700A67C1C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081668E29A77CA700A67C1C /* SceneDelegate.swift */; };
 		D081669129A77CA700A67C1C /* SubwayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081669029A77CA700A67C1C /* SubwayViewController.swift */; };
@@ -28,8 +29,8 @@
 		D081681929AF78ED00A67C1C /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081681829AF78ED00A67C1C /* NetworkError.swift */; };
 		D081681B29AF7E6800A67C1C /* JSONError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081681A29AF7E6800A67C1C /* JSONError.swift */; };
 		D081681E29AF82AF00A67C1C /* RealTimeStationArrivalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081681D29AF82AF00A67C1C /* RealTimeStationArrivalService.swift */; };
-		D0FE2BF729B4CA69001C83F7 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FE2BF629B4CA69001C83F7 /* ListViewController.swift */; };
-		D0FE2BF929B4CA73001C83F7 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FE2BF829B4CA73001C83F7 /* ListViewModel.swift */; };
+		D0FE2BF729B4CA69001C83F7 /* MapViewControllerr.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FE2BF629B4CA69001C83F7 /* MapViewControllerr.swift */; };
+		D0FE2BF929B4CA73001C83F7 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FE2BF829B4CA73001C83F7 /* MapViewModel.swift */; };
 		D0FE2BFB29B4CADA001C83F7 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FE2BFA29B4CADA001C83F7 /* ListTableViewCell.swift */; };
 		D0FE2C0229B4CB48001C83F7 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D0FE2C0129B4CB48001C83F7 /* RxCocoa */; };
 		D0FE2C0A29B4CB48001C83F7 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D0FE2C0929B4CB48001C83F7 /* RxSwift */; };
@@ -84,8 +85,8 @@
 		D081681829AF78ED00A67C1C /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		D081681A29AF7E6800A67C1C /* JSONError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONError.swift; sourceTree = "<group>"; };
 		D081681D29AF82AF00A67C1C /* RealTimeStationArrivalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealTimeStationArrivalService.swift; sourceTree = "<group>"; };
-		D0FE2BF629B4CA69001C83F7 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
-		D0FE2BF829B4CA73001C83F7 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
+		D0FE2BF629B4CA69001C83F7 /* MapViewControllerr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewControllerr.swift; sourceTree = "<group>"; };
+		D0FE2BF829B4CA73001C83F7 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		D0FE2BFA29B4CADA001C83F7 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
 		D0FE2C1929B4CE28001C83F7 /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -96,6 +97,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0FE2C0229B4CB48001C83F7 /* RxCocoa in Frameworks */,
+				D08122D329BAECC400CA5664 /* NMapsMap in Frameworks */,
 				D0FE2C0A29B4CB48001C83F7 /* RxSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -274,8 +276,8 @@
 		D0FE2BF529B4CA31001C83F7 /* List */ = {
 			isa = PBXGroup;
 			children = (
-				D0FE2BF629B4CA69001C83F7 /* ListViewController.swift */,
-				D0FE2BF829B4CA73001C83F7 /* ListViewModel.swift */,
+				D0FE2BF629B4CA69001C83F7 /* MapViewControllerr.swift */,
+				D0FE2BF829B4CA73001C83F7 /* MapViewModel.swift */,
 				D0FE2BFA29B4CADA001C83F7 /* ListTableViewCell.swift */,
 			);
 			path = List;
@@ -316,6 +318,7 @@
 			packageProductDependencies = (
 				D0FE2C0129B4CB48001C83F7 /* RxCocoa */,
 				D0FE2C0929B4CB48001C83F7 /* RxSwift */,
+				D08122D229BAECC400CA5664 /* NMapsMap */,
 			);
 			productName = PublicTransportAlram;
 			productReference = D081668929A77CA700A67C1C /* PublicTransportAlram.app */;
@@ -369,6 +372,7 @@
 			mainGroup = D081668029A77CA700A67C1C;
 			packageReferences = (
 				D0FE2BFC29B4CB48001C83F7 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				D08122D129BAECC400CA5664 /* XCRemoteSwiftPackageReference "NMapsMap-SPM" */,
 			);
 			productRefGroup = D081668A29A77CA700A67C1C /* Products */;
 			projectDirPath = "";
@@ -420,8 +424,8 @@
 				D08166C129A79DC400A67C1C /* RequestError.swift in Sources */,
 				D08166A929A78A3100A67C1C /* SubwayViewModel.swift in Sources */,
 				D08166BF29A79B0D00A67C1C /* SubwayRouteSearch.swift in Sources */,
-				D0FE2BF929B4CA73001C83F7 /* ListViewModel.swift in Sources */,
-				D0FE2BF729B4CA69001C83F7 /* ListViewController.swift in Sources */,
+				D0FE2BF929B4CA73001C83F7 /* MapViewModel.swift in Sources */,
+				D0FE2BF729B4CA69001C83F7 /* MapViewControllerr.swift in Sources */,
 				D081681B29AF7E6800A67C1C /* JSONError.swift in Sources */,
 				D081681E29AF82AF00A67C1C /* RealTimeStationArrivalService.swift in Sources */,
 				D08166B129A78E7100A67C1C /* BusViewController.swift in Sources */,
@@ -706,6 +710,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		D08122D129BAECC400CA5664 /* XCRemoteSwiftPackageReference "NMapsMap-SPM" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jaemyeong/NMapsMap-SPM.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		D0FE2BFC29B4CB48001C83F7 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
@@ -717,6 +729,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		D08122D229BAECC400CA5664 /* NMapsMap */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D08122D129BAECC400CA5664 /* XCRemoteSwiftPackageReference "NMapsMap-SPM" */;
+			productName = NMapsMap;
+		};
 		D0FE2C0129B4CB48001C83F7 /* RxCocoa */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D0FE2BFC29B4CB48001C83F7 /* XCRemoteSwiftPackageReference "RxSwift" */;

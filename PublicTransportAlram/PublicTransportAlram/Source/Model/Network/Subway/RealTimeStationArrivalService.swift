@@ -12,11 +12,16 @@ class RealTimeStationArrivalService {
     
     var nowStationCode = String()
     var targetStationCode = String()
+    var isValidCode = false
     
     private let disposeBag = DisposeBag()
     
-    func fetchSubwayCode(_ station: String) -> String {
-        let codeData = JSONDecoder.decodeAsset(name: "SubwayCodeJSON", to: SubwayCodeInfo.self)
+    func checkValidCode() {
+        isValidCode = !nowStationCode.isEmpty && !targetStationCode.isEmpty
+    }
+    
+    func fetchStationCode(_ station: String) -> String {
+        let codeData = JSONDecoder.decodeAsset(name: "StationCodeJSON", to: StationCodeInfo.self)
         let targetData = codeData?.data.filter { $0.stationNm == station }
         
         if let data = targetData,
@@ -28,7 +33,6 @@ class RealTimeStationArrivalService {
     }
     
     func fetchSubwayInfoRx() -> Observable<SubwayRouteSearch> {
-        print("nowCode: \(nowStationCode), target: \(targetStationCode)")
         let manager = NetworkManager(urlSession: .shared)
         let request = SubwayRequest(city: CID.capital, now: nowStationCode, target: targetStationCode)
         

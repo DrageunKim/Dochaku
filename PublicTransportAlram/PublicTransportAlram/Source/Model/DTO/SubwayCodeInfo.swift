@@ -5,7 +5,7 @@
 //  Created by yonggeun Kim on 2023/03/08.
 //
 
-struct SubwayCodeInfo: Decodable {
+struct StationCodeInfo: Decodable {
     let data: [DataInfo]
     
     enum CodingKeys: String, CodingKey {

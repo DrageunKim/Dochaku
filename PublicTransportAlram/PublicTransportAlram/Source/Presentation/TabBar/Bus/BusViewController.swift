@@ -194,7 +194,7 @@ extension BusViewController {
     
     @objc
     private func tappedOkButton() {
-        let presentViewController = ListViewController()
+        let presentViewController = MapViewController()
         
         navigationController?.present(presentViewController, animated: true)
     }

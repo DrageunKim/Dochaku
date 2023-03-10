@@ -25,32 +25,38 @@ class SubwayViewModel {
     let subwayInfo: Observable<SubwayRouteSearch>
     
     init(domain: RealTimeStationArrivalService = RealTimeStationArrivalService()) {
-        let fetching = PublishSubject<Void>()
-        let information = PublishSubject<SubwayRouteSearch>()
-        
         let nowStation = PublishSubject<String>()
         let targetStation = PublishSubject<String>()
+        let fetching = PublishSubject<Void>()
         
-        fetchSubwayInfo = fetching.asObserver()
-        subwayInfo = information.asObserver()
+        let information = PublishSubject<SubwayRouteSearch>()
+        
         nowStationText = nowStation.asObserver()
         targetStationText = targetStation.asObserver()
+        fetchSubwayInfo = fetching.asObserver()
+        
+        subwayInfo = information.asObserver()
         
         fetching
+            .map(domain.checkValidCode)
+            .filter { domain.isValidCode }
             .flatMap(domain.fetchSubwayInfoRx)
             .subscribe(onNext: information.onNext)
             .disposed(by: disposeBag)
         
         nowStation
-            .map(domain.fetchSubwayCode)
+            .filter { $0.count > 0 }
+            .map(domain.fetchStationCode)
             .subscribe(onNext: { code in
                 domain.nowStationCode = code
             })
             .disposed(by: disposeBag)
         
         targetStation
-            .map(domain.fetchSubwayCode)
+            .filter { $0.count > 0 }
+            .map(domain.fetchStationCode)
             .subscribe(onNext: { code in
+                print(code)
                 domain.targetStationCode = code
             })
             .disposed(by: disposeBag)

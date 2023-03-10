@@ -188,7 +188,6 @@ class SubwayViewController: UIViewController {
         configureStackView()
         configureLayout()
         configureDelegate()
-        configureButtonAction()
         configureBindings()
     }
     
@@ -217,6 +216,7 @@ class SubwayViewController: UIViewController {
         nowStationBar.rx.text.orEmpty
             .bind(to: viewModel.nowStationText)
             .disposed(by: disposeBag)
+        
         targetStationBar.rx.text.orEmpty
             .bind(to: viewModel.targetStationText)
             .disposed(by: disposeBag)
