@@ -6,14 +6,11 @@
 //
 
 import UIKit
-import NMapsMap
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        NMFAuthManager.shared().clientId = "l2dfq52gb6"
         
         return true
     }
