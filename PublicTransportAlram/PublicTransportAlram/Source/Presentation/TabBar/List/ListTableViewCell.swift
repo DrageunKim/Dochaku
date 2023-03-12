@@ -15,7 +15,8 @@ class ListTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 14, weight: .semibold)
-        label.textColor = .lightGray
+        label.textColor = .label
+        label.numberOfLines = 1
         return label
     }()
     
@@ -55,7 +56,7 @@ class ListTableViewCell: UITableViewCell {
             ),
             stationLabel.topAnchor.constraint(
                 equalTo: contentView.topAnchor,
-                constant: contentView.frame.height * 0.05
+                constant: contentView.frame.height * 0.35
             ),
             stationLabel.bottomAnchor.constraint(
                 equalTo: contentView.bottomAnchor,

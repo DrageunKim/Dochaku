@@ -13,37 +13,29 @@ class ListViewController: UIViewController {
     private var searchCompleter = MKLocalSearchCompleter()
     private var searchResults = [MKLocalSearchCompletion]()
     
-    private let topView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .lightGray.withAlphaComponent(0.7)
-        return view
-    }()
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "위치 입력"
+        label.text = "출발지 & 도착지 입력"
         label.font = .systemFont(ofSize: 14, weight: .semibold)
-        label.textColor = .white
+        label.textColor = .label
         label.textAlignment = .center
         return label
     }()
     private let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
-        searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.becomeFirstResponder()
-        searchBar.keyboardAppearance = .dark
+        searchBar.keyboardAppearance = .default
         searchBar.showsCancelButton = false
         searchBar.searchBarStyle = .minimal
-        searchBar.searchTextField.leftView?.tintColor = UIColor.white.withAlphaComponent(0.5)
-        searchBar.searchTextField.backgroundColor = .lightGray
-        searchBar.searchTextField.textColor = .white
-        searchBar.searchTextField.tintColor = .white
+        searchBar.searchTextField.leftView?.tintColor = UIColor.systemBackground.withAlphaComponent(0.8)
+        searchBar.searchTextField.backgroundColor = .label.withAlphaComponent(0.5)
+        searchBar.searchTextField.textColor = .systemBackground
+        searchBar.searchTextField.tintColor = .systemBackground
         searchBar.searchTextField.font = .systemFont(ofSize: 14, weight: .semibold)
         searchBar.searchTextField.attributedPlaceholder = NSAttributedString(
             string: "검색",
             attributes: [
-                NSAttributedString.Key.foregroundColor : UIColor.white.withAlphaComponent(0.5)
+                NSAttributedString.Key.foregroundColor : UIColor.systemBackground.withAlphaComponent(0.5)
             ]
         )
         return searchBar
@@ -51,11 +43,28 @@ class ListViewController: UIViewController {
     private let cancelButton: UIButton = {
         let button = UIButton()
         button.setTitle("취소", for: .normal)
-        button.tintColor = .white
+        button.setTitleColor(.label, for: .normal)
+        button.tintColor = .label
         button.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
-        button.addTarget(ListViewController.self, action: #selector(tappedCancelButton), for: .touchDown)
         return button
     }()
+    private let searchStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.alignment = .fill
+        stackView.distribution = .fill
+        return stackView
+    }()
+    private let topStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.backgroundColor = .systemBackground.withAlphaComponent(0.9)
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.distribution = .fill
+        return stackView
+    }()
+    
     private let lineView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -65,7 +74,7 @@ class ListViewController: UIViewController {
     private let listTableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = .systemBackground.withAlphaComponent(0.9)
         tableView.register(
             ListTableViewCell.self,
             forCellReuseIdentifier: ListTableViewCell.identifier
@@ -77,8 +86,10 @@ class ListViewController: UIViewController {
         super.viewDidLoad()
         
         configureView()
+        configureStackView()
         configureLayout()
         configureTableView()
+        configureButtonAction()
         configureSearchCompleter()
         configureSearchBar()
     }
@@ -115,7 +126,7 @@ extension ListViewController: UITableViewDataSource {
             for: indexPath
         ) as? ListTableViewCell {
             cell.stationLabel.text = searchResults[indexPath.row].title
-            cell.backgroundColor = .clear
+            cell.backgroundColor = .systemBackground
             cell.selectionStyle = .none
             
             return cell
@@ -128,6 +139,10 @@ extension ListViewController: UITableViewDataSource {
 // MARK: - Button Action
 
 extension ListViewController {
+    private func configureButtonAction() {
+        cancelButton.addTarget(self, action: #selector(tappedCancelButton), for: .touchDown)
+    }
+    
     @objc
     private func tappedCancelButton() {
         dismiss(animated: true)
@@ -159,49 +174,42 @@ extension ListViewController: MKLocalSearchCompleterDelegate {
 
 extension ListViewController {
     private func configureView() {
-        view.backgroundColor = .black.withAlphaComponent(0.4)
+        view.backgroundColor = .systemBackground.withAlphaComponent(0.6)
+    }
+    
+    private func configureStackView() {
+        searchStackView.addArrangedSubview(searchBar)
+        searchStackView.addArrangedSubview(cancelButton)
+        
+        topStackView.addArrangedSubview(titleLabel)
+        topStackView.addArrangedSubview(searchStackView)
     }
     
     private func configureLayout() {
-        view.addSubview(topView)
+        view.addSubview(topStackView)
+        view.addSubview(lineView)
         view.addSubview(listTableView)
-        
-        topView.addSubview(titleLabel)
-        topView.addSubview(searchBar)
-        topView.addSubview(cancelButton)
-        topView.addSubview(lineView)
-        
+
         NSLayoutConstraint.activate([
-            topView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            topView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            topView.topAnchor.constraint(equalTo: view.topAnchor),
-            topView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.12),
+            topStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            topStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            topStackView.topAnchor.constraint(equalTo: view.topAnchor),
+            topStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.12),
             
-            titleLabel.topAnchor.constraint(
-                equalTo: topView.topAnchor,
-                constant: view.frame.height * 0.01
-            ),
-            titleLabel.centerXAnchor.constraint(equalTo: topView.centerXAnchor),
+            searchBar.leadingAnchor.constraint(equalTo: topStackView.leadingAnchor),
+            searchBar.widthAnchor.constraint(equalTo: topStackView.widthAnchor, multiplier: 0.85),
             
-            searchBar.leadingAnchor.constraint(equalTo: topView.leadingAnchor),
-            searchBar.trailingAnchor.constraint(equalTo: topView.trailingAnchor),
-            searchBar.topAnchor.constraint(
-                equalTo: titleLabel.bottomAnchor,
-                constant: view.frame.height * 0.01
-            ),
-            searchBar.heightAnchor.constraint(equalTo: topView.heightAnchor, multiplier: 0.4),
-            
-            lineView.leadingAnchor.constraint(equalTo: topView.leadingAnchor),
-            lineView.trailingAnchor.constraint(equalTo: topView.trailingAnchor),
-            lineView.bottomAnchor.constraint(equalTo: topView.bottomAnchor),
+            lineView.leadingAnchor.constraint(equalTo: topStackView.leadingAnchor),
+            lineView.trailingAnchor.constraint(equalTo: topStackView.trailingAnchor),
+            lineView.topAnchor.constraint(equalTo: topStackView.bottomAnchor),
             lineView.heightAnchor.constraint(
-                equalTo: topView.heightAnchor,
+                equalTo: topStackView.heightAnchor,
                 multiplier: 0.05
             ),
             
             listTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             listTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            listTableView.topAnchor.constraint(equalTo: topView.bottomAnchor),
+            listTableView.topAnchor.constraint(equalTo: lineView.bottomAnchor),
             listTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
