@@ -9,7 +9,7 @@ import UIKit
 
 class ListTableViewCell: UITableViewCell {
     
-    // MARK: - Private Properties
+    // MARK: Private Properties
     
     let stationLabel: UILabel = {
         let label = UILabel()
@@ -20,10 +20,11 @@ class ListTableViewCell: UITableViewCell {
         return label
     }()
     
-    // MARK: - Lifecycle
+    // MARK: Lifecycle
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
         configureLayout()
     }
     
@@ -31,19 +32,16 @@ class ListTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        if selected {
-            self.backgroundColor = .init(white: 1.0, alpha: 0.1)
-        } else {
-            self.backgroundColor = .none
-        }
+    // MARK: PrepareForReuse
+    
+    override func prepareForReuse() {
+        stationLabel.text = nil
     }
     
-    // MARK: - Private Methods
+    // MARK: Private Methods
 
     private func configureLayout() {
-        addSubview(stationLabel)
+        contentView.addSubview(stationLabel)
         
         NSLayoutConstraint.activate([
             stationLabel.leadingAnchor.constraint(
@@ -56,7 +54,7 @@ class ListTableViewCell: UITableViewCell {
             ),
             stationLabel.topAnchor.constraint(
                 equalTo: contentView.topAnchor,
-                constant: contentView.frame.height * 0.35
+                constant: contentView.frame.height * 0.05
             ),
             stationLabel.bottomAnchor.constraint(
                 equalTo: contentView.bottomAnchor,
@@ -65,5 +63,7 @@ class ListTableViewCell: UITableViewCell {
         ])
     }
 }
+
+// MARK: - Identifiable
 
 extension ListTableViewCell: Identifiable {}

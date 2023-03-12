@@ -8,7 +8,25 @@
 import UIKit
 
 class BusViewController: UIViewController {
-
+    
+    private let settingStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.alignment = .center
+        stackView.axis = .vertical
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 10
+        return stackView
+    }()
+    
+    private let nowStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.alignment = .fill
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
+        stackView.spacing = 5
+        return stackView
+    }()
     private let nowStationLabel: UILabel = {
         let label = UILabel()
         label.text = "버스번호 :"
@@ -24,7 +42,8 @@ class BusViewController: UIViewController {
         searchBar.placeholder = "버스번호"
         return searchBar
     }()
-    private let nowStackView: UIStackView = {
+    
+    private let targetStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.alignment = .fill
         stackView.axis = .horizontal
@@ -32,7 +51,6 @@ class BusViewController: UIViewController {
         stackView.spacing = 5
         return stackView
     }()
-    
     private let targetStationLabel: UILabel = {
         let label = UILabel()
         label.text = "도착위치 :"
@@ -48,15 +66,15 @@ class BusViewController: UIViewController {
         searchBar.placeholder = "버스역"
         return searchBar
     }()
-    private let targetStackView: UIStackView = {
+    
+    private let buttonStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.alignment = .fill
+        stackView.alignment = .center
         stackView.axis = .horizontal
-        stackView.distribution = .fill
-        stackView.spacing = 5
+        stackView.distribution = .fillEqually
+        stackView.spacing = 20
         return stackView
     }()
-    
     private let okButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .label
@@ -79,25 +97,29 @@ class BusViewController: UIViewController {
         button.layer.cornerRadius = 10
         return button
     }()
-    private let buttonStackView: UIStackView = {
+    
+    private let arrivalStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.layoutMargins = UIEdgeInsets(top: 25, left: 20, bottom: 25, right: 20)
+        stackView.alignment = .center
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.spacing = 10
+        stackView.layer.borderWidth = 3
+        stackView.layer.borderColor = UIColor.systemMint.cgColor
+        stackView.layer.cornerRadius = 10
+        return stackView
+    }()
+    private let arrivalTimeStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.alignment = .center
         stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
-        stackView.spacing = 20
-        return stackView
-    }()
-    
-    private let settingStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.alignment = .center
-        stackView.axis = .vertical
         stackView.distribution = .equalSpacing
-        stackView.spacing = 10
+        stackView.spacing = 5
         return stackView
     }()
-    
     private let arrivalTimeGuideLabel: UILabel = {
         let label = UILabel()
         label.text = "[도착 예정 시간]   -  "
@@ -112,14 +134,6 @@ class BusViewController: UIViewController {
         timePicker.preferredDatePickerStyle = .automatic
         timePicker.date = .now
         return timePicker
-    }()
-    private let arrivalTimeStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.alignment = .center
-        stackView.axis = .horizontal
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 5
-        return stackView
     }()
     private let arrivalTimePickerGuideLabel: UILabel = {
         let label = UILabel()
@@ -139,29 +153,7 @@ class BusViewController: UIViewController {
         button.layer.cornerRadius = 10
         return button
     }()
-    private let arrivalStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.layoutMargins = UIEdgeInsets(top: 25, left: 20, bottom: 25, right: 20)
-        stackView.alignment = .center
-        stackView.axis = .vertical
-        stackView.distribution = .fillEqually
-        stackView.spacing = 10
-        stackView.layer.borderWidth = 3
-        stackView.layer.borderColor = UIColor.systemMint.cgColor
-        stackView.layer.cornerRadius = 10
-        return stackView
-    }()
     
-    private let timerFirstGuideLabel: UILabel = {
-        let label = UILabel()
-        label.text = "✅  설정된 시간에서 -1분으로 타이머를 설정합니다."
-        label.numberOfLines = 1
-        label.font = .preferredFont(forTextStyle: .subheadline)
-        label.textColor = .label
-        return label
-    }()
     private let timerGuideLineStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -170,6 +162,14 @@ class BusViewController: UIViewController {
         stackView.distribution = .fillEqually
         stackView.spacing = 15
         return stackView
+    }()
+    private let timerFirstGuideLabel: UILabel = {
+        let label = UILabel()
+        label.text = "✅  설정된 시간에서 -1분으로 타이머를 설정합니다."
+        label.numberOfLines = 1
+        label.font = .preferredFont(forTextStyle: .subheadline)
+        label.textColor = .label
+        return label
     }()
     
     override func viewDidLoad() {
@@ -187,22 +187,35 @@ class BusViewController: UIViewController {
 
 extension BusViewController {
     private func configureButtonAction() {
+        nowStationBar.searchTextField.addTarget(
+            self,
+            action: #selector(tappedStationBar),
+            for: .touchDown
+        )
+        targetStationBar.searchTextField.addTarget(
+            self,
+            action: #selector(tappedStationBar),
+            for: .touchDown
+        )
         okButton.addTarget(self, action: #selector(tappedOkButton), for: .touchDown)
         initButton.addTarget(self, action: #selector(tappedInitButton), for: .touchDown)
         timerStartButton.addTarget(self, action: #selector(tappedTimerStartButton), for: .touchDown)
     }
     
     @objc
-    private func tappedOkButton() {
-        let presentViewController = ListViewController()
-        
-        navigationController?.present(presentViewController, animated: true)
+    private func tappedStationBar() {
+        present(ListViewController(), animated: true)
     }
     
     @objc
     private func tappedInitButton() {
         nowStationBar.text = nil
         targetStationBar.text = nil
+    }
+    
+    @objc
+    private func tappedOkButton() {
+        
     }
     
     @objc

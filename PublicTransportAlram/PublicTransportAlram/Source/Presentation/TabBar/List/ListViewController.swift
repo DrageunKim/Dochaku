@@ -6,13 +6,27 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 import MapKit
 
 class ListViewController: UIViewController {
     
+    private let viewModel = ListViewModel()
+    private let disposeBag = DisposeBag()
+    
     private var searchCompleter = MKLocalSearchCompleter()
     private var searchResults = [MKLocalSearchCompletion]()
     
+    private let topStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.backgroundColor = .systemBackground.withAlphaComponent(0.9)
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.distribution = .fill
+        return stackView
+    }()
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "출발지 & 도착지 입력"
@@ -20,6 +34,13 @@ class ListViewController: UIViewController {
         label.textColor = .label
         label.textAlignment = .center
         return label
+    }()
+    private let searchStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.alignment = .fill
+        stackView.distribution = .fill
+        return stackView
     }()
     private let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
@@ -48,22 +69,6 @@ class ListViewController: UIViewController {
         button.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
         return button
     }()
-    private let searchStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.alignment = .fill
-        stackView.distribution = .fill
-        return stackView
-    }()
-    private let topStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.backgroundColor = .systemBackground.withAlphaComponent(0.9)
-        stackView.axis = .vertical
-        stackView.alignment = .center
-        stackView.distribution = .fill
-        return stackView
-    }()
     
     private let lineView: UIView = {
         let view = UIView()
@@ -89,9 +94,9 @@ class ListViewController: UIViewController {
         configureStackView()
         configureLayout()
         configureTableView()
-        configureButtonAction()
         configureSearchCompleter()
         configureSearchBar()
+        configureButtonAction()
     }
     
     private func configureTableView() {
@@ -134,6 +139,10 @@ extension ListViewController: UITableViewDataSource {
         
         return UITableViewCell()
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
+    }
 }
 
 // MARK: - Button Action
@@ -174,7 +183,7 @@ extension ListViewController: MKLocalSearchCompleterDelegate {
 
 extension ListViewController {
     private func configureView() {
-        view.backgroundColor = .systemBackground.withAlphaComponent(0.6)
+        view.backgroundColor = .systemBackground.withAlphaComponent(0.5)
     }
     
     private func configureStackView() {
@@ -194,7 +203,7 @@ extension ListViewController {
             topStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             topStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             topStackView.topAnchor.constraint(equalTo: view.topAnchor),
-            topStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.12),
+            topStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.13),
             
             searchBar.leadingAnchor.constraint(equalTo: topStackView.leadingAnchor),
             searchBar.widthAnchor.constraint(equalTo: topStackView.widthAnchor, multiplier: 0.85),
