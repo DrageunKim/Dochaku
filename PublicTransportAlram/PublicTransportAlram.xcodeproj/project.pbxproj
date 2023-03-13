@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D08122BA29B88DFD00CA5664 /* SubwayCodeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08122B929B88DFD00CA5664 /* SubwayCodeInfo.swift */; };
+		D081230F29BF7A1B00CA5664 /* LocationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081230E29BF7A1B00CA5664 /* LocationType.swift */; };
 		D081668D29A77CA700A67C1C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081668C29A77CA700A67C1C /* AppDelegate.swift */; };
 		D081668F29A77CA700A67C1C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081668E29A77CA700A67C1C /* SceneDelegate.swift */; };
 		D081669129A77CA700A67C1C /* SubwayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081669029A77CA700A67C1C /* SubwayViewController.swift */; };
@@ -61,6 +62,7 @@
 
 /* Begin PBXFileReference section */
 		D08122B929B88DFD00CA5664 /* SubwayCodeInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayCodeInfo.swift; sourceTree = "<group>"; };
+		D081230E29BF7A1B00CA5664 /* LocationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationType.swift; sourceTree = "<group>"; };
 		D081668929A77CA700A67C1C /* PublicTransportAlram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PublicTransportAlram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D081668C29A77CA700A67C1C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D081668E29A77CA700A67C1C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -110,6 +112,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D081230D29BF7A0500CA5664 /* Enum */ = {
+			isa = PBXGroup;
+			children = (
+				D081230E29BF7A1B00CA5664 /* LocationType.swift */,
+			);
+			path = Enum;
+			sourceTree = "<group>";
+		};
 		D081668029A77CA700A67C1C = {
 			isa = PBXGroup;
 			children = (
@@ -152,8 +162,8 @@
 			isa = PBXGroup;
 			children = (
 				D08166A429A77DD100A67C1C /* App */,
-				D08166A229A77DC100A67C1C /* Model */,
 				D081681729AF78E100A67C1C /* Error */,
+				D08166A229A77DC100A67C1C /* Model */,
 				D08166A329A77DC500A67C1C /* Presentation */,
 			);
 			path = Source;
@@ -164,6 +174,7 @@
 			children = (
 				D0FE2C1B29B4EEC2001C83F7 /* Protocol */,
 				D08166D029A7A65200A67C1C /* Extension */,
+				D081230D29BF7A0500CA5664 /* Enum */,
 				D08166C229A79DF500A67C1C /* Network */,
 				D081681629AF787600A67C1C /* DTO */,
 			);
@@ -406,6 +417,7 @@
 			files = (
 				D081669129A77CA700A67C1C /* SubwayViewController.swift in Sources */,
 				D081668D29A77CA700A67C1C /* AppDelegate.swift in Sources */,
+				D081230F29BF7A1B00CA5664 /* LocationType.swift in Sources */,
 				D08166AD29A78BF300A67C1C /* CustomTabBarController.swift in Sources */,
 				D08166B929A7973400A67C1C /* HTTPMethod.swift in Sources */,
 				D0FE2C1A29B4CE28001C83F7 /* Identifiable.swift in Sources */,

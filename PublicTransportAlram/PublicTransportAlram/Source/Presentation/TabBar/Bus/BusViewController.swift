@@ -189,12 +189,12 @@ extension BusViewController {
     private func configureButtonAction() {
         nowStationBar.searchTextField.addTarget(
             self,
-            action: #selector(tappedStationBar),
+            action: #selector(tappedNowStationBar),
             for: .touchDown
         )
         targetStationBar.searchTextField.addTarget(
             self,
-            action: #selector(tappedStationBar),
+            action: #selector(tappedTargetStationBar),
             for: .touchDown
         )
         okButton.addTarget(self, action: #selector(tappedOkButton), for: .touchDown)
@@ -203,8 +203,13 @@ extension BusViewController {
     }
     
     @objc
-    private func tappedStationBar() {
-        present(ListViewController(), animated: true)
+    private func tappedNowStationBar() {
+        present(ListViewController(viewModel: ListViewModel(type: .busNow)), animated: true)
+    }
+    
+    @objc
+    private func tappedTargetStationBar() {
+        present(ListViewController(viewModel: ListViewModel(type: .busTarget)), animated: true)
     }
     
     @objc
