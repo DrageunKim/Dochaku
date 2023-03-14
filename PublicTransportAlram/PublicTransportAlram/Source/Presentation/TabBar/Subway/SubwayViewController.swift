@@ -187,7 +187,6 @@ class SubwayViewController: UIViewController {
         configureView()
         configureStackView()
         configureLayout()
-        configureButtonAction()
         configureDelegate()
         configureBindings()
     }
@@ -228,33 +227,6 @@ class SubwayViewController: UIViewController {
 extension SubwayViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-    }
-}
-
-// MARK: - Configure Button
-
-extension SubwayViewController {
-    private func configureButtonAction() {
-        nowStationBar.searchTextField.addTarget(
-            self,
-            action: #selector(tappedNowStationBar),
-            for: .touchDown
-        )
-        targetStationBar.searchTextField.addTarget(
-            self,
-            action: #selector(tappedTargetStationBar),
-            for: .touchDown
-        )
-    }
-    
-    @objc
-    private func tappedNowStationBar() {
-        present(ListViewController(viewModel: ListViewModel(type: .subwayNow)), animated: true)
-    }
-    
-    @objc
-    private func tappedTargetStationBar() {
-        present(ListViewController(viewModel: ListViewModel(type: .subwayTarget)), animated: true)
     }
 }
 

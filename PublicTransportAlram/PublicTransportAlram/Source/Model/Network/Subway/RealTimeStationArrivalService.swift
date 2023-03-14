@@ -14,19 +14,17 @@ class RealTimeStationArrivalService {
     var targetStationCode = String()
     var isValidCode = false
     
-    private let disposeBag = DisposeBag()
-    
     func checkValidCode() {
         isValidCode = !nowStationCode.isEmpty && !targetStationCode.isEmpty
     }
     
     func fetchStationCode(_ station: String) -> String {
-        let codeData = JSONDecoder.decodeAsset(name: "StationCodeJSON", to: StationCodeInfo.self)
-        let targetData = codeData?.data.filter { $0.stationNm == station }
+        let codeData = JSONDecoder.decodeAsset(name: "StationInfoJSON", to: StationInfo.self)
+        let targetData = codeData?.stations.filter { $0.name == station }
         
         if let data = targetData,
-           let subwayCode = data.first?.stationCd {
-            return subwayCode
+           let subwayCode = data.first?.code {
+            return String(subwayCode)
         }
         
         return String()

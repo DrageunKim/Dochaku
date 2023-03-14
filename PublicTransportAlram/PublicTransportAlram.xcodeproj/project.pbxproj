@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D08122BA29B88DFD00CA5664 /* SubwayCodeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08122B929B88DFD00CA5664 /* SubwayCodeInfo.swift */; };
+		D08122BA29B88DFD00CA5664 /* StationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08122B929B88DFD00CA5664 /* StationInfo.swift */; };
 		D081230F29BF7A1B00CA5664 /* LocationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081230E29BF7A1B00CA5664 /* LocationType.swift */; };
+		D081233729C0DA5800CA5664 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D081233629C0DA5800CA5664 /* RxCocoa */; };
+		D081233929C0DA5800CA5664 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D081233829C0DA5800CA5664 /* RxSwift */; };
 		D081668D29A77CA700A67C1C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081668C29A77CA700A67C1C /* AppDelegate.swift */; };
 		D081668F29A77CA700A67C1C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081668E29A77CA700A67C1C /* SceneDelegate.swift */; };
 		D081669129A77CA700A67C1C /* SubwayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081669029A77CA700A67C1C /* SubwayViewController.swift */; };
@@ -61,7 +63,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		D08122B929B88DFD00CA5664 /* SubwayCodeInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayCodeInfo.swift; sourceTree = "<group>"; };
+		D08122B929B88DFD00CA5664 /* StationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationInfo.swift; sourceTree = "<group>"; };
 		D081230E29BF7A1B00CA5664 /* LocationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationType.swift; sourceTree = "<group>"; };
 		D081668929A77CA700A67C1C /* PublicTransportAlram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PublicTransportAlram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D081668C29A77CA700A67C1C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +108,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D081233929C0DA5800CA5664 /* RxSwift in Frameworks */,
+				D081233729C0DA5800CA5664 /* RxCocoa in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,7 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				D08166BE29A79B0D00A67C1C /* SubwayRouteSearch.swift */,
-				D08122B929B88DFD00CA5664 /* SubwayCodeInfo.swift */,
+				D08122B929B88DFD00CA5664 /* StationInfo.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -346,6 +350,10 @@
 				D08166CC29A7A4C700A67C1C /* PBXTargetDependency */,
 			);
 			name = JSONParsingTests;
+			packageProductDependencies = (
+				D081233629C0DA5800CA5664 /* RxCocoa */,
+				D081233829C0DA5800CA5664 /* RxSwift */,
+			);
 			productName = JSONParsingTests;
 			productReference = D08166C729A7A4C700A67C1C /* JSONParsingTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -437,7 +445,7 @@
 				D081681B29AF7E6800A67C1C /* JSONError.swift in Sources */,
 				D081681E29AF82AF00A67C1C /* RealTimeStationArrivalService.swift in Sources */,
 				D08166B129A78E7100A67C1C /* BusViewController.swift in Sources */,
-				D08122BA29B88DFD00CA5664 /* SubwayCodeInfo.swift in Sources */,
+				D08122BA29B88DFD00CA5664 /* StationInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -729,6 +737,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		D081233629C0DA5800CA5664 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0FE2BFC29B4CB48001C83F7 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		D081233829C0DA5800CA5664 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0FE2BFC29B4CB48001C83F7 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
 		D0FE2C0129B4CB48001C83F7 /* RxCocoa */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D0FE2BFC29B4CB48001C83F7 /* XCRemoteSwiftPackageReference "RxSwift" */;

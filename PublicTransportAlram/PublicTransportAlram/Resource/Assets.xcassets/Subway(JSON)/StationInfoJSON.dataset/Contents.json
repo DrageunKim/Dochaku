@@ -1,0 +1,12 @@
+{
+  "data" : [
+    {
+      "filename" : "station_coordinate.json",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -88,17 +88,17 @@ final class JSONParsingTests: XCTestCase {
         XCTAssertEqual(result, 1350)
     }
     
-    func test_파일명을SubwayCodeJSON를주었을때_dataAsset을실행하면_result의fare은1350이다() {
+    func test_파일명을StationInfoJSON를주었을때_dataAsset을실행하면_stations의첫번째name은녹양이다() {
         // Given
-        let fileName = "SubwayCodeJSON"
+        let fileName = "StationInfoJSON"
 
         // When
         let result = JSONDecoder.decodeAsset(
             name: fileName,
-            to: SubwayCodeInfo.self
-        )?.data.first?.stationNm
+            to: StationInfo.self
+        )?.stations.first?.name
 
         // Then
-        XCTAssertEqual(result, "용답")
+        XCTAssertEqual(result, "녹양")
     }
 }

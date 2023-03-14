@@ -48,6 +48,7 @@ class SubwayViewModel {
             .filter { $0.count > 0 }
             .map(domain.fetchStationCode)
             .subscribe(onNext: { code in
+                print(code)
                 domain.nowStationCode = code
             })
             .disposed(by: disposeBag)

@@ -204,12 +204,12 @@ extension BusViewController {
     
     @objc
     private func tappedNowStationBar() {
-        present(ListViewController(viewModel: ListViewModel(type: .busNow)), animated: true)
+//        present(ListViewController(viewModel: ListViewModel(type: .busNow)), animated: true)
     }
     
     @objc
     private func tappedTargetStationBar() {
-        present(ListViewController(viewModel: ListViewModel(type: .busTarget)), animated: true)
+//        present(ListViewController(viewModel: ListViewModel(type: .busTarget)), animated: true)
     }
     
     @objc

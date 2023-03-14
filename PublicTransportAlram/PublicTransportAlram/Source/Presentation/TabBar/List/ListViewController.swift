@@ -12,22 +12,12 @@ import MapKit
 
 class ListViewController: UIViewController {
     
-    private let viewModel: ListViewModel
+//    private let viewModel: ListViewModel
     private let disposeBag = DisposeBag()
     
     private var searchCompleter = MKLocalSearchCompleter()
     private var searchResults = [MKLocalSearchCompletion]()
-    private var places: MKMapItem? {
-        didSet {
-            listTableView.reloadData()
-        }
-    }
-    private var localSearch: MKLocalSearch? {
-        willSet {
-            places = nil
-            localSearch?.cancel()
-        }
-    }
+    private var searchLocation = MKLocalSearchCompletion()
     
     private let topStackView: UIStackView = {
         let stackView = UIStackView()
@@ -97,17 +87,7 @@ class ListViewController: UIViewController {
         )
         return tableView
     }()
-    
-    init(viewModel: ListViewModel) {
-        self.viewModel = viewModel
-        
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -118,6 +98,7 @@ class ListViewController: UIViewController {
         configureSearchCompleter()
         configureSearchBar()
         configureButtonAction()
+        configureBindings()
     }
     
     private func configureTableView() {
@@ -134,24 +115,7 @@ class ListViewController: UIViewController {
         searchBar.delegate = self
     }
     
-    private func search(for suggestedCompletion: MKLocalSearchCompletion) {
-        let searchRequest = MKLocalSearch.Request(completion: suggestedCompletion)
-        
-        search(using: searchRequest)
-    }
-    
-    private func search(using searchRequest: MKLocalSearch.Request) {
-        searchRequest.resultTypes = .pointOfInterest
-        
-        localSearch = MKLocalSearch(request: searchRequest)
-        localSearch?.start(completionHandler: { response, error in
-            if error != nil {
-                return
-            }
-            
-            self.places = response?.mapItems[0]
-            print(self.places!.placemark.coordinate)
-        })
+    private func configureBindings() {
     }
 }
 
@@ -161,7 +125,7 @@ extension ListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        search(for: searchResults[indexPath.row])
+        searchLocation = searchResults[indexPath.row]
     }
 }
 
