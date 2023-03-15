@@ -1,0 +1,20 @@
+{
+    "result": {
+        "count": 1,
+        "station": [
+            {
+                "nonstopStation": 0,
+                "stationClass": 2,
+                "stationName": "단대오거리",
+                "stationID": 823,
+                "x": 127.156872,
+                "y": 37.445188,
+                "arsID": "824",
+                "type": 8,
+                "laneName": "수도권 8호선",
+                "laneCity": "수도권",
+                "ebid": "824"
+            }
+        ]
+    }
+}

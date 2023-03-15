@@ -101,4 +101,18 @@ final class JSONParsingTests: XCTestCase {
         // Then
         XCTAssertEqual(result, "녹양")
     }
+    
+    func test_파일명을POISearchJSON를주었을때_dataAsset을실행하면_stations의첫번째name은녹양이다() {
+        // Given
+        let fileName = "POISearchJSON"
+
+        // When
+        let result = JSONDecoder.decodeAsset(
+            name: fileName,
+            to: PublicTransitPOI.self
+        )?.result.station.first?.stationName
+
+        // Then
+        XCTAssertEqual(result, "단대오거리")
+    }
 }

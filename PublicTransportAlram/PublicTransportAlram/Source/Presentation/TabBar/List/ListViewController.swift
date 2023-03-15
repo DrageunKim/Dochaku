@@ -12,12 +12,10 @@ import MapKit
 
 class ListViewController: UIViewController {
     
-//    private let viewModel: ListViewModel
+    private let viewModel: ListViewModel
     private let disposeBag = DisposeBag()
     
-    private var searchCompleter = MKLocalSearchCompleter()
-    private var searchResults = [MKLocalSearchCompletion]()
-    private var searchLocation = MKLocalSearchCompletion()
+    private let stationList: [POI] = []
     
     private let topStackView: UIStackView = {
         let stackView = UIStackView()
@@ -30,7 +28,7 @@ class ListViewController: UIViewController {
     }()
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "출발지 & 도착지 입력"
+        label.text = "목적지 입력"
         label.font = .systemFont(ofSize: 14, weight: .semibold)
         label.textColor = .label
         label.textAlignment = .center
@@ -87,7 +85,17 @@ class ListViewController: UIViewController {
         )
         return tableView
     }()
-
+    
+    init(viewModel: ListViewModel) {
+        self.viewModel = viewModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -95,8 +103,6 @@ class ListViewController: UIViewController {
         configureStackView()
         configureLayout()
         configureTableView()
-        configureSearchCompleter()
-        configureSearchBar()
         configureButtonAction()
         configureBindings()
     }
@@ -106,34 +112,34 @@ class ListViewController: UIViewController {
         listTableView.dataSource = self
     }
     
-    private func configureSearchCompleter() {
-        searchCompleter.delegate = self
-        searchCompleter.resultTypes = .pointOfInterest
-    }
-    
-    private func configureSearchBar() {
-        searchBar.delegate = self
-    }
-    
     private func configureBindings() {
+        searchBar.rx.text.orEmpty
+            .bind(to: viewModel.stationText)
+            .disposed(by: disposeBag)
+        
+        cancelButton.rx.tap
+            .subscribe { _ in
+                self.dismiss(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.stationName
+            .subscribe(onNext: { data in
+                print(data)
+            })
+            .disposed(by: disposeBag)
     }
 }
 
 // MARK: - UITableViewDelegate
 
-extension ListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-        searchLocation = searchResults[indexPath.row]
-    }
-}
+extension ListViewController: UITableViewDelegate {}
 
 // MARK: - UITableViewDataSource
 
 extension ListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchResults.count
+        return stationList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -141,7 +147,7 @@ extension ListViewController: UITableViewDataSource {
             withIdentifier: ListTableViewCell.identifier,
             for: indexPath
         ) as? ListTableViewCell {
-            cell.stationLabel.text = searchResults[indexPath.row].title
+            cell.stationLabel.text = stationList[indexPath.row].stationName
             cell.backgroundColor = .systemBackground
             cell.selectionStyle = .none
             
@@ -166,27 +172,6 @@ extension ListViewController {
     @objc
     private func tappedCancelButton() {
         dismiss(animated: true)
-    }
-}
-
-// MARK: - UISearchBarDelegate
-
-extension ListViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        searchCompleter.queryFragment = searchText
-    }
-}
-
-// MARK: - MKLocalSearchCompleterDelegate
-
-extension ListViewController: MKLocalSearchCompleterDelegate {
-    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
-        searchResults = completer.results
-        listTableView.reloadData()
-    }
-    
-    func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
-        print(error.localizedDescription)
     }
 }
 

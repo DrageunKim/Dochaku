@@ -11,20 +11,22 @@ import RxSwift
 class RealTimeStationArrivalService {
     
     var nowStationCode = String()
-    var nowStationLatitude: Double = 0
-    var nowStationLongitude: Double = 0
-    
     var targetStationCode = String()
-    var targetStationLatitude: Double = 0
-    var targetStationLongitude: Double = 0
+    var stationLatitude: Double = 0
+    var stationLongitude: Double = 0
     
     var isValidCode = false
+    var isValidLatitudeAndLongitude = false
     
     func checkValidCode() {
         isValidCode = !nowStationCode.isEmpty && !targetStationCode.isEmpty
     }
     
-    func fetchStationLatitudeAndLogitude(_ station: String) -> String {
+    func checkValidLatitudeAndLongitude() {
+        isValidLatitudeAndLongitude = stationLatitude != 0 && stationLongitude != 0
+    }
+    
+    func fetchStationLatitudeAndLongitude(_ station: String) -> String {
         let codeData = JSONDecoder.decodeAsset(name: "StationInfoJSON", to: StationInfo.self)
         let targetData = codeData?.stations.filter { $0.name == station }
         
@@ -37,9 +39,13 @@ class RealTimeStationArrivalService {
         return String()
     }
     
-    func fetchSubwayCodeRx() -> Observable<SubwayRouteSearch> {
+    func fetchSubwayCodeRx() -> Observable<PublicTransitPOI> {
         let manager = NetworkManager(urlSession: .shared)
-        let request = SubwayRequest(city: CID.capital, now: nowStationCode, target: targetStationCode)
+        let request = PublicTransit(
+            type: StationClass.subway,
+            latitude: stationLatitude,
+            longitude: stationLongitude
+        )
         
         return Observable.create { emitter in
             manager.dataTask(request) { result in
@@ -58,7 +64,11 @@ class RealTimeStationArrivalService {
     
     func fetchSubwayInfoRx() -> Observable<SubwayRouteSearch> {
         let manager = NetworkManager(urlSession: .shared)
-        let request = SubwayRequest(city: CID.capital, now: nowStationCode, target: targetStationCode)
+        let request = SubwayRequest(
+            city: CID.capital,
+            now: nowStationCode,
+            target: targetStationCode
+        )
         
         return Observable.create { emitter in
             manager.dataTask(request) { result in

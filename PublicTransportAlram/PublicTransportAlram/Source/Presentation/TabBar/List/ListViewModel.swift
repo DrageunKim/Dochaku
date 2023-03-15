@@ -10,7 +10,6 @@ import RxSwift
 import RxCocoa
 import MapKit
 
-/*
 class ListViewModel {
     
     enum LocationType {
@@ -20,53 +19,62 @@ class ListViewModel {
         case busTarget
     }
     
-    let disposeBag = DisposeBag()
-    
     let type: LocationType
-    let stationInfo: AnyObserver<MKLocalSearchCompletion>
+    let disposeBag = DisposeBag()
+
+    // MARK: Input
     
-    var latitude: Observable<Double>
-    //    var longitude: Observable<Double>
-    //    var test: Double
+    let stationText: AnyObserver<String>
+    let fetchSubwayInfo: AnyObserver<Void>
     
-    private var places: MKMapItem?
-    private var localSearch: MKLocalSearch? {
-        willSet {
-            places = nil
-            localSearch?.cancel()
-        }
-    }
+    // MARK: Output
     
-    init(type: LocationType) {
+    let stationName: Observable<[POI]>
+    
+    init(
+        type: LocationType,
+        domain: RealTimeStationArrivalService = RealTimeStationArrivalService()
+    ) {
         self.type = type
         
-        let station = PublishSubject<MKLocalSearchCompletion>()
+        let station = PublishSubject<String>()
+        let fetching = PublishSubject<Void>()
+        let poi = PublishSubject<PublicTransitPOI>()
         
-        stationInfo = station.asObserver()
-    }
-    
-    private func searchLocation(for suggestedCompletion: MKLocalSearchCompletion) {
-        let searchRequest = MKLocalSearch.Request(completion: suggestedCompletion)
+        stationText = station.asObserver()
+        fetchSubwayInfo = fetching.asObserver()
         
-        searchRequest.resultTypes = .pointOfInterest
+        //        fetching
+        //            .map(domain.checkValidCode)
+        //            .filter { domain.isValidCode }
+        //            .flatMap(domain.fetchSubwayInfoRx)
+        //            .subscribe(onNext: information.onNext)
+        //            .disposed(by: disposeBag)
         
-        localSearch = MKLocalSearch(request: searchRequest)
-        localSearch?.start(completionHandler: { response, error in
-            if error != nil {
-                return
-            }
-            
-            if let response = response {
-                self.places = response.mapItems[0]
+        station
+            .filter { $0.count > 0 }
+            .map(domain.fetchStationLatitudeAndLongitude)
+            .filter { $0.split(separator: " ").count == 2 }
+            .subscribe(onNext: { info in
+                let data = info.split(separator: " ").compactMap { String($0) }
                 
-//                latitude = places?.placemark.coordinate.latitude
-                
-            }
-        })
-    }
-    
-    private func searchLatitude(_ item: MKMapItem) -> Double {
-        return item.placemark.coordinate.latitude
+                if let latitude = Double(data[0]),
+                   let longitude = Double(data[1]) {
+                    print(latitude, longitude)
+                    domain.stationLatitude = latitude
+                    domain.stationLongitude = longitude
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        fetching
+            .map(domain.checkValidLatitudeAndLongitude)
+            .filter { domain.isValidLatitudeAndLongitude }
+            .flatMap(domain.fetchSubwayCodeRx)
+            .subscribe(onNext: poi.onNext)
+            .disposed(by: disposeBag)
+        
+        stationName = poi
+            .map { $0.result.station }
     }
 }
-*/

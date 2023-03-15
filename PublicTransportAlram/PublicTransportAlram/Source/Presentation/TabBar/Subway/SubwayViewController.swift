@@ -188,7 +188,7 @@ class SubwayViewController: UIViewController {
         configureStackView()
         configureLayout()
         configureDelegate()
-        configureBindings()
+        configureButtonAction()
     }
     
     // MARK: Configure Keyboard
@@ -206,30 +206,30 @@ class SubwayViewController: UIViewController {
     }
 
     private func configureBindings() {
-        okButton.rx.tap
-            .bind(to: viewModel.fetchSubwayInfo)
-            .disposed(by: disposeBag)
-        
-        initButton.rx.tap
-            .subscribe { _ in
-                self.nowStationBar.text = .init()
-                self.targetStationBar.text =  .init()
-            }
-            .disposed(by: disposeBag)
-        
-        nowStationBar.rx.text.orEmpty
-            .bind(to: viewModel.nowStationText)
-            .disposed(by: disposeBag)
-        
-        targetStationBar.rx.text.orEmpty
-            .bind(to: viewModel.targetStationText)
-            .disposed(by: disposeBag)
-        
-        viewModel.subwayInfo
-            .subscribe(onNext: { data in
-                print(data)
-            })
-            .disposed(by: disposeBag)
+//        okButton.rx.tap
+//            .bind(to: viewModel.fetchSubwayInfo)
+//            .disposed(by: disposeBag)
+//
+//        initButton.rx.tap
+//            .subscribe { _ in
+//                self.nowStationBar.text = .init()
+//                self.targetStationBar.text =  .init()
+//            }
+//            .disposed(by: disposeBag)
+//
+//        nowStationBar.rx.text.orEmpty
+//            .bind(to: viewModel.nowStationText)
+//            .disposed(by: disposeBag)
+//
+//        targetStationBar.rx.text.orEmpty
+//            .bind(to: viewModel.targetStationText)
+//            .disposed(by: disposeBag)
+//
+//        viewModel.subwayInfo
+//            .subscribe(onNext: { data in
+//                print(data)
+//            })
+//            .disposed(by: disposeBag)
     }
 }
 
@@ -238,6 +238,34 @@ class SubwayViewController: UIViewController {
 extension SubwayViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+    }
+}
+
+// MARK: - Button Action
+
+extension SubwayViewController {
+    private func configureButtonAction() {
+        nowStationBar.searchTextField.addTarget(
+            self,
+            action: #selector(tappedNowStationBar),
+            for: .touchDown
+        )
+        
+        targetStationBar.searchTextField.addTarget(
+            self,
+            action: #selector(tappedTargetStationBar),
+            for: .touchDown
+        )
+    }
+    
+    @objc
+    private func tappedNowStationBar() {
+        present(ListViewController(viewModel: ListViewModel(type: .subwayNow)), animated: true)
+    }
+    
+    @objc
+    private func tappedTargetStationBar() {
+        present(ListViewController(viewModel: ListViewModel(type: .subwayTarget)), animated: true)
     }
 }
 
