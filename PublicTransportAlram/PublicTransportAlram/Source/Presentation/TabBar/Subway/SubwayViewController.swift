@@ -206,6 +206,17 @@ class SubwayViewController: UIViewController {
     }
 
     private func configureBindings() {
+        okButton.rx.tap
+            .bind(to: viewModel.fetchSubwayInfo)
+            .disposed(by: disposeBag)
+        
+        initButton.rx.tap
+            .subscribe { _ in
+                self.nowStationBar.text = .init()
+                self.targetStationBar.text =  .init()
+            }
+            .disposed(by: disposeBag)
+        
         nowStationBar.rx.text.orEmpty
             .bind(to: viewModel.nowStationText)
             .disposed(by: disposeBag)

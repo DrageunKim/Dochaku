@@ -46,19 +46,32 @@ class SubwayViewModel {
         
         nowStation
             .filter { $0.count > 0 }
-            .map(domain.fetchStationCode)
-            .subscribe(onNext: { code in
-                print(code)
-                domain.nowStationCode = code
+            .map(domain.fetchStationLatitudeAndLogitude)
+            .filter { $0.split(separator: " ").count == 2 }
+            .subscribe(onNext: { info in
+                let data = info.split(separator: " ").compactMap { String($0) }
+                
+                if let latitude = Double(data[0]),
+                   let longitude = Double(data[1]) {
+                    domain.nowStationLatitude = latitude
+                    domain.nowStationLongitude = longitude
+                    print(latitude, longitude)
+                }
             })
             .disposed(by: disposeBag)
         
         targetStation
             .filter { $0.count > 0 }
-            .map(domain.fetchStationCode)
-            .subscribe(onNext: { code in
-                print(code)
-                domain.targetStationCode = code
+            .map(domain.fetchStationLatitudeAndLogitude)
+            .filter { $0.split(separator: " ").count == 2 }
+            .subscribe(onNext: { info in
+                let data = info.split(separator: " ").compactMap { String($0) }
+                
+                if let latitude = Double(data[0]),
+                   let longitude = Double(data[1]) {
+                    domain.targetStationLatitude = latitude
+                    domain.targetStationLongitude = longitude
+                }
             })
             .disposed(by: disposeBag)
     }
