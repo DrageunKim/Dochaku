@@ -10,20 +10,20 @@ import RxSwift
 
 class RealTimeStationArrivalService {
     
-    var nowStationCode = String()
-    var targetStationCode = String()
+    var nowStationCode: Int = 0
+    var targetStationCode: Int = 0
     var stationLatitude: Double = 0
     var stationLongitude: Double = 0
     
-    var isValidCode = false
     var isValidLatitudeAndLongitude = false
-    
-    func checkValidCode() {
-        isValidCode = !nowStationCode.isEmpty && !targetStationCode.isEmpty
-    }
+    var isValidCode = false
     
     func checkValidLatitudeAndLongitude() {
         isValidLatitudeAndLongitude = stationLatitude != 0 && stationLongitude != 0
+    }
+    
+    func checkValidCode() -> Bool {
+        return nowStationCode != 0 && targetStationCode != 0
     }
     
     func fetchStationLatitudeAndLongitude(_ station: String) -> String {

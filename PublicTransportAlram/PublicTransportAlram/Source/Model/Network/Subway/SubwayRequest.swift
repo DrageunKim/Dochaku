@@ -17,12 +17,12 @@ struct SubwayRequest: Request {
     let lang: String = String(Lang.korean.rawValue)
     let sopt: String = "2"
     
-    init(city: CID, now: String, target: String) {
+    init(city: CID, now: Int, target: Int) {
         queryList.updateValue(apiKey, forKey: "apiKey")
         queryList.updateValue(lang, forKey: "lang")
         queryList.updateValue(String(city.rawValue), forKey: "CID")
-        queryList.updateValue(now, forKey: "SID")
-        queryList.updateValue(target, forKey: "EID")
+        queryList.updateValue(String(now), forKey: "SID")
+        queryList.updateValue(String(target), forKey: "EID")
         queryList.updateValue(sopt, forKey: "Sopt")
     }
 }

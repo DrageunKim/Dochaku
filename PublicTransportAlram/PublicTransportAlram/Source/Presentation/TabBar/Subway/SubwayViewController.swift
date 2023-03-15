@@ -47,6 +47,7 @@ class SubwayViewController: UIViewController {
         let searchBar = UISearchBar()
         searchBar.backgroundColor = .systemBackground
         searchBar.placeholder = "역명"
+        searchBar.searchTextField.font = .systemFont(ofSize: 15)
         return searchBar
     }()
     
@@ -71,6 +72,7 @@ class SubwayViewController: UIViewController {
         let searchBar = UISearchBar()
         searchBar.backgroundColor = .systemBackground
         searchBar.placeholder = "역명"
+        searchBar.searchTextField.font = .systemFont(ofSize: 15)
         return searchBar
     }()
     
@@ -189,6 +191,7 @@ class SubwayViewController: UIViewController {
         configureLayout()
         configureDelegate()
         configureButtonAction()
+        configureBindings()
     }
     
     // MARK: Configure Keyboard
@@ -206,30 +209,22 @@ class SubwayViewController: UIViewController {
     }
 
     private func configureBindings() {
-//        okButton.rx.tap
-//            .bind(to: viewModel.fetchSubwayInfo)
-//            .disposed(by: disposeBag)
-//
-//        initButton.rx.tap
-//            .subscribe { _ in
-//                self.nowStationBar.text = .init()
-//                self.targetStationBar.text =  .init()
-//            }
-//            .disposed(by: disposeBag)
-//
-//        nowStationBar.rx.text.orEmpty
-//            .bind(to: viewModel.nowStationText)
-//            .disposed(by: disposeBag)
-//
-//        targetStationBar.rx.text.orEmpty
-//            .bind(to: viewModel.targetStationText)
-//            .disposed(by: disposeBag)
-//
-//        viewModel.subwayInfo
-//            .subscribe(onNext: { data in
-//                print(data)
-//            })
-//            .disposed(by: disposeBag)
+        okButton.rx.tap
+            .bind(to: viewModel.fetchSubwayInfo)
+            .disposed(by: disposeBag)
+
+        initButton.rx.tap
+            .subscribe { _ in
+                self.nowStationBar.text = .init()
+                self.targetStationBar.text =  .init()
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.subwayInfo
+            .subscribe(onNext: { data in
+                print(data)
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -238,6 +233,19 @@ class SubwayViewController: UIViewController {
 extension SubwayViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+    }
+}
+
+extension SubwayViewController: Sendable {
+    func dataSend(type: stationType, data: String, code: Int) {
+        switch type {
+        case .now:
+            nowStationBar.text = data
+            viewModel.nowStationCode = code
+        case .target:
+            targetStationBar.text = data
+            viewModel.targetStationCode = code
+        }
     }
 }
 
@@ -260,12 +268,20 @@ extension SubwayViewController {
     
     @objc
     private func tappedNowStationBar() {
-        present(ListViewController(viewModel: ListViewModel(type: .subwayNow)), animated: true)
+        let presentViewController = ListViewController(type: .now)
+        
+        presentViewController.delegate = self
+        
+        present(presentViewController, animated: true)
     }
     
     @objc
     private func tappedTargetStationBar() {
-        present(ListViewController(viewModel: ListViewModel(type: .subwayTarget)), animated: true)
+        let presentViewController = ListViewController(type: .target)
+        
+        presentViewController.delegate = self
+        
+        present(presentViewController, animated: true)
     }
 }
 

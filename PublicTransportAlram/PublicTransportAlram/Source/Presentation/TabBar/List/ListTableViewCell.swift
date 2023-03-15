@@ -14,7 +14,15 @@ class ListTableViewCell: UITableViewCell {
     let stationLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 14, weight: .semibold)
+        label.font = .systemFont(ofSize: 15, weight: .bold)
+        label.textColor = .label
+        label.numberOfLines = 1
+        return label
+    }()
+    let laneLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .systemFont(ofSize: 12, weight: .semibold)
         label.textColor = .label
         label.numberOfLines = 1
         return label
@@ -42,23 +50,27 @@ class ListTableViewCell: UITableViewCell {
 
     private func configureLayout() {
         contentView.addSubview(stationLabel)
+        contentView.addSubview(laneLabel)
         
         NSLayoutConstraint.activate([
             stationLabel.leadingAnchor.constraint(
                 equalTo: contentView.leadingAnchor,
-                constant: contentView.frame.width * 0.05
+                constant: 10
             ),
             stationLabel.trailingAnchor.constraint(
                 equalTo: contentView.trailingAnchor,
-                constant: contentView.frame.width * 0.05
+                constant: 10
             ),
             stationLabel.topAnchor.constraint(
                 equalTo: contentView.topAnchor,
-                constant: contentView.frame.height * 0.05
+                constant: 10
             ),
-            stationLabel.bottomAnchor.constraint(
-                equalTo: contentView.bottomAnchor,
-                constant: contentView.frame.height * 0.05
+            
+            laneLabel.leadingAnchor.constraint(equalTo: stationLabel.leadingAnchor),
+            laneLabel.trailingAnchor.constraint(equalTo: stationLabel.trailingAnchor),
+            laneLabel.topAnchor.constraint(
+                equalTo: stationLabel.bottomAnchor,
+                constant: 2
             )
         ])
     }

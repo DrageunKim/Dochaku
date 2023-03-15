@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		D08122BA29B88DFD00CA5664 /* StationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08122B929B88DFD00CA5664 /* StationInfo.swift */; };
-		D081230F29BF7A1B00CA5664 /* LocationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081230E29BF7A1B00CA5664 /* LocationType.swift */; };
 		D081233729C0DA5800CA5664 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D081233629C0DA5800CA5664 /* RxCocoa */; };
 		D081233929C0DA5800CA5664 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D081233829C0DA5800CA5664 /* RxSwift */; };
 		D081237629C1E5C000CA5664 /* PublicTransit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081237529C1E5C000CA5664 /* PublicTransit.swift */; };
@@ -66,7 +65,6 @@
 
 /* Begin PBXFileReference section */
 		D08122B929B88DFD00CA5664 /* StationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationInfo.swift; sourceTree = "<group>"; };
-		D081230E29BF7A1B00CA5664 /* LocationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationType.swift; sourceTree = "<group>"; };
 		D081237529C1E5C000CA5664 /* PublicTransit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicTransit.swift; sourceTree = "<group>"; };
 		D081237729C1EB3300CA5664 /* PublicTransitPOI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicTransitPOI.swift; sourceTree = "<group>"; };
 		D081668929A77CA700A67C1C /* PublicTransportAlram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PublicTransportAlram.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -120,14 +118,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D081230D29BF7A0500CA5664 /* Enum */ = {
-			isa = PBXGroup;
-			children = (
-				D081230E29BF7A1B00CA5664 /* LocationType.swift */,
-			);
-			path = Enum;
-			sourceTree = "<group>";
-		};
 		D081668029A77CA700A67C1C = {
 			isa = PBXGroup;
 			children = (
@@ -182,7 +172,6 @@
 			children = (
 				D0FE2C1B29B4EEC2001C83F7 /* Protocol */,
 				D08166D029A7A65200A67C1C /* Extension */,
-				D081230D29BF7A0500CA5664 /* Enum */,
 				D08166C229A79DF500A67C1C /* Network */,
 				D081681629AF787600A67C1C /* DTO */,
 			);
@@ -432,7 +421,6 @@
 				D081669129A77CA700A67C1C /* SubwayViewController.swift in Sources */,
 				D081237629C1E5C000CA5664 /* PublicTransit.swift in Sources */,
 				D081668D29A77CA700A67C1C /* AppDelegate.swift in Sources */,
-				D081230F29BF7A1B00CA5664 /* LocationType.swift in Sources */,
 				D08166AD29A78BF300A67C1C /* CustomTabBarController.swift in Sources */,
 				D08166B929A7973400A67C1C /* HTTPMethod.swift in Sources */,
 				D0FE2C1A29B4CE28001C83F7 /* Identifiable.swift in Sources */,

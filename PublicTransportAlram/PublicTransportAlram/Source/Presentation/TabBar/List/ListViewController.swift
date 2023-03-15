@@ -10,12 +10,24 @@ import RxSwift
 import RxCocoa
 import MapKit
 
+enum stationType {
+    case now
+    case target
+}
+
+protocol Sendable {
+    func dataSend(type: stationType , data: String, code: Int)
+}
+
 class ListViewController: UIViewController {
     
-    private let viewModel: ListViewModel
-    private let disposeBag = DisposeBag()
+    var delegate: Sendable?
     
-    private let stationList: [POI] = []
+    private let viewModel = ListViewModel()
+    private let disposeBag = DisposeBag()
+    private let type: stationType
+    
+    private var stationList: [POI] = []
     
     private let topStackView: UIStackView = {
         let stackView = UIStackView()
@@ -86,8 +98,8 @@ class ListViewController: UIViewController {
         return tableView
     }()
     
-    init(viewModel: ListViewModel) {
-        self.viewModel = viewModel
+    init(type: stationType) {
+        self.type = type
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -124,8 +136,10 @@ class ListViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.stationName
+            .observe(on: MainScheduler.instance)
             .subscribe(onNext: { data in
-                print(data)
+                self.stationList = data
+                self.listTableView.reloadData()
             })
             .disposed(by: disposeBag)
     }
@@ -133,7 +147,18 @@ class ListViewController: UIViewController {
 
 // MARK: - UITableViewDelegate
 
-extension ListViewController: UITableViewDelegate {}
+extension ListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let station = stationList[indexPath.row]
+        let data = station.stationName + "(\(station.laneName))"
+        guard let code = Int(station.ebid) else { return }
+        delegate?.dataSend(type: type, data: data, code: code)
+        
+        dismiss(animated: true)
+    }
+}
 
 // MARK: - UITableViewDataSource
 
@@ -148,6 +173,7 @@ extension ListViewController: UITableViewDataSource {
             for: indexPath
         ) as? ListTableViewCell {
             cell.stationLabel.text = stationList[indexPath.row].stationName
+            cell.laneLabel.text = stationList[indexPath.row].laneName
             cell.backgroundColor = .systemBackground
             cell.selectionStyle = .none
             

@@ -12,7 +12,7 @@ struct PublicTransit: Request {
     
     let method: HTTPMethod = .get
     var queryList: [String: String] = [:]
-    var path: String = "/subwayPath"
+    var path: String = "/pointSearch"
     let apiKey: String = "DnMRoATHlXeGpeewYG0b6A"
     let lang: String = String(Lang.korean.rawValue)
     let output: String = "json"
@@ -30,7 +30,7 @@ struct PublicTransit: Request {
 }
 
 enum StationClass: Int {
-    case bus = 0
+    case bus = 1
     case subway
     case train
 }
