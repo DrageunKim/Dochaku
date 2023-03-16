@@ -8,6 +8,8 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import AVKit
+import UserNotifications
 
 class SubwayViewController: UIViewController {
     
@@ -221,10 +223,42 @@ class SubwayViewController: UIViewController {
             .disposed(by: disposeBag)
 
         viewModel.subwayInfo
+            .observe(on: MainScheduler.instance)
             .subscribe(onNext: { data in
-                print(data)
+                let travelTime = data.result.globalTravelTime * 60
+                self.arrivalTimePicker.date = .now + TimeInterval(travelTime)
             })
             .disposed(by: disposeBag)
+        
+        timerStartButton.rx.tap
+            .subscribe { _ in
+                self.checkAlarmEnable()
+                self.pushArriveAlarm()
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func checkAlarmEnable() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { (didAllow, error) in
+            guard let err = error else {
+                print(didAllow)
+                return
+            }
+
+            print(err.localizedDescription)
+        }
+    }
+    
+    private func pushArriveAlarm() {
+        let content = UNMutableNotificationContent()
+                
+        content.title = "⏰ 목적지 도착"
+        content.body = "예약하신 타이머가 종료되었습니다."
+
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        let request = UNNotificationRequest(identifier: "timer", content: content, trigger: trigger)
+
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
     }
 }
 

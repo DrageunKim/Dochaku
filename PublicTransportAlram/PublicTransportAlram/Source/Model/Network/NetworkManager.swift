@@ -16,7 +16,6 @@ struct NetworkManager {
 
     func dataTask<R: Request>(_ request: R, completion: @escaping (Result<R.Response, NetworkError>) -> Void) {
         let urlRequest = request.create()
-        print(urlRequest.url)
         
         urlSession.dataTask(with: urlRequest) { data, response, error in
             if error != nil {

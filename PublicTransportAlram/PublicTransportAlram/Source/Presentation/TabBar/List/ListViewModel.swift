@@ -42,7 +42,6 @@ class ListViewModel {
                 
                 if let latitude = Double(data[0]),
                    let longitude = Double(data[1]) {
-                    print(latitude, longitude)
                     domain.stationLatitude = latitude
                     domain.stationLongitude = longitude
                 }
