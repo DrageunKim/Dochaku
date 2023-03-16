@@ -34,6 +34,7 @@
 		D081681E29AF82AF00A67C1C /* SubwayService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081681D29AF82AF00A67C1C /* SubwayService.swift */; };
 		D08316EF29C36FA900E86676 /* RealtimeStationArrival.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08316EE29C36FA900E86676 /* RealtimeStationArrival.swift */; };
 		D08316F129C370A400E86676 /* RealTimeStationArrivalDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08316F029C370A400E86676 /* RealTimeStationArrivalDTO.swift */; };
+		D08316F329C3736F00E86676 /* ServiceEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08316F229C3736F00E86676 /* ServiceEnum.swift */; };
 		D0FE2BF729B4CA69001C83F7 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FE2BF629B4CA69001C83F7 /* ListViewController.swift */; };
 		D0FE2BF929B4CA73001C83F7 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FE2BF829B4CA73001C83F7 /* ListViewModel.swift */; };
 		D0FE2BFB29B4CADA001C83F7 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FE2BFA29B4CADA001C83F7 /* ListTableViewCell.swift */; };
@@ -94,6 +95,7 @@
 		D081681D29AF82AF00A67C1C /* SubwayService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayService.swift; sourceTree = "<group>"; };
 		D08316EE29C36FA900E86676 /* RealtimeStationArrival.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimeStationArrival.swift; sourceTree = "<group>"; };
 		D08316F029C370A400E86676 /* RealTimeStationArrivalDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealTimeStationArrivalDTO.swift; sourceTree = "<group>"; };
+		D08316F229C3736F00E86676 /* ServiceEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceEnum.swift; sourceTree = "<group>"; };
 		D0FE2BF629B4CA69001C83F7 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		D0FE2BF829B4CA73001C83F7 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		D0FE2BFA29B4CADA001C83F7 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 				D08166BC29A79A7900A67C1C /* SubwayRouteSearch.swift */,
 				D081237529C1E5C000CA5664 /* PublicTransitPoi.swift */,
 				D08316EE29C36FA900E86676 /* RealtimeStationArrival.swift */,
+				D08316F229C3736F00E86676 /* ServiceEnum.swift */,
 			);
 			path = Subway;
 			sourceTree = "<group>";
@@ -429,6 +432,7 @@
 				D081668D29A77CA700A67C1C /* AppDelegate.swift in Sources */,
 				D08166AD29A78BF300A67C1C /* CustomTabBarController.swift in Sources */,
 				D08166B929A7973400A67C1C /* HTTPMethod.swift in Sources */,
+				D08316F329C3736F00E86676 /* ServiceEnum.swift in Sources */,
 				D0FE2C1A29B4CE28001C83F7 /* Identifiable.swift in Sources */,
 				D08166D229A7A66F00A67C1C /* JSONDecoder +.swift in Sources */,
 				D08166B329A78E7B00A67C1C /* BusViewModel.swift in Sources */,

@@ -32,10 +32,3 @@ struct PublicTransitPoi: Request {
         queryList.updateValue(String(type.rawValue), forKey: "StationClass")
     }
 }
-
-enum StationClass: Int {
-    case bus = 1
-    case subway
-    case train
-}
-
