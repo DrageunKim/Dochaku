@@ -81,7 +81,7 @@ final class JSONParsingTests: XCTestCase {
         // When
         let result = JSONDecoder.decodeAsset(
             name: fileName,
-            to: SubwayRouteSearch.self
+            to: SubwayRouteSearchDTO.self
         )?.result.fare
 
         // Then
@@ -109,7 +109,7 @@ final class JSONParsingTests: XCTestCase {
         // When
         let result = JSONDecoder.decodeAsset(
             name: fileName,
-            to: PublicTransitPOI.self
+            to: PublicTransitPoiDTO.self
         )?.result.station.first?.stationName
 
         // Then

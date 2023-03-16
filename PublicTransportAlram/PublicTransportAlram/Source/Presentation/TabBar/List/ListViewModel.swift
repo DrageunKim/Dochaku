@@ -28,7 +28,7 @@ class ListViewModel {
     ) {
         let station = PublishSubject<String>()
         let fetching = PublishSubject<Void>()
-        let poi = PublishSubject<PublicTransitPOI>()
+        let poi = PublishSubject<PublicTransitPoiDTO>()
         
         stationText = station.asObserver()
         fetchSubwayInfo = fetching.asObserver()
@@ -52,7 +52,7 @@ class ListViewModel {
         fetching
             .map(domain.checkValidLatitudeAndLongitude)
             .filter { domain.isValidLatitudeAndLongitude }
-            .flatMap(domain.fetchSubwayCodeRx)
+            .flatMap(domain.fetchStationCodeRx)
             .subscribe(onNext: poi.onNext)
             .disposed(by: disposeBag)
         

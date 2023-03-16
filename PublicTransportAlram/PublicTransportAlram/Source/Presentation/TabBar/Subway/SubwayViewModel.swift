@@ -22,11 +22,11 @@ class SubwayViewModel {
     
     // MARK: Output
     
-    let subwayInfo: Observable<SubwayRouteSearch>
+    let subwayInfo: Observable<SubwayRouteSearchDTO>
     
     init(domain: RealTimeStationArrivalService = RealTimeStationArrivalService()) {
         let fetching = PublishSubject<Void>()
-        let information = PublishSubject<SubwayRouteSearch>()
+        let information = PublishSubject<SubwayRouteSearchDTO>()
         
         fetchSubwayInfo = fetching.asObserver()
         subwayInfo = information.asObserver()

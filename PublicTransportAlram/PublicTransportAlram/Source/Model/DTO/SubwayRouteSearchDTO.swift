@@ -1,11 +1,11 @@
 //
-//  SubwayRouteSearch.swift
+//  SubwayRouteSearchDTO.swift
 //  PublicTransportAlram
 //
 //  Created by yonggeun Kim on 2023/02/23.
 //
 
-struct SubwayRouteSearch: Decodable {
+struct SubwayRouteSearchDTO: Decodable {
     let result: SearchResult
 }
 

@@ -39,9 +39,9 @@ class RealTimeStationArrivalService {
         return String()
     }
     
-    func fetchSubwayCodeRx() -> Observable<PublicTransitPOI> {
+    func fetchStationCodeRx() -> Observable<PublicTransitPoiDTO> {
         let manager = NetworkManager(urlSession: .shared)
-        let request = PublicTransit(
+        let request = PublicTransitPoi(
             type: StationClass.subway,
             latitude: stationLatitude,
             longitude: stationLongitude
@@ -62,9 +62,9 @@ class RealTimeStationArrivalService {
         }
     }
     
-    func fetchSubwayInfoRx() -> Observable<SubwayRouteSearch> {
+    func fetchSubwayInfoRx() -> Observable<SubwayRouteSearchDTO> {
         let manager = NetworkManager(urlSession: .shared)
-        let request = SubwayRequest(
+        let request = SubwayRouteSearch(
             city: CID.capital,
             now: nowStationCode,
             target: targetStationCode

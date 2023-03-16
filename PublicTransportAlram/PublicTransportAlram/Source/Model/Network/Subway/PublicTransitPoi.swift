@@ -1,5 +1,5 @@
 //
-//  PublicTransit.swift
+//  PublicTransitPoi.swift
 //  PublicTransportAlram
 //
 //  Created by yonggeun Kim on 2023/03/15.
@@ -7,8 +7,12 @@
 
 import Foundation
 
-struct PublicTransit: Request {
-    typealias Response = PublicTransitPOI
+struct PublicTransitPoi: Request {
+    var baseURL: URL? {
+        return URL(string: "https://api.odsay.com/v1/api")
+    }
+    
+    typealias Response = PublicTransitPoiDTO
     
     let method: HTTPMethod = .get
     var queryList: [String: String] = [:]

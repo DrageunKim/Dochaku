@@ -1,5 +1,5 @@
 //
-//  SubwayRequest.swift
+//  SubwayRouteSearch.swift
 //  PublicTransportAlram
 //
 //  Created by yonggeun Kim on 2023/02/23.
@@ -7,8 +7,12 @@
 
 import Foundation
 
-struct SubwayRequest: Request {
-    typealias Response = SubwayRouteSearch
+struct SubwayRouteSearch: Request {
+    var baseURL: URL? {
+        return URL(string: "https://api.odsay.com/v1/api")
+    }
+    
+    typealias Response = SubwayRouteSearchDTO
     
     let method: HTTPMethod = .get
     var queryList: [String: String] = [:]

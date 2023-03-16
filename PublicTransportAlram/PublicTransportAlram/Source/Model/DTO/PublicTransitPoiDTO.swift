@@ -1,11 +1,11 @@
 //
-//  SubwayInfo.swift
+//  PublicTransitPoiDTO.swift
 //  PublicTransportAlram
 //
 //  Created by yonggeun Kim on 2023/03/15.
 //
 
-struct PublicTransitPOI: Decodable {
+struct PublicTransitPoiDTO: Decodable {
     let result: PublicTransitResult
 }
 

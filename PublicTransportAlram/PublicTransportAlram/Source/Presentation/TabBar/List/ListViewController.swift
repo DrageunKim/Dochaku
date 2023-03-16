@@ -153,7 +153,8 @@ extension ListViewController: UITableViewDelegate {
         
         let station = stationList[indexPath.row]
         let data = station.stationName + "(\(station.laneName))"
-        guard let code = Int(station.ebid) else { return }
+        let code = station.stationID
+        
         delegate?.dataSend(type: type, data: data, code: code)
         
         dismiss(animated: true)

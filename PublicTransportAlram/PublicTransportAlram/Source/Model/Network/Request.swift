@@ -17,10 +17,6 @@ protocol Request {
 }
 
 extension Request {
-    var baseURL: URL? {
-        return URL(string: "https://api.odsay.com/v1/api")
-    }
-    
     var url: URL? {
         if let url = baseURL?.appendingPathComponent(path) {
             var components = URLComponents(string: url.absoluteString)
