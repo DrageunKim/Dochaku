@@ -24,7 +24,7 @@ class ListViewModel {
     let stationName: Observable<[POI]>
     
     init(
-        domain: RealTimeStationArrivalService = RealTimeStationArrivalService()
+        domain: SubwayService = SubwayService()
     ) {
         let station = PublishSubject<String>()
         let fetching = PublishSubject<Void>()

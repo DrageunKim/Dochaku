@@ -8,8 +8,7 @@
 import Foundation
 import RxSwift
 
-class RealTimeStationArrivalService {
-    
+class SubwayService {
     var nowStationCode: Int = 0
     var targetStationCode: Int = 0
     var stationLatitude: Double = 0

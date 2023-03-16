@@ -24,7 +24,7 @@ class SubwayViewModel {
     
     let subwayInfo: Observable<SubwayRouteSearchDTO>
     
-    init(domain: RealTimeStationArrivalService = RealTimeStationArrivalService()) {
+    init(domain: SubwayService = SubwayService()) {
         let fetching = PublishSubject<Void>()
         let information = PublishSubject<SubwayRouteSearchDTO>()
         

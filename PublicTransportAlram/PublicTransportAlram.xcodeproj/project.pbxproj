@@ -31,7 +31,9 @@
 		D08166D229A7A66F00A67C1C /* JSONDecoder +.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08166D129A7A66F00A67C1C /* JSONDecoder +.swift */; };
 		D081681929AF78ED00A67C1C /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081681829AF78ED00A67C1C /* NetworkError.swift */; };
 		D081681B29AF7E6800A67C1C /* JSONError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081681A29AF7E6800A67C1C /* JSONError.swift */; };
-		D081681E29AF82AF00A67C1C /* RealTimeStationArrivalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081681D29AF82AF00A67C1C /* RealTimeStationArrivalService.swift */; };
+		D081681E29AF82AF00A67C1C /* SubwayService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081681D29AF82AF00A67C1C /* SubwayService.swift */; };
+		D08316EF29C36FA900E86676 /* RealtimeStationArrival.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08316EE29C36FA900E86676 /* RealtimeStationArrival.swift */; };
+		D08316F129C370A400E86676 /* RealTimeStationArrivalDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08316F029C370A400E86676 /* RealTimeStationArrivalDTO.swift */; };
 		D0FE2BF729B4CA69001C83F7 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FE2BF629B4CA69001C83F7 /* ListViewController.swift */; };
 		D0FE2BF929B4CA73001C83F7 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FE2BF829B4CA73001C83F7 /* ListViewModel.swift */; };
 		D0FE2BFB29B4CADA001C83F7 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FE2BFA29B4CADA001C83F7 /* ListTableViewCell.swift */; };
@@ -89,7 +91,9 @@
 		D08166D129A7A66F00A67C1C /* JSONDecoder +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONDecoder +.swift"; sourceTree = "<group>"; };
 		D081681829AF78ED00A67C1C /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		D081681A29AF7E6800A67C1C /* JSONError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONError.swift; sourceTree = "<group>"; };
-		D081681D29AF82AF00A67C1C /* RealTimeStationArrivalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealTimeStationArrivalService.swift; sourceTree = "<group>"; };
+		D081681D29AF82AF00A67C1C /* SubwayService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayService.swift; sourceTree = "<group>"; };
+		D08316EE29C36FA900E86676 /* RealtimeStationArrival.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimeStationArrival.swift; sourceTree = "<group>"; };
+		D08316F029C370A400E86676 /* RealTimeStationArrivalDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealTimeStationArrivalDTO.swift; sourceTree = "<group>"; };
 		D0FE2BF629B4CA69001C83F7 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		D0FE2BF829B4CA73001C83F7 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		D0FE2BFA29B4CADA001C83F7 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
@@ -256,6 +260,7 @@
 			children = (
 				D08166BE29A79B0D00A67C1C /* SubwayRouteSearchDTO.swift */,
 				D081237729C1EB3300CA5664 /* PublicTransitPoiDTO.swift */,
+				D08316F029C370A400E86676 /* RealTimeStationArrivalDTO.swift */,
 				D08122B929B88DFD00CA5664 /* StationInfo.swift */,
 			);
 			path = DTO;
@@ -274,9 +279,10 @@
 		D081681C29AF827600A67C1C /* Subway */ = {
 			isa = PBXGroup;
 			children = (
-				D081681D29AF82AF00A67C1C /* RealTimeStationArrivalService.swift */,
+				D081681D29AF82AF00A67C1C /* SubwayService.swift */,
 				D08166BC29A79A7900A67C1C /* SubwayRouteSearch.swift */,
 				D081237529C1E5C000CA5664 /* PublicTransitPoi.swift */,
+				D08316EE29C36FA900E86676 /* RealtimeStationArrival.swift */,
 			);
 			path = Subway;
 			sourceTree = "<group>";
@@ -426,6 +432,7 @@
 				D0FE2C1A29B4CE28001C83F7 /* Identifiable.swift in Sources */,
 				D08166D229A7A66F00A67C1C /* JSONDecoder +.swift in Sources */,
 				D08166B329A78E7B00A67C1C /* BusViewModel.swift in Sources */,
+				D08316EF29C36FA900E86676 /* RealtimeStationArrival.swift in Sources */,
 				D08166B529A793C600A67C1C /* NetworkManager.swift in Sources */,
 				D081668F29A77CA700A67C1C /* SceneDelegate.swift in Sources */,
 				D08166BB29A7978C00A67C1C /* Request.swift in Sources */,
@@ -436,9 +443,10 @@
 				D08166A929A78A3100A67C1C /* SubwayViewModel.swift in Sources */,
 				D08166BF29A79B0D00A67C1C /* SubwayRouteSearchDTO.swift in Sources */,
 				D0FE2BF929B4CA73001C83F7 /* ListViewModel.swift in Sources */,
+				D08316F129C370A400E86676 /* RealTimeStationArrivalDTO.swift in Sources */,
 				D0FE2BF729B4CA69001C83F7 /* ListViewController.swift in Sources */,
 				D081681B29AF7E6800A67C1C /* JSONError.swift in Sources */,
-				D081681E29AF82AF00A67C1C /* RealTimeStationArrivalService.swift in Sources */,
+				D081681E29AF82AF00A67C1C /* SubwayService.swift in Sources */,
 				D08166B129A78E7100A67C1C /* BusViewController.swift in Sources */,
 				D081237829C1EB3300CA5664 /* PublicTransitPoiDTO.swift in Sources */,
 				D08122BA29B88DFD00CA5664 /* StationInfo.swift in Sources */,

@@ -11,11 +11,11 @@ struct SubwayRouteSearch: Request {
     var baseURL: URL? {
         return URL(string: "https://api.odsay.com/v1/api")
     }
+    var queryList: [String: String] = [:]
     
     typealias Response = SubwayRouteSearchDTO
     
     let method: HTTPMethod = .get
-    var queryList: [String: String] = [:]
     var path: String = "/subwayPath"
     let apiKey: String = "DnMRoATHlXeGpeewYG0b6A"
     let lang: String = String(Lang.korean.rawValue)
