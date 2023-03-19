@@ -16,7 +16,7 @@ enum stationType {
 }
 
 protocol Sendable {
-    func dataSend(type: stationType , data: String, code: Int)
+    func dataSend(type: stationType , station: String, lane: String, code: Int)
 }
 
 class ListViewController: UIViewController {
@@ -152,10 +152,11 @@ extension ListViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let station = stationList[indexPath.row]
-        let data = station.stationName + "(\(station.laneName))"
+        let stationName = station.stationName
+        let laneName = station.laneName
         let code = station.stationID
         
-        delegate?.dataSend(type: type, data: data, code: code)
+        delegate?.dataSend(type: type, station: stationName, lane: laneName, code: code)
         
         dismiss(animated: true)
     }

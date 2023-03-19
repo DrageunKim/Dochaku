@@ -8,8 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import AVKit
-import UserNotifications
+import MapKit
 
 class SubwayViewController: UIViewController {
     
@@ -28,31 +27,6 @@ class SubwayViewController: UIViewController {
         return stackView
     }()
     
-    private let nowStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.alignment = .fill
-        stackView.axis = .horizontal
-        stackView.distribution = .fill
-        stackView.spacing = 5
-        return stackView
-    }()
-    private let nowStationLabel: UILabel = {
-        let label = UILabel()
-        label.text = "현재역 :"
-        label.font = .preferredFont(forTextStyle: .headline)
-        label.numberOfLines = 1
-        label.textAlignment = .right
-        label.textColor = .label
-        return label
-    }()
-    private let nowStationBar: UISearchBar = {
-        let searchBar = UISearchBar()
-        searchBar.backgroundColor = .systemBackground
-        searchBar.placeholder = "역명"
-        searchBar.searchTextField.font = .systemFont(ofSize: 15)
-        return searchBar
-    }()
-    
     private let targetStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.alignment = .fill
@@ -61,9 +35,18 @@ class SubwayViewController: UIViewController {
         stackView.spacing = 5
         return stackView
     }()
+    private let segmentedControl: UISegmentedControl = {
+        let control = UISegmentedControl(items: ["지하철", "버스", "위치"])
+        control.selectedSegmentIndex = 0
+        control.backgroundColor = .lightGray
+        control.selectedSegmentTintColor = .systemBackground
+        control.layer.borderColor = UIColor.label.cgColor
+        control.layer.borderWidth = 0.5
+        return control
+    }()
     private let targetStationLabel: UILabel = {
         let label = UILabel()
-        label.text = "도착역 :"
+        label.text = "목적지 :"
         label.font = .preferredFont(forTextStyle: .headline)
         label.numberOfLines = 1
         label.textAlignment = .right
@@ -89,7 +72,7 @@ class SubwayViewController: UIViewController {
     private let okButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .label
-        button.setTitle("조회", for: .normal)
+        button.setTitle("설정", for: .normal)
         button.setTitleColor(.label, for: .normal)
         button.titleLabel?.font = .preferredFont(forTextStyle: .headline)
         button.layer.backgroundColor = UIColor.systemBlue.cgColor
@@ -109,80 +92,6 @@ class SubwayViewController: UIViewController {
         return button
     }()
     
-    private let arrivalStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.alignment = .center
-        stackView.axis = .vertical
-        stackView.distribution = .fillEqually
-        stackView.spacing = 10
-        stackView.layoutMargins = UIEdgeInsets(top: 25, left: 20, bottom: 25, right: 20)
-        stackView.layer.borderWidth = 3
-        stackView.layer.borderColor = UIColor.systemMint.cgColor
-        stackView.layer.cornerRadius = 10
-        return stackView
-    }()
-    private let arrivalTimeStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.alignment = .center
-        stackView.axis = .horizontal
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 5
-        return stackView
-    }()
-    private let arrivalTimeGuideLabel: UILabel = {
-        let label = UILabel()
-        label.text = "[도착 예정 시간]   -  "
-        label.numberOfLines = 1
-        label.font = .preferredFont(forTextStyle: .headline).withSize(20)
-        label.textColor = .label
-        return label
-    }()
-    private let arrivalTimePicker: UIDatePicker = {
-        let timePicker = UIDatePicker()
-        timePicker.datePickerMode = .time
-        timePicker.preferredDatePickerStyle = .automatic
-        timePicker.date = .now
-        return timePicker
-    }()
-    private let arrivalTimePickerGuideLabel: UILabel = {
-        let label = UILabel()
-        label.text = "필요시 원하시는 시간으로 변경해주세요 ⏰"
-        label.numberOfLines = 1
-        label.font = .preferredFont(forTextStyle: .subheadline)
-        label.textColor = .label
-        return label
-    }()
-    private let timerStartButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .label
-        button.setTitle("타이머 시작", for: .normal)
-        button.setTitleColor(.systemBackground, for: .normal)
-        button.titleLabel?.font = .preferredFont(forTextStyle: .headline)
-        button.layer.cornerRadius = 10
-        return button
-    }()
-    
-    private let timerGuideLineStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.alignment = .fill
-        stackView.axis = .vertical
-        stackView.distribution = .fillEqually
-        stackView.spacing = 15
-        return stackView
-    }()
-    private let timerFirstGuideLabel: UILabel = {
-        let label = UILabel()
-        label.text = "✅  설정된 시간에서 -1분으로 타이머를 설정합니다."
-        label.numberOfLines = 1
-        label.font = .preferredFont(forTextStyle: .subheadline)
-        label.textColor = .label
-        return label
-    }()
-    
     // MARK: Life Cycle
     
     override func viewDidLoad() {
@@ -199,14 +108,12 @@ class SubwayViewController: UIViewController {
     // MARK: Configure Keyboard
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        nowStationBar.resignFirstResponder()
         targetStationBar.resignFirstResponder()
     }
     
     // MARK: Private Methods
     
     private func configureDelegate() {
-        nowStationBar.delegate = self
         targetStationBar.delegate = self
     }
 
@@ -214,51 +121,19 @@ class SubwayViewController: UIViewController {
         okButton.rx.tap
             .bind(to: viewModel.fetchSubwayInfo)
             .disposed(by: disposeBag)
-
+        
         initButton.rx.tap
             .subscribe { _ in
-                self.nowStationBar.text = .init()
-                self.targetStationBar.text =  .init()
+                self.targetStationBar.text = nil
             }
             .disposed(by: disposeBag)
 
-        viewModel.subwayInfo
+        viewModel.travelInfo
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { data in
                 let travelTime = data.result.globalTravelTime * 60
-                self.arrivalTimePicker.date = .now + TimeInterval(travelTime)
             })
             .disposed(by: disposeBag)
-        
-        timerStartButton.rx.tap
-            .subscribe { _ in
-                self.checkAlarmEnable()
-                self.pushArriveAlarm()
-            }
-            .disposed(by: disposeBag)
-    }
-    
-    private func checkAlarmEnable() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { (didAllow, error) in
-            guard let err = error else {
-                print(didAllow)
-                return
-            }
-
-            print(err.localizedDescription)
-        }
-    }
-    
-    private func pushArriveAlarm() {
-        let content = UNMutableNotificationContent()
-                
-        content.title = "⏰ 목적지 도착"
-        content.body = "예약하신 타이머가 종료되었습니다."
-
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-        let request = UNNotificationRequest(identifier: "timer", content: content, trigger: trigger)
-
-        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
     }
 }
 
@@ -271,15 +146,9 @@ extension SubwayViewController: UISearchBarDelegate {
 }
 
 extension SubwayViewController: Sendable {
-    func dataSend(type: stationType, data: String, code: Int) {
-        switch type {
-        case .now:
-            nowStationBar.text = data
-            viewModel.nowStationCode = code
-        case .target:
-            targetStationBar.text = data
-            viewModel.targetStationCode = code
-        }
+    func dataSend(type: stationType, station: String, lane: String, code: Int) {
+        targetStationBar.text = station + " (\(lane))"
+        viewModel.targetStationCode = code
     }
 }
 
@@ -287,26 +156,11 @@ extension SubwayViewController: Sendable {
 
 extension SubwayViewController {
     private func configureButtonAction() {
-        nowStationBar.searchTextField.addTarget(
-            self,
-            action: #selector(tappedNowStationBar),
-            for: .touchDown
-        )
-        
         targetStationBar.searchTextField.addTarget(
             self,
             action: #selector(tappedTargetStationBar),
             for: .touchDown
         )
-    }
-    
-    @objc
-    private func tappedNowStationBar() {
-        let presentViewController = ListViewController(type: .now)
-        
-        presentViewController.delegate = self
-        
-        present(presentViewController, animated: true)
     }
     
     @objc
@@ -325,40 +179,26 @@ extension SubwayViewController {
     private func configureView() {
         view.backgroundColor = .systemBackground
         
-        navigationItem.title = "🔔   지하철 도착 알림   🔔"
+        navigationItem.title = "🔔  도착알림 설정   🔔"
     }
     
     private func configureStackView() {
-        nowStackView.addArrangedSubview(nowStationLabel)
-        nowStackView.addArrangedSubview(nowStationBar)
-        
         targetStackView.addArrangedSubview(targetStationLabel)
         targetStackView.addArrangedSubview(targetStationBar)
         
         buttonStackView.addArrangedSubview(okButton)
         buttonStackView.addArrangedSubview(initButton)
         
-        settingStackView.addArrangedSubview(nowStackView)
+        settingStackView.addArrangedSubview(segmentedControl)
         settingStackView.addArrangedSubview(targetStackView)
         settingStackView.addArrangedSubview(buttonStackView)
-        
-        timerGuideLineStackView.addArrangedSubview(timerFirstGuideLabel)
-        
-        arrivalTimeStackView.addArrangedSubview(arrivalTimeGuideLabel)
-        arrivalTimeStackView.addArrangedSubview(arrivalTimePicker)
-        
-        arrivalStackView.addArrangedSubview(arrivalTimeStackView)
-        arrivalStackView.addArrangedSubview(arrivalTimePickerGuideLabel)
-        arrivalStackView.addArrangedSubview(timerStartButton)
     }
     
     private func configureLayout() {
         view.addSubview(settingStackView)
-        view.addSubview(arrivalStackView)
-        view.addSubview(timerGuideLineStackView)
         
         NSLayoutConstraint.activate([
-            nowStackView.widthAnchor.constraint(equalTo: settingStackView.widthAnchor),
+            segmentedControl.widthAnchor.constraint(equalTo: settingStackView.widthAnchor),
             targetStackView.widthAnchor.constraint(equalTo: settingStackView.widthAnchor),
             buttonStackView.widthAnchor.constraint(equalTo: settingStackView.widthAnchor),
             
@@ -367,24 +207,7 @@ extension SubwayViewController {
             settingStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             settingStackView.topAnchor.constraint(
                 equalTo: view.topAnchor,
-                constant: view.bounds.height * 0.18
-            ),
-            
-            timerStartButton.widthAnchor.constraint(equalTo: buttonStackView.widthAnchor),
-            
-            arrivalStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            arrivalStackView.topAnchor.constraint(
-                equalTo: settingStackView.bottomAnchor,
-                constant: view.bounds.height * 0.1
-            ),
-            
-            timerGuideLineStackView.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor,
-                constant: view.bounds.width * 0.1
-            ),
-            timerGuideLineStackView.topAnchor.constraint(
-                equalTo: arrivalStackView.bottomAnchor,
-                constant: view.bounds.height * 0.03
+                constant: view.bounds.height * 0.2
             )
         ])
     }

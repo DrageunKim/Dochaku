@@ -8,37 +8,63 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import AVKit
+import UserNotifications
 
 class SubwayViewModel {
     
     let disposeBag = DisposeBag()
-    var arrivalTime: String = .init()
-    var nowStationCode: Int = .init()
-    var targetStationCode: Int = .init()
+    var arrivalTime: String = String()
+    var nowStationCode: Int = 0
+    var targetStationCode: Int = 0
     
     // MARK: Input
     
     let fetchSubwayInfo: AnyObserver<Void>
+    let fetchStart: AnyObserver<Void>
     
     // MARK: Output
     
-    let subwayInfo: Observable<SubwayRouteSearchDTO>
+    let startInfo: Observable<RealTimeStationArrivalDTO>
+    let travelInfo: Observable<SubwayRouteSearchDTO>
     
     init(domain: SubwayService = SubwayService()) {
-        let fetching = PublishSubject<Void>()
-        let information = PublishSubject<SubwayRouteSearchDTO>()
+        let fetchingTravel = PublishSubject<Void>()
+        let fetchingStart = PublishSubject<Void>()
+        let fetch = PublishSubject<Void>()
+        let start = PublishSubject<RealTimeStationArrivalDTO>()
+        let travel = PublishSubject<SubwayRouteSearchDTO>()
         
-        fetchSubwayInfo = fetching.asObserver()
-        subwayInfo = information.asObserver()
-        
-        fetching
-            .map {
-                domain.nowStationCode = self.nowStationCode
-                domain.targetStationCode = self.targetStationCode
+        fetchSubwayInfo = fetch.asObserver()
+        fetchStart = fetchingStart.asObserver()
+        startInfo = start.asObserver()
+        travelInfo = travel.asObserver()
+    }
+    
+    private func checkValidCode() -> Bool {
+        return nowStationCode != 0 && targetStationCode != 0
+    }
+    
+    private func checkAlarmEnable() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { (didAllow, error) in
+            guard let err = error else {
+                print(didAllow)
+                return
             }
-            .filter { domain.checkValidCode() }
-            .flatMap(domain.fetchSubwayInfoRx)
-            .subscribe(onNext: information.onNext)
-            .disposed(by: disposeBag)
+            
+            print(err.localizedDescription)
+        }
+    }
+    
+    private func pushArriveAlarm() {
+        let content = UNMutableNotificationContent()
+        
+        content.title = "⏰ 목적지 근접 알림"
+        content.body = "목적지 근처에 도착하였습니다. 하차 준비해주세요. 😃"
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        let request = UNNotificationRequest(identifier: "timer", content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
     }
 }

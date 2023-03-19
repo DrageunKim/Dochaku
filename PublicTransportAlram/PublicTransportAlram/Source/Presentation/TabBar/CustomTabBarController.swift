@@ -9,6 +9,13 @@ import UIKit
 
 class CustomTabBarController: UITabBarController {
 
+    private let mapViewController: UIViewController = {
+        let viewController = UINavigationController(rootViewController: MapViewController())
+        viewController.view.backgroundColor = .systemBackground
+        viewController.tabBarItem.title = "지도"
+        viewController.tabBarItem.image = UIImage(systemName: "bus.fill")
+        return viewController
+    }()
     private let subwayViewController: UIViewController = {
         let viewController = UINavigationController(rootViewController: SubwayViewController())
         viewController.view.backgroundColor = .systemBackground
@@ -37,6 +44,8 @@ class CustomTabBarController: UITabBarController {
         tabBar.layer.borderColor = UIColor.label.cgColor
         tabBar.layer.cornerRadius = 10
         
-        viewControllers = [ subwayViewController, busViewController ]
+        viewControllers = [
+            mapViewController, subwayViewController, busViewController
+        ]
     }
 }

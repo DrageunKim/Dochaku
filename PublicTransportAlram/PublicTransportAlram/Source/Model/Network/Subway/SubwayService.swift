@@ -9,20 +9,16 @@ import Foundation
 import RxSwift
 
 class SubwayService {
+    var startStationName: String = String()
     var nowStationCode: Int = 0
     var targetStationCode: Int = 0
     var stationLatitude: Double = 0
     var stationLongitude: Double = 0
     
     var isValidLatitudeAndLongitude = false
-    var isValidCode = false
     
     func checkValidLatitudeAndLongitude() {
         isValidLatitudeAndLongitude = stationLatitude != 0 && stationLongitude != 0
-    }
-    
-    func checkValidCode() -> Bool {
-        return nowStationCode != 0 && targetStationCode != 0
     }
     
     func fetchStationLatitudeAndLongitude(_ station: String) -> String {
@@ -36,6 +32,25 @@ class SubwayService {
         }
         
         return String()
+    }
+    
+    func fetchStationStartRx() -> Observable<RealTimeStationArrivalDTO> {
+        let manager = NetworkManager(urlSession: .shared)
+        let request = RealtimeStationArrival(stationName: startStationName)
+        
+        return Observable.create { emitter in
+            manager.dataTask(request) { result in
+                switch result {
+                case .success(let data):
+                    emitter.onNext(data)
+                    emitter.onCompleted()
+                case .failure(let error):
+                    emitter.onError(error)
+                }
+            }
+            
+            return Disposables.create()
+        }
     }
     
     func fetchStationCodeRx() -> Observable<PublicTransitPoiDTO> {

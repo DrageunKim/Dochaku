@@ -13,7 +13,7 @@ struct RealtimeStationArrival: Request {
     }
     var queryList: [String : String] = [:]
     
-    typealias Response = PublicTransitPoiDTO
+    typealias Response = RealTimeStationArrivalDTO
     
     let method: HTTPMethod = .get
     var path: String = "/subway"
