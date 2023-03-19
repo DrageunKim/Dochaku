@@ -11,13 +11,13 @@ import CoreLocation
 
 class MapViewController: UIViewController {
     
-    private let stackView: UIStackView = {
+    private let topStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.alignment = .fill
+        stackView.alignment = .center
         stackView.axis = .vertical
         stackView.distribution = .fill
-        stackView.spacing = 20
+        stackView.spacing = 10
         return stackView
     }()
     private let segmentedControl: UISegmentedControl = {
@@ -46,12 +46,43 @@ class MapViewController: UIViewController {
         map.setUserTrackingMode(.follow, animated: true)
         return map
     }()
-    let locationManager: CLLocationManager = {
+    private let locationManager: CLLocationManager = {
         let location = CLLocationManager()
         location.desiredAccuracy = kCLLocationAccuracyBest
         location.startUpdatingLocation()
         location.requestWhenInUseAuthorization()
         return location
+    }()
+    private let buttonStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.alignment = .center
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.spacing = 20
+        return stackView
+    }()
+    private let okButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .label
+        button.setTitle("설정", for: .normal)
+        button.setTitleColor(.label, for: .normal)
+        button.titleLabel?.font = .preferredFont(forTextStyle: .headline)
+        button.layer.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.8).cgColor
+        button.layer.borderWidth = 1
+        button.layer.cornerRadius = 10
+        return button
+    }()
+    private let initButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .label
+        button.setTitle("초기화", for: .normal)
+        button.setTitleColor(.label, for: .normal)
+        button.titleLabel?.font = .preferredFont(forTextStyle: .headline)
+        button.layer.backgroundColor = UIColor.systemRed.withAlphaComponent(0.8).cgColor
+        button.layer.borderWidth = 1
+        button.layer.cornerRadius = 10
+        return button
     }()
     
     override func viewDidLoad() {
@@ -103,7 +134,6 @@ class MapViewController: UIViewController {
 extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
-            
             configureAnnotation(
                 latitude: location.coordinate.latitude,
                 longitude: location.coordinate.longitude
@@ -129,9 +159,16 @@ extension MapViewController {
     
     @objc
     private func tappedLocationSearchBar() {
-        let presentViewController = SearchListViewController()
-        
-        present(presentViewController, animated: true)
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
+            present(SearchListViewController(type: .subway), animated: true)
+        case 1:
+            present(SearchListViewController(type: .bus), animated: true)
+        case 2:
+            present(SearchListViewController(type: .address), animated: true)
+        default:
+            break
+        }
     }
 }
 
@@ -143,26 +180,35 @@ extension MapViewController {
     }
     
     private func configureStackView() {
-        stackView.addArrangedSubview(segmentedControl)
-        stackView.addArrangedSubview(locationSearchBar)
-        stackView.addArrangedSubview(mapView)
+        topStackView.addArrangedSubview(segmentedControl)
+        topStackView.addArrangedSubview(locationSearchBar)
+        topStackView.addArrangedSubview(mapView)
+        
+        buttonStackView.addArrangedSubview(okButton)
+        buttonStackView.addArrangedSubview(initButton)
     }
     
     private func configureLayout() {
-        view.addSubview(stackView)
+        view.addSubview(topStackView)
+        view.addSubview(buttonStackView)
         
         NSLayoutConstraint.activate([
-            segmentedControl.widthAnchor.constraint(equalTo: stackView.widthAnchor),
-            locationSearchBar.widthAnchor.constraint(equalTo: stackView.widthAnchor),
-            mapView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
-            
-            stackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
-            stackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.75),
-            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stackView.topAnchor.constraint(
+            topStackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
+            topStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.7),
+            topStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            topStackView.topAnchor.constraint(
                 equalTo: view.topAnchor,
                 constant: view.bounds.height * 0.12
-            )
+            ),
+            
+            segmentedControl.widthAnchor.constraint(equalTo: topStackView.widthAnchor, multiplier: 0.8),
+            locationSearchBar.widthAnchor.constraint(equalTo: topStackView.widthAnchor),
+            mapView.widthAnchor.constraint(equalTo: topStackView.widthAnchor),
+            
+            buttonStackView.widthAnchor.constraint(equalTo: topStackView.widthAnchor, multiplier: 0.9),
+            buttonStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
+            buttonStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            buttonStackView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: 10)
         ])
     }
 }

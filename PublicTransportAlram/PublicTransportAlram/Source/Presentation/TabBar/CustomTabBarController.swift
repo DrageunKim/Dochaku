@@ -12,24 +12,24 @@ class CustomTabBarController: UITabBarController {
     private let mapViewController: UIViewController = {
         let viewController = MapViewController()
         viewController.view.backgroundColor = .systemBackground
-        viewController.tabBarItem.title = "지도"
+        viewController.tabBarItem.title = "알림 추가"
         viewController.tabBarItem.image = UIImage(systemName: "bus.fill")
         return viewController
     }()
-    private let subwayViewController: UIViewController = {
-        let viewController = UINavigationController(rootViewController: SubwayViewController())
-        viewController.view.backgroundColor = .systemBackground
-        viewController.tabBarItem.title = "지하철"
-        viewController.tabBarItem.image = UIImage(systemName: "tram.fill")
-        return viewController
-    }()
-    private let busViewController: UIViewController = {
-        let viewController = UINavigationController(rootViewController: BusViewController())
-        viewController.view.backgroundColor = .systemBackground
-        viewController.tabBarItem.title = "버스"
-        viewController.tabBarItem.image = UIImage(systemName: "bus.fill")
-        return viewController
-    }()
+//    private let subwayViewController: UIViewController = {
+//        let viewController = UINavigationController(rootViewController: SubwayViewController())
+//        viewController.view.backgroundColor = .systemBackground
+//        viewController.tabBarItem.title = "지하철"
+//        viewController.tabBarItem.image = UIImage(systemName: "tram.fill")
+//        return viewController
+//    }()
+//    private let busViewController: UIViewController = {
+//        let viewController = UINavigationController(rootViewController: BusViewController())
+//        viewController.view.backgroundColor = .systemBackground
+//        viewController.tabBarItem.title = "버스"
+//        viewController.tabBarItem.image = UIImage(systemName: "bus.fill")
+//        return viewController
+//    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +45,7 @@ class CustomTabBarController: UITabBarController {
         tabBar.layer.cornerRadius = 10
         
         viewControllers = [
-            mapViewController, subwayViewController, busViewController
+            mapViewController
         ]
     }
 }

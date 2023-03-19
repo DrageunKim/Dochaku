@@ -20,6 +20,7 @@ class SearchListViewController: UIViewController {
     
 //    private let viewModel: ListViewModel
     private let disposeBag = DisposeBag()
+    private var type: SearchType
     
     private var searchCompleter = MKLocalSearchCompleter()
     private var searchResults = [MKLocalSearchCompletion]()
@@ -103,6 +104,16 @@ class SearchListViewController: UIViewController {
         )
         return tableView
     }()
+    
+    init(type: SearchType) {
+        self.type = type
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
