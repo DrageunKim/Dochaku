@@ -10,13 +10,8 @@ import RxSwift
 import RxCocoa
 import MapKit
 
-enum stationType {
-    case now
-    case target
-}
-
 protocol Sendable {
-    func dataSend(type: stationType , station: String, lane: String, code: Int)
+    func dataSend(location: String, lane: String, code: Int)
 }
 
 class ListViewController: UIViewController {
@@ -25,7 +20,6 @@ class ListViewController: UIViewController {
     
     private let viewModel = ListViewModel()
     private let disposeBag = DisposeBag()
-    private let type: stationType
     
     private var stationList: [POI] = []
     
@@ -98,16 +92,6 @@ class ListViewController: UIViewController {
         return tableView
     }()
     
-    init(type: stationType) {
-        self.type = type
-        
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -156,7 +140,7 @@ extension ListViewController: UITableViewDelegate {
         let laneName = station.laneName
         let code = station.stationID
         
-        delegate?.dataSend(type: type, station: stationName, lane: laneName, code: code)
+        delegate?.dataSend(location: stationName, lane: laneName, code: code)
         
         dismiss(animated: true)
     }

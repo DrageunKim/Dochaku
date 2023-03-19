@@ -146,9 +146,7 @@ extension SubwayViewController: UISearchBarDelegate {
 }
 
 extension SubwayViewController: Sendable {
-    func dataSend(type: stationType, station: String, lane: String, code: Int) {
-        targetStationBar.text = station + " (\(lane))"
-        viewModel.targetStationCode = code
+    func dataSend(location: String, lane: String, code: Int) {
     }
 }
 
@@ -165,7 +163,7 @@ extension SubwayViewController {
     
     @objc
     private func tappedTargetStationBar() {
-        let presentViewController = ListViewController(type: .target)
+        let presentViewController = ListViewController()
         
         presentViewController.delegate = self
         
