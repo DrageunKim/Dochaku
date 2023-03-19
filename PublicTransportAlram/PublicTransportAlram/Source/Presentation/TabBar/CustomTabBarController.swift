@@ -10,7 +10,7 @@ import UIKit
 class CustomTabBarController: UITabBarController {
 
     private let mapViewController: UIViewController = {
-        let viewController = UINavigationController(rootViewController: MapViewController())
+        let viewController = MapViewController()
         viewController.view.backgroundColor = .systemBackground
         viewController.tabBarItem.title = "지도"
         viewController.tabBarItem.image = UIImage(systemName: "bus.fill")

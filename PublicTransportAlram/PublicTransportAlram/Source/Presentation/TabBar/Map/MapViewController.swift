@@ -10,9 +10,26 @@ import MapKit
 
 class MapViewController: UIViewController {
     
-    private let targetStationBar: UISearchBar = {
+    private let stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.alignment = .fill
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.spacing = 20
+        return stackView
+    }()
+    private let segmentedControl: UISegmentedControl = {
+        let control = UISegmentedControl(items: ["지하철", "버스", "주소"])
+        control.selectedSegmentIndex = 0
+        control.backgroundColor = .lightGray
+        control.selectedSegmentTintColor = .systemBackground
+        control.layer.borderColor = UIColor.label.cgColor
+        control.layer.borderWidth = 0.5
+        return control
+    }()
+    private let locationSearchBar: UISearchBar = {
         let searchBar = UISearchBar()
-        searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.backgroundColor = .systemBackground
         searchBar.placeholder = "목적지"
         searchBar.searchTextField.font = .systemFont(ofSize: 15)
@@ -21,7 +38,6 @@ class MapViewController: UIViewController {
     }()
     private let mapView: MKMapView = {
         let map = MKMapView()
-        map.translatesAutoresizingMaskIntoConstraints = false
         map.isPitchEnabled = true
         map.isZoomEnabled = true
         map.showsUserLocation = true
@@ -39,48 +55,40 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         
         configureView()
+        configureStackView()
         configureLayout()
-        configureDelegate()
+        locationSearchBar.delegate = self
+        configureButtonAction()
     }
     
-    private func configureDelegate() {
-        mapView.delegate = self
-        locationManager.delegate = self
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        locationSearchBar.resignFirstResponder()
+    }
+}
+    
+// MARK: - UISearchBarDelegate
+
+extension MapViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
 }
 
-// MARK: - MKMapViewDelegate
-
-extension MapViewController: MKMapViewDelegate {}
-
-// MARK: - CLLocationManagerDelegate
-
-extension MapViewController: CLLocationManagerDelegate {}
-
-// MARK: - Sendable
-
-extension MapViewController: Sendable {
-    func dataSend(location station: String, lane: String, code: Int) {
-        
-    }
-}
 
 // MARK: - Configure Button Action
 
 extension MapViewController {
     private func configureButtonAction() {
-        targetStationBar.searchTextField.addTarget(
+        locationSearchBar.searchTextField.addTarget(
             self,
-            action: #selector(tappedTargetStationBar),
+            action: #selector(tappedLocationSearchBar),
             for: .touchDown
         )
     }
     
     @objc
-    private func tappedTargetStationBar() {
-        let presentViewController = ListViewController()
-        
-        presentViewController.delegate = self
+    private func tappedLocationSearchBar() {
+        let presentViewController = SearchListViewController()
         
         present(presentViewController, animated: true)
     }
@@ -93,36 +101,26 @@ extension MapViewController {
         view.backgroundColor = .systemBackground
     }
     
+    private func configureStackView() {
+        stackView.addArrangedSubview(segmentedControl)
+        stackView.addArrangedSubview(locationSearchBar)
+        stackView.addArrangedSubview(mapView)
+    }
+    
     private func configureLayout() {
-        let safeArea = view.safeAreaLayoutGuide
-        
-        view.addSubview(targetStationBar)
-        view.addSubview(mapView)
+        view.addSubview(stackView)
         
         NSLayoutConstraint.activate([
-            targetStationBar.leftAnchor.constraint(
-                equalTo: view.leftAnchor,
-                constant: view.frame.width * 0.03
-            ),
-            targetStationBar.rightAnchor.constraint(
-                equalTo: view.rightAnchor,
-                constant: view.frame.width * -0.03
-            ),
-            targetStationBar.topAnchor.constraint(
-                equalTo: view.topAnchor,
-                constant: view.frame.height * 0.1
-            ),
-            targetStationBar.bottomAnchor.constraint(
-                equalTo: safeArea.topAnchor,
-                constant: -10
-            ),
+            segmentedControl.widthAnchor.constraint(equalTo: stackView.widthAnchor),
+            locationSearchBar.widthAnchor.constraint(equalTo: stackView.widthAnchor),
+            mapView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
             
-            mapView.leftAnchor.constraint(equalTo: safeArea.leftAnchor),
-            mapView.rightAnchor.constraint(equalTo: safeArea.rightAnchor),
-            mapView.topAnchor.constraint(equalTo: safeArea.topAnchor),
-            mapView.bottomAnchor.constraint(
-                equalTo: safeArea.bottomAnchor,
-                constant: -10
+            stackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
+            stackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.75),
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackView.topAnchor.constraint(
+                equalTo: view.topAnchor,
+                constant: view.bounds.height * 0.12
             )
         ])
     }

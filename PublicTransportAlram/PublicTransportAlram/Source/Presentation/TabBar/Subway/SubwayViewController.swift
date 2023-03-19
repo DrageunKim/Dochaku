@@ -167,7 +167,7 @@ extension SubwayViewController {
         
         presentViewController.delegate = self
         
-        present(presentViewController, animated: true)
+        present(SearchListViewController(), animated: true)
     }
 }
 

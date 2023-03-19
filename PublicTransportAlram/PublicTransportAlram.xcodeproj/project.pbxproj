@@ -36,6 +36,7 @@
 		D08316F129C370A400E86676 /* RealTimeStationArrivalDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08316F029C370A400E86676 /* RealTimeStationArrivalDTO.swift */; };
 		D08316F329C3736F00E86676 /* ServiceEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08316F229C3736F00E86676 /* ServiceEnum.swift */; };
 		D08316F629C6D65400E86676 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08316F529C6D65400E86676 /* MapViewController.swift */; };
+		D08316FA29C6E3B700E86676 /* SearchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08316F929C6E3B700E86676 /* SearchListViewController.swift */; };
 		D0FE2BF729B4CA69001C83F7 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FE2BF629B4CA69001C83F7 /* ListViewController.swift */; };
 		D0FE2BF929B4CA73001C83F7 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FE2BF829B4CA73001C83F7 /* ListViewModel.swift */; };
 		D0FE2BFB29B4CADA001C83F7 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FE2BFA29B4CADA001C83F7 /* ListTableViewCell.swift */; };
@@ -98,6 +99,7 @@
 		D08316F029C370A400E86676 /* RealTimeStationArrivalDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealTimeStationArrivalDTO.swift; sourceTree = "<group>"; };
 		D08316F229C3736F00E86676 /* ServiceEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceEnum.swift; sourceTree = "<group>"; };
 		D08316F529C6D65400E86676 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		D08316F929C6E3B700E86676 /* SearchListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListViewController.swift; sourceTree = "<group>"; };
 		D0FE2BF629B4CA69001C83F7 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		D0FE2BF829B4CA73001C83F7 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		D0FE2BFA29B4CADA001C83F7 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 			children = (
 				D08166AC29A78BF300A67C1C /* CustomTabBarController.swift */,
 				D08316F429C6D60B00E86676 /* Map */,
+				D08316F829C6E38100E86676 /* SearchList */,
 				D08166A729A78A1A00A67C1C /* Subway */,
 				D08166AF29A78D4600A67C1C /* Bus */,
 				D0FE2BF529B4CA31001C83F7 /* List */,
@@ -299,6 +302,14 @@
 				D08316F529C6D65400E86676 /* MapViewController.swift */,
 			);
 			path = Map;
+			sourceTree = "<group>";
+		};
+		D08316F829C6E38100E86676 /* SearchList */ = {
+			isa = PBXGroup;
+			children = (
+				D08316F929C6E3B700E86676 /* SearchListViewController.swift */,
+			);
+			path = SearchList;
 			sourceTree = "<group>";
 		};
 		D0FE2BF529B4CA31001C83F7 /* List */ = {
@@ -466,6 +477,7 @@
 				D081237829C1EB3300CA5664 /* PublicTransitPoiDTO.swift in Sources */,
 				D08122BA29B88DFD00CA5664 /* StationInfo.swift in Sources */,
 				D08316F629C6D65400E86676 /* MapViewController.swift in Sources */,
+				D08316FA29C6E3B700E86676 /* SearchListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
