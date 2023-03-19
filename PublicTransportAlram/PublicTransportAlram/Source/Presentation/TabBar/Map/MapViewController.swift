@@ -7,6 +7,7 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
 class MapViewController: UIViewController {
     
@@ -38,16 +39,18 @@ class MapViewController: UIViewController {
     }()
     private let mapView: MKMapView = {
         let map = MKMapView()
+        map.mapType = .standard
         map.isPitchEnabled = true
         map.isZoomEnabled = true
         map.showsUserLocation = true
+        map.setUserTrackingMode(.follow, animated: true)
         return map
     }()
     let locationManager: CLLocationManager = {
         let location = CLLocationManager()
         location.desiredAccuracy = kCLLocationAccuracyBest
-        location.requestWhenInUseAuthorization()
         location.startUpdatingLocation()
+        location.requestWhenInUseAuthorization()
         return location
     }()
     
@@ -57,23 +60,61 @@ class MapViewController: UIViewController {
         configureView()
         configureStackView()
         configureLayout()
-        locationSearchBar.delegate = self
+        configureLocationManager()
         configureButtonAction()
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        locationSearchBar.resignFirstResponder()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        locationManager.stopUpdatingLocation()
     }
-}
     
-// MARK: - UISearchBarDelegate
-
-extension MapViewController: UISearchBarDelegate {
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
+    private func configureLocationManager() {
+        locationManager.delegate = self
+    }
+    
+    private func configureAnnotation(
+        latitude: CLLocationDegrees,
+        longitude: CLLocationDegrees,
+        title: String? = nil,
+        subTitle: String? = nil
+    ) {
+        let center = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let region = MKCoordinateRegion(center: center, latitudinalMeters: 500, longitudinalMeters: 500)
+        
+        mapView.setRegion(region, animated: true)
+        
+        if let title = title,
+           let subTitle = subTitle {
+            let annotation = MKPointAnnotation()
+            
+            annotation.coordinate = center
+            annotation.title = title
+            annotation.subtitle = subTitle
+            
+            mapView.addAnnotation(annotation)
+        }
     }
 }
 
+// MARK: - CLLocationManagerDelegate
+
+extension MapViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            
+            configureAnnotation(
+                latitude: location.coordinate.latitude,
+                longitude: location.coordinate.longitude
+            )
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("error: \(error.localizedDescription)")
+    }
+}
 
 // MARK: - Configure Button Action
 
