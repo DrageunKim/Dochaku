@@ -11,6 +11,12 @@ import CoreLocation
 
 class MapViewController: UIViewController {
     
+    enum SearchType: Int {
+        case subway = 0
+        case bus
+        case address
+    }
+    
     private let topStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -215,6 +221,21 @@ class MapViewController: UIViewController {
     }
 }
 
+// MARK: - Sendable
+
+extension MapViewController: Sendable {
+    func dataSend(longitude: Double, latitude: Double, location: String, lane: String) {
+        locationSearchBar.text = location + " " + "(\(lane))"
+        
+        configureAnnotation(
+            latitude: latitude,
+            longitude: longitude,
+            title: location,
+            subTitle: lane
+        )
+    }
+}
+
 // MARK: - CLLocationManagerDelegate
 
 extension MapViewController: CLLocationManagerDelegate {
@@ -246,12 +267,18 @@ extension MapViewController {
     @objc
     private func tappedLocationSearchBar() {
         switch segmentedControl.selectedSegmentIndex {
-        case 0:
-            present(SearchListViewController(type: .subway), animated: true)
-        case 1:
-            present(SearchListViewController(type: .bus), animated: true)
-        case 2:
-            present(SearchListViewController(type: .address), animated: true)
+        case SearchType.subway.rawValue:
+            let presentViewController = SubwaySearchListViewController()
+            presentViewController.delegate = self
+            present(presentViewController, animated: true)
+        case SearchType.bus.rawValue:
+            let presentViewController = SubwaySearchListViewController()
+            presentViewController.delegate = self
+            present(presentViewController, animated: true)
+        case SearchType.address.rawValue:
+            let presentViewController = AddressSearchListViewController()
+//            presentViewController.delegate = self
+            present(presentViewController, animated: true)
         default:
             break
         }

@@ -1,23 +1,19 @@
 //
-//  ListViewController.swift
+//  SearchListViewController.swift
 //  PublicTransportAlram
 //
-//  Created by yonggeun Kim on 2023/03/05.
+//  Created by yonggeun Kim on 2023/03/19.
 //
 
 import UIKit
+import MapKit
 import RxSwift
 import RxCocoa
-import MapKit
 
-class ListViewController: UIViewController {
+class AddressSearchListViewController: UIViewController {
     
-    var delegate: Sendable?
-    
-    private let viewModel = ListViewModel()
+    private let viewModel = AddressSearchListViewModel()
     private let disposeBag = DisposeBag()
-    
-    private var stationList: [POI] = []
     
     private let topStackView: UIStackView = {
         let stackView = UIStackView()
@@ -30,7 +26,7 @@ class ListViewController: UIViewController {
     }()
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "목적지 입력"
+        label.text = "주소지 입력"
         label.font = .systemFont(ofSize: 14, weight: .semibold)
         label.textColor = .label
         label.textAlignment = .center
@@ -82,8 +78,8 @@ class ListViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .systemBackground.withAlphaComponent(0.9)
         tableView.register(
-            ListTableViewCell.self,
-            forCellReuseIdentifier: ListTableViewCell.identifier
+            SearchListTableViewCell.self,
+            forCellReuseIdentifier: SearchListTableViewCell.identifier
         )
         return tableView
     }()
@@ -95,8 +91,9 @@ class ListViewController: UIViewController {
         configureStackView()
         configureLayout()
         configureTableView()
-        configureButtonAction()
-        configureBindings()
+        configureSearchCompleter()
+        configureSearchBar()
+        configureBinding()
     }
     
     private func configureTableView() {
@@ -104,57 +101,47 @@ class ListViewController: UIViewController {
         listTableView.dataSource = self
     }
     
-    private func configureBindings() {
-        searchBar.rx.text.orEmpty
-            .bind(to: viewModel.stationText)
-            .disposed(by: disposeBag)
-        
+    private func configureSearchBar() {
+        searchBar.delegate = self
+    }
+    
+    private func configureSearchCompleter() {
+        viewModel.searchCompleter.delegate = self
+        viewModel.searchCompleter.resultTypes = .address
+    }
+    
+    private func configureBinding() {
         cancelButton.rx.tap
             .subscribe { _ in
                 self.dismiss(animated: true)
             }
-            .disposed(by: disposeBag)
-        
-        viewModel.stationName
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { data in
-                self.stationList = data
-                self.listTableView.reloadData()
-            })
             .disposed(by: disposeBag)
     }
 }
 
 // MARK: - UITableViewDelegate
 
-extension ListViewController: UITableViewDelegate {
+extension AddressSearchListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let station = stationList[indexPath.row]
-        let stationName = station.stationName
-        let laneName = station.laneName
-        
-//        delegate?.dataSend(location: stationName, lane: laneName)
-        
-        dismiss(animated: true)
+        viewModel.search(for: viewModel.searchResults[indexPath.row])
     }
 }
 
 // MARK: - UITableViewDataSource
 
-extension ListViewController: UITableViewDataSource {
+extension AddressSearchListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return stationList.count
+        return viewModel.searchResults.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(
-            withIdentifier: ListTableViewCell.identifier,
+            withIdentifier: SearchListTableViewCell.identifier,
             for: indexPath
-        ) as? ListTableViewCell {
-            cell.stationLabel.text = stationList[indexPath.row].stationName
-            cell.laneLabel.text = stationList[indexPath.row].laneName
+        ) as? SearchListTableViewCell {
+            cell.titleLabel.text = viewModel.searchResults[indexPath.row].title
             cell.backgroundColor = .systemBackground
             cell.selectionStyle = .none
             
@@ -165,26 +152,34 @@ extension ListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return 45
     }
 }
 
-// MARK: - Button Action
+// MARK: - UISearchBarDelegate
 
-extension ListViewController {
-    private func configureButtonAction() {
-        cancelButton.addTarget(self, action: #selector(tappedCancelButton), for: .touchDown)
+extension AddressSearchListViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        viewModel.searchCompleter.queryFragment = searchText
+    }
+}
+
+// MARK: - MKLocalSearchCompleterDelegate
+
+extension AddressSearchListViewController: MKLocalSearchCompleterDelegate {
+    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
+        viewModel.searchResults = completer.results
+        listTableView.reloadData()
     }
     
-    @objc
-    private func tappedCancelButton() {
-        dismiss(animated: true)
+    func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
+        print(error.localizedDescription)
     }
 }
 
 // MARK: - View & Layout Configure
 
-extension ListViewController {
+extension AddressSearchListViewController {
     private func configureView() {
         view.backgroundColor = .systemBackground.withAlphaComponent(0.5)
     }
@@ -201,12 +196,12 @@ extension ListViewController {
         view.addSubview(topStackView)
         view.addSubview(lineView)
         view.addSubview(listTableView)
-
+        
         NSLayoutConstraint.activate([
             topStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             topStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             topStackView.topAnchor.constraint(equalTo: view.topAnchor),
-            topStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.13),
+            topStackView.heightAnchor.constraint(equalToConstant: 100),
             
             searchBar.leadingAnchor.constraint(equalTo: topStackView.leadingAnchor),
             searchBar.widthAnchor.constraint(equalTo: topStackView.widthAnchor, multiplier: 0.85),
@@ -214,10 +209,7 @@ extension ListViewController {
             lineView.leadingAnchor.constraint(equalTo: topStackView.leadingAnchor),
             lineView.trailingAnchor.constraint(equalTo: topStackView.trailingAnchor),
             lineView.topAnchor.constraint(equalTo: topStackView.bottomAnchor),
-            lineView.heightAnchor.constraint(
-                equalTo: topStackView.heightAnchor,
-                multiplier: 0.05
-            ),
+            lineView.heightAnchor.constraint(equalToConstant: 5),
             
             listTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             listTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),

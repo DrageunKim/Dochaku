@@ -11,11 +11,30 @@ class SearchListTableViewCell: UITableViewCell {
     
     // MARK: - Private Properties
     
-    let stationLabel: UILabel = {
+    private let stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.alignment = .fill
+        stackView.axis = .vertical
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 5
+        return stackView
+    }()
+    let titleLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 14, weight: .semibold)
-        label.textColor = .lightGray
+        label.font = .systemFont(ofSize: 17, weight: .semibold)
+        label.textColor = .label
+        label.textAlignment = .left
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 0
+        return label
+    }()
+    let subTitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 15, weight: .semibold)
+        label.textColor = .label
+        label.textAlignment = .left
+        label.numberOfLines = 0
         return label
     }()
     
@@ -41,26 +60,30 @@ class SearchListTableViewCell: UITableViewCell {
     }
     
     // MARK: - Private Methods
+    
     private func configureLayout() {
-        addSubview(stationLabel)
+        stackView.addArrangedSubview(titleLabel)
+        stackView.addArrangedSubview(subTitleLabel)
+        
+        addSubview(stackView)
         
         NSLayoutConstraint.activate([
-            stationLabel.leadingAnchor.constraint(
+            stackView.leadingAnchor.constraint(
                 equalTo: contentView.leadingAnchor,
                 constant: contentView.frame.width * 0.05
             ),
-            stationLabel.trailingAnchor.constraint(
+            stackView.trailingAnchor.constraint(
                 equalTo: contentView.trailingAnchor,
                 constant: contentView.frame.width * 0.05
             ),
-            stationLabel.topAnchor.constraint(
+            stackView.topAnchor.constraint(
                 equalTo: contentView.topAnchor,
-                constant: contentView.frame.height * 0.05
+                constant: contentView.frame.height * 0.2
             ),
-            stationLabel.bottomAnchor.constraint(
+            stackView.bottomAnchor.constraint(
                 equalTo: contentView.bottomAnchor,
-                constant: contentView.frame.height * 0.05
-            )
+                constant: contentView.frame.height * 0.2
+            ),
         ])
     }
 }

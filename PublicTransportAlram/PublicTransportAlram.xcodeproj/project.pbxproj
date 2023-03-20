@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D055594A29C8354A00850785 /* AddressSearchListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D055594929C8354A00850785 /* AddressSearchListViewModel.swift */; };
+		D055594E29C83E2700850785 /* SubwaySearchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D055594D29C83E2700850785 /* SubwaySearchListViewController.swift */; };
+		D055595029C83ECE00850785 /* SubwaySearchListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D055594F29C83ECE00850785 /* SubwaySearchListViewModel.swift */; };
+		D055595229C83F0500850785 /* Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D055595129C83F0500850785 /* Sendable.swift */; };
 		D08122BA29B88DFD00CA5664 /* StationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08122B929B88DFD00CA5664 /* StationInfo.swift */; };
 		D081233729C0DA5800CA5664 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D081233629C0DA5800CA5664 /* RxCocoa */; };
 		D081233929C0DA5800CA5664 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D081233829C0DA5800CA5664 /* RxSwift */; };
@@ -36,7 +40,7 @@
 		D08316F129C370A400E86676 /* RealTimeStationArrivalDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08316F029C370A400E86676 /* RealTimeStationArrivalDTO.swift */; };
 		D08316F329C3736F00E86676 /* ServiceEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08316F229C3736F00E86676 /* ServiceEnum.swift */; };
 		D08316F629C6D65400E86676 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08316F529C6D65400E86676 /* MapViewController.swift */; };
-		D08316FA29C6E3B700E86676 /* SearchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08316F929C6E3B700E86676 /* SearchListViewController.swift */; };
+		D08316FA29C6E3B700E86676 /* AddressSearchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08316F929C6E3B700E86676 /* AddressSearchListViewController.swift */; };
 		D08316FC29C74AE400E86676 /* SearchListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08316FB29C74AE400E86676 /* SearchListTableViewCell.swift */; };
 		D0FE2BF729B4CA69001C83F7 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FE2BF629B4CA69001C83F7 /* ListViewController.swift */; };
 		D0FE2BF929B4CA73001C83F7 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FE2BF829B4CA73001C83F7 /* ListViewModel.swift */; };
@@ -70,6 +74,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D055594929C8354A00850785 /* AddressSearchListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSearchListViewModel.swift; sourceTree = "<group>"; };
+		D055594D29C83E2700850785 /* SubwaySearchListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwaySearchListViewController.swift; sourceTree = "<group>"; };
+		D055594F29C83ECE00850785 /* SubwaySearchListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwaySearchListViewModel.swift; sourceTree = "<group>"; };
+		D055595129C83F0500850785 /* Sendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sendable.swift; sourceTree = "<group>"; };
 		D08122B929B88DFD00CA5664 /* StationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationInfo.swift; sourceTree = "<group>"; };
 		D081237529C1E5C000CA5664 /* PublicTransitPoi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicTransitPoi.swift; sourceTree = "<group>"; };
 		D081237729C1EB3300CA5664 /* PublicTransitPoiDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicTransitPoiDTO.swift; sourceTree = "<group>"; };
@@ -100,7 +108,7 @@
 		D08316F029C370A400E86676 /* RealTimeStationArrivalDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealTimeStationArrivalDTO.swift; sourceTree = "<group>"; };
 		D08316F229C3736F00E86676 /* ServiceEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceEnum.swift; sourceTree = "<group>"; };
 		D08316F529C6D65400E86676 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		D08316F929C6E3B700E86676 /* SearchListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListViewController.swift; sourceTree = "<group>"; };
+		D08316F929C6E3B700E86676 /* AddressSearchListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSearchListViewController.swift; sourceTree = "<group>"; };
 		D08316FB29C74AE400E86676 /* SearchListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListTableViewCell.swift; sourceTree = "<group>"; };
 		D0FE2BF629B4CA69001C83F7 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		D0FE2BF829B4CA73001C83F7 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
@@ -130,6 +138,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D055594B29C8389800850785 /* Address */ = {
+			isa = PBXGroup;
+			children = (
+				D08316F929C6E3B700E86676 /* AddressSearchListViewController.swift */,
+				D055594929C8354A00850785 /* AddressSearchListViewModel.swift */,
+			);
+			path = Address;
+			sourceTree = "<group>";
+		};
+		D055594C29C83DDE00850785 /* Subway */ = {
+			isa = PBXGroup;
+			children = (
+				D055594D29C83E2700850785 /* SubwaySearchListViewController.swift */,
+				D055594F29C83ECE00850785 /* SubwaySearchListViewModel.swift */,
+			);
+			path = Subway;
+			sourceTree = "<group>";
+		};
 		D081668029A77CA700A67C1C = {
 			isa = PBXGroup;
 			children = (
@@ -309,7 +335,8 @@
 		D08316F829C6E38100E86676 /* SearchList */ = {
 			isa = PBXGroup;
 			children = (
-				D08316F929C6E3B700E86676 /* SearchListViewController.swift */,
+				D055594C29C83DDE00850785 /* Subway */,
+				D055594B29C8389800850785 /* Address */,
 				D08316FB29C74AE400E86676 /* SearchListTableViewCell.swift */,
 			);
 			path = SearchList;
@@ -336,6 +363,7 @@
 			isa = PBXGroup;
 			children = (
 				D0FE2C1929B4CE28001C83F7 /* Identifiable.swift */,
+				D055595129C83F0500850785 /* Sendable.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -452,6 +480,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D055594A29C8354A00850785 /* AddressSearchListViewModel.swift in Sources */,
 				D081669129A77CA700A67C1C /* SubwayViewController.swift in Sources */,
 				D081237629C1E5C000CA5664 /* PublicTransitPoi.swift in Sources */,
 				D081668D29A77CA700A67C1C /* AppDelegate.swift in Sources */,
@@ -468,6 +497,7 @@
 				D08166BB29A7978C00A67C1C /* Request.swift in Sources */,
 				D0FE2BFB29B4CADA001C83F7 /* ListTableViewCell.swift in Sources */,
 				D081681929AF78ED00A67C1C /* NetworkError.swift in Sources */,
+				D055595029C83ECE00850785 /* SubwaySearchListViewModel.swift in Sources */,
 				D08166BD29A79A7900A67C1C /* SubwayRouteSearch.swift in Sources */,
 				D08166C129A79DC400A67C1C /* RequestError.swift in Sources */,
 				D08166A929A78A3100A67C1C /* SubwayViewModel.swift in Sources */,
@@ -475,13 +505,15 @@
 				D0FE2BF929B4CA73001C83F7 /* ListViewModel.swift in Sources */,
 				D08316F129C370A400E86676 /* RealTimeStationArrivalDTO.swift in Sources */,
 				D0FE2BF729B4CA69001C83F7 /* ListViewController.swift in Sources */,
+				D055595229C83F0500850785 /* Sendable.swift in Sources */,
 				D081681B29AF7E6800A67C1C /* JSONError.swift in Sources */,
 				D081681E29AF82AF00A67C1C /* SubwayService.swift in Sources */,
 				D08166B129A78E7100A67C1C /* BusViewController.swift in Sources */,
+				D055594E29C83E2700850785 /* SubwaySearchListViewController.swift in Sources */,
 				D081237829C1EB3300CA5664 /* PublicTransitPoiDTO.swift in Sources */,
 				D08122BA29B88DFD00CA5664 /* StationInfo.swift in Sources */,
 				D08316F629C6D65400E86676 /* MapViewController.swift in Sources */,
-				D08316FA29C6E3B700E86676 /* SearchListViewController.swift in Sources */,
+				D08316FA29C6E3B700E86676 /* AddressSearchListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

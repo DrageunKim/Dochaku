@@ -1,8 +1,8 @@
 //
-//  SearchListViewController.swift
+//  SubwaySearchListViewController.swift
 //  PublicTransportAlram
 //
-//  Created by yonggeun Kim on 2023/03/19.
+//  Created by yonggeun Kim on 2023/03/20.
 //
 
 import UIKit
@@ -10,31 +10,14 @@ import MapKit
 import RxSwift
 import RxCocoa
 
-enum SearchType {
-    case subway
-    case bus
-    case address
-}
-
-class SearchListViewController: UIViewController {
+class SubwaySearchListViewController: UIViewController {
     
-//    private let viewModel: ListViewModel
+    var delegate: Sendable?
+    
+    private let viewModel = SubwaySearchListViewModel()
     private let disposeBag = DisposeBag()
-    private var type: SearchType
     
-    private var searchCompleter = MKLocalSearchCompleter()
-    private var searchResults = [MKLocalSearchCompletion]()
-    private var places: MKMapItem? {
-        didSet {
-            listTableView.reloadData()
-        }
-    }
-    private var localSearch: MKLocalSearch? {
-        willSet {
-            places = nil
-            localSearch?.cancel()
-        }
-    }
+    private var stationList: [POI] = []
     
     private let topStackView: UIStackView = {
         let stackView = UIStackView()
@@ -47,7 +30,7 @@ class SearchListViewController: UIViewController {
     }()
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "목적지 입력"
+        label.text = "지하철역 입력"
         label.font = .systemFont(ofSize: 14, weight: .semibold)
         label.textColor = .label
         label.textAlignment = .center
@@ -105,16 +88,6 @@ class SearchListViewController: UIViewController {
         return tableView
     }()
     
-    init(type: SearchType) {
-        self.type = type
-        
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -122,9 +95,7 @@ class SearchListViewController: UIViewController {
         configureStackView()
         configureLayout()
         configureTableView()
-        configureSearchCompleter()
-        configureSearchBar()
-        configureButtonAction()
+        configureBinding()
     }
     
     private func configureTableView() {
@@ -132,51 +103,55 @@ class SearchListViewController: UIViewController {
         listTableView.dataSource = self
     }
     
-    private func configureSearchCompleter() {
-        searchCompleter.delegate = self
-        searchCompleter.resultTypes = .address
-    }
-    
-    private func configureSearchBar() {
-        searchBar.delegate = self
-    }
-    
-    private func search(for suggestedCompletion: MKLocalSearchCompletion) {
-        let searchRequest = MKLocalSearch.Request(completion: suggestedCompletion)
+    private func configureBinding() {
+        searchBar.rx.text.orEmpty
+            .bind(to: viewModel.stationText)
+            .disposed(by: disposeBag)
         
-        search(using: searchRequest)
-    }
-    
-    private func search(using searchRequest: MKLocalSearch.Request) {
-        searchRequest.resultTypes = .pointOfInterest
-        
-        localSearch = MKLocalSearch(request: searchRequest)
-        localSearch?.start(completionHandler: { response, error in
-            if error != nil {
-                return
+        cancelButton.rx.tap
+            .subscribe { _ in
+                self.dismiss(animated: true)
             }
-            
-            self.places = response?.mapItems[0]
-            print(self.places!.placemark.coordinate)
-        })
+            .disposed(by: disposeBag)
+        
+        viewModel.stationName
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { data in
+                self.stationList = data
+                self.listTableView.reloadData()
+            })
+            .disposed(by: disposeBag)
     }
 }
 
 // MARK: - UITableViewDelegate
 
-extension SearchListViewController: UITableViewDelegate {
+extension SubwaySearchListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        search(for: searchResults[indexPath.row])
+        let station = stationList[indexPath.row]
+        let stationName = station.stationName
+        let laneName = station.laneName
+        let longitude = station.x
+        let latitude = station.y
+        
+        delegate?.dataSend(
+            longitude: longitude,
+            latitude: latitude,
+            location: stationName,
+            lane: laneName
+        )
+        
+        dismiss(animated: true)
     }
 }
 
 // MARK: - UITableViewDataSource
 
-extension SearchListViewController: UITableViewDataSource {
+extension SubwaySearchListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchResults.count
+        return stationList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -184,7 +159,8 @@ extension SearchListViewController: UITableViewDataSource {
             withIdentifier: SearchListTableViewCell.identifier,
             for: indexPath
         ) as? SearchListTableViewCell {
-            cell.stationLabel.text = searchResults[indexPath.row].title
+            cell.titleLabel.text = stationList[indexPath.row].stationName
+            cell.subTitleLabel.text = stationList[indexPath.row].laneName
             cell.backgroundColor = .systemBackground
             cell.selectionStyle = .none
             
@@ -195,47 +171,13 @@ extension SearchListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
-    }
-}
-
-// MARK: - Button Action
-
-extension SearchListViewController {
-    private func configureButtonAction() {
-        cancelButton.addTarget(self, action: #selector(tappedCancelButton), for: .touchDown)
-    }
-    
-    @objc
-    private func tappedCancelButton() {
-        dismiss(animated: true)
-    }
-}
-
-// MARK: - UISearchBarDelegate
-
-extension SearchListViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        searchCompleter.queryFragment = searchText
-    }
-}
-
-// MARK: - MKLocalSearchCompleterDelegate
-
-extension SearchListViewController: MKLocalSearchCompleterDelegate {
-    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
-        searchResults = completer.results
-        listTableView.reloadData()
-    }
-    
-    func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
-        print(error.localizedDescription)
+        return 65
     }
 }
 
 // MARK: - View & Layout Configure
 
-extension SearchListViewController {
+extension SubwaySearchListViewController {
     private func configureView() {
         view.backgroundColor = .systemBackground.withAlphaComponent(0.5)
     }
