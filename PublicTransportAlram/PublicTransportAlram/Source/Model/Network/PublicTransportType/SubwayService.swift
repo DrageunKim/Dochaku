@@ -34,26 +34,7 @@ class SubwayService {
         return String()
     }
     
-    func fetchStationStartRx() -> Observable<RealTimeStationArrivalDTO> {
-        let manager = NetworkManager(urlSession: .shared)
-        let request = RealtimeStationArrival(stationName: startStationName)
-        
-        return Observable.create { emitter in
-            manager.dataTask(request) { result in
-                switch result {
-                case .success(let data):
-                    emitter.onNext(data)
-                    emitter.onCompleted()
-                case .failure(let error):
-                    emitter.onError(error)
-                }
-            }
-            
-            return Disposables.create()
-        }
-    }
-    
-    func fetchStationCodeRx() -> Observable<PublicTransitPoiDTO> {
+    func fetchSubwayPOIRx() -> Observable<PublicTransitPoiDTO> {
         let manager = NetworkManager(urlSession: .shared)
         let request = PublicTransitPoi(
             type: StationClass.subway,
@@ -76,12 +57,12 @@ class SubwayService {
         }
     }
     
-    func fetchSubwayInfoRx() -> Observable<SubwayRouteSearchDTO> {
+    func fetchBusPOIRx() -> Observable<PublicTransitPoiDTO> {
         let manager = NetworkManager(urlSession: .shared)
-        let request = SubwayRouteSearch(
-            city: CID.capital,
-            now: nowStationCode,
-            target: targetStationCode
+        let request = PublicTransitPoi(
+            type: StationClass.bus,
+            latitude: stationLatitude,
+            longitude: stationLongitude
         )
         
         return Observable.create { emitter in

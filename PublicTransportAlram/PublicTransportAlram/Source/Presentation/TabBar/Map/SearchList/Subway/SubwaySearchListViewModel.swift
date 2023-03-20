@@ -8,6 +8,11 @@
 import RxSwift
 import RxCocoa
 
+enum PublicTransportType {
+    case subway
+    case bus
+}
+
 class SubwaySearchListViewModel {
     
     let disposeBag = DisposeBag()
@@ -15,7 +20,6 @@ class SubwaySearchListViewModel {
     // MARK: Input
     
     let stationText: AnyObserver<String>
-    let fetchSubwayInfo: AnyObserver<Void>
     
     // MARK: Output
     
@@ -29,7 +33,6 @@ class SubwaySearchListViewModel {
         let poi = PublishSubject<PublicTransitPoiDTO>()
         
         stationText = station.asObserver()
-        fetchSubwayInfo = fetching.asObserver()
         
         station
             .filter { $0.count > 0 }
@@ -50,7 +53,7 @@ class SubwaySearchListViewModel {
         fetching
             .map(domain.checkValidLatitudeAndLongitude)
             .filter { domain.isValidLatitudeAndLongitude }
-            .flatMap(domain.fetchStationCodeRx)
+            .flatMap(domain.fetchSubwayPOIRx)
             .subscribe(onNext: poi.onNext)
             .disposed(by: disposeBag)
         

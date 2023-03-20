@@ -156,6 +156,13 @@
 			path = Subway;
 			sourceTree = "<group>";
 		};
+		D055595529C8511700850785 /* Bus */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Bus;
+			sourceTree = "<group>";
+		};
 		D081668029A77CA700A67C1C = {
 			isa = PBXGroup;
 			children = (
@@ -238,7 +245,6 @@
 			children = (
 				D08166AC29A78BF300A67C1C /* CustomTabBarController.swift */,
 				D08316F429C6D60B00E86676 /* Map */,
-				D08316F829C6E38100E86676 /* SearchList */,
 				D08166A729A78A1A00A67C1C /* Subway */,
 				D08166AF29A78D4600A67C1C /* Bus */,
 				D0FE2BF529B4CA31001C83F7 /* List */,
@@ -270,7 +276,7 @@
 				D08166B429A793C600A67C1C /* NetworkManager.swift */,
 				D08166BA29A7978C00A67C1C /* Request.swift */,
 				D08166B829A7973400A67C1C /* HTTPMethod.swift */,
-				D081681C29AF827600A67C1C /* Subway */,
+				D081681C29AF827600A67C1C /* PublicTransportType */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -312,7 +318,7 @@
 			path = Error;
 			sourceTree = "<group>";
 		};
-		D081681C29AF827600A67C1C /* Subway */ = {
+		D081681C29AF827600A67C1C /* PublicTransportType */ = {
 			isa = PBXGroup;
 			children = (
 				D081681D29AF82AF00A67C1C /* SubwayService.swift */,
@@ -321,13 +327,14 @@
 				D08316EE29C36FA900E86676 /* RealtimeStationArrival.swift */,
 				D08316F229C3736F00E86676 /* ServiceEnum.swift */,
 			);
-			path = Subway;
+			path = PublicTransportType;
 			sourceTree = "<group>";
 		};
 		D08316F429C6D60B00E86676 /* Map */ = {
 			isa = PBXGroup;
 			children = (
 				D08316F529C6D65400E86676 /* MapViewController.swift */,
+				D08316F829C6E38100E86676 /* SearchList */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -336,6 +343,7 @@
 			isa = PBXGroup;
 			children = (
 				D055594C29C83DDE00850785 /* Subway */,
+				D055595529C8511700850785 /* Bus */,
 				D055594B29C8389800850785 /* Address */,
 				D08316FB29C74AE400E86676 /* SearchListTableViewCell.swift */,
 			);

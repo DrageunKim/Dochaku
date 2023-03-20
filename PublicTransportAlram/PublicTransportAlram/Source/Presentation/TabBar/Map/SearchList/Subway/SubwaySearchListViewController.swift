@@ -16,7 +16,6 @@ class SubwaySearchListViewController: UIViewController {
     
     private let viewModel = SubwaySearchListViewModel()
     private let disposeBag = DisposeBag()
-    
     private var stationList: [POI] = []
     
     private let topStackView: UIStackView = {

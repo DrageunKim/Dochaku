@@ -51,7 +51,7 @@ class ListViewModel {
         fetching
             .map(domain.checkValidLatitudeAndLongitude)
             .filter { domain.isValidLatitudeAndLongitude }
-            .flatMap(domain.fetchStationCodeRx)
+            .flatMap(domain.fetchSubwayPOIRx)
             .subscribe(onNext: poi.onNext)
             .disposed(by: disposeBag)
         

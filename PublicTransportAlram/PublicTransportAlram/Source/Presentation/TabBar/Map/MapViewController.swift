@@ -72,7 +72,7 @@ class MapViewController: UIViewController {
         stackView.alignment = .fill
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
-        stackView.spacing = 5
+        stackView.spacing = 10
         return stackView
     }()
     private let dateStackView: UIStackView = {
@@ -197,12 +197,14 @@ class MapViewController: UIViewController {
         locationManager.delegate = self
     }
     
-    private func configureAnnotation(
+    func configureAnnotation(
         latitude: CLLocationDegrees,
         longitude: CLLocationDegrees,
         title: String? = nil,
         subTitle: String? = nil
     ) {
+        mapView.removeAnnotations(mapView.annotations)
+        
         let center = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let region = MKCoordinateRegion(center: center, latitudinalMeters: 500, longitudinalMeters: 500)
         
@@ -321,7 +323,7 @@ extension MapViewController {
         
         NSLayoutConstraint.activate([
             topStackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
-            topStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.6),
+            topStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.55),
             topStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             topStackView.topAnchor.constraint(
                 equalTo: view.topAnchor,
@@ -335,17 +337,17 @@ extension MapViewController {
             dateTimeStackView.widthAnchor.constraint(equalTo: topStackView.widthAnchor, multiplier: 0.9),
             dateTimeStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1),
             dateTimeStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            dateTimeStackView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: 10),
+            dateTimeStackView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: 20),
             
             borderLine.widthAnchor.constraint(equalTo: topStackView.widthAnchor),
             borderLine.heightAnchor.constraint(equalToConstant: 1),
             borderLine.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            borderLine.topAnchor.constraint(equalTo: dateTimeStackView.bottomAnchor, constant: 10),
+            borderLine.topAnchor.constraint(equalTo: dateTimeStackView.bottomAnchor, constant: 20),
             
             buttonStackView.widthAnchor.constraint(equalTo: topStackView.widthAnchor, multiplier: 0.9),
             buttonStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
             buttonStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            buttonStackView.topAnchor.constraint(equalTo: borderLine.bottomAnchor, constant: 10)
+            buttonStackView.topAnchor.constraint(equalTo: borderLine.bottomAnchor, constant: 20)
         ])
     }
 }
