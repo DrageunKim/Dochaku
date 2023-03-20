@@ -19,14 +19,13 @@ class AddressSearchListViewModel {
         }
     }
     
-    func search(for suggestedCompletion: MKLocalSearchCompletion) {
+    func search(
+        for suggestedCompletion: MKLocalSearchCompletion,
+        completion: @escaping (CLLocationCoordinate2D
+        ) -> Void) {
         let searchRequest = MKLocalSearch.Request(completion: suggestedCompletion)
         
-        search(using: searchRequest)
-    }
-    
-    func search(using searchRequest: MKLocalSearch.Request) {
-        searchRequest.resultTypes = .pointOfInterest
+        searchRequest.resultTypes = .address
         
         localSearch = MKLocalSearch(request: searchRequest)
         localSearch?.start(completionHandler: { response, error in
@@ -35,7 +34,10 @@ class AddressSearchListViewModel {
             }
             
             self.places = response?.mapItems[0]
-            print(self.places!.placemark.coordinate)
+            
+            if let places = self.places {
+                return completion(places.placemark.coordinate)
+            }
         })
     }
 }

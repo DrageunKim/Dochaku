@@ -1,5 +1,5 @@
 //
-//  SearchListViewController.swift
+//  BusSearchListViewController.swift
 //  PublicTransportAlram
 //
 //  Created by yonggeun Kim on 2023/03/19.
@@ -10,12 +10,17 @@ import MapKit
 import RxSwift
 import RxCocoa
 
-class AddressSearchListViewController: UIViewController {
+class BusSearchListViewController: UIViewController {
     
     var delegate: Sendable?
     
-    private let viewModel = AddressSearchListViewModel()
+    private let viewModel = BusSearchListViewModel()
     private let disposeBag = DisposeBag()
+    private var stationList: [POI] = [] {
+        didSet {
+            listTableView.reloadData()
+        }
+    }
     
     private let topStackView: UIStackView = {
         let stackView = UIStackView()
@@ -28,7 +33,7 @@ class AddressSearchListViewController: UIViewController {
     }()
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "주소지 입력"
+        label.text = "정류장근처 위치 입력"
         label.font = .systemFont(ofSize: 14, weight: .semibold)
         label.textColor = .label
         label.textAlignment = .center
@@ -109,7 +114,7 @@ class AddressSearchListViewController: UIViewController {
     
     private func configureSearchCompleter() {
         viewModel.searchCompleter.delegate = self
-        viewModel.searchCompleter.resultTypes = .address
+        viewModel.searchCompleter.resultTypes = .pointOfInterest
     }
     
     private func configureBinding() {
@@ -118,35 +123,46 @@ class AddressSearchListViewController: UIViewController {
                 self.dismiss(animated: true)
             }
             .disposed(by: disposeBag)
+        
+        viewModel.stationName
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { data in
+                self.stationList = data
+            })
+            .disposed(by: disposeBag)
+        
+       
     }
 }
 
 // MARK: - UITableViewDelegate
 
-extension AddressSearchListViewController: UITableViewDelegate {
+extension BusSearchListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let result = viewModel.searchResults[indexPath.row]
+        let station = stationList[indexPath.row]
+        let stationName = station.stationName
+        let longitude = station.x
+        let latitude = station.y
+        let laneName = station.laneName ?? String()
         
-        viewModel.search(for: result, completion: { data in
-            self.delegate?.dataSend(
-                longitude: data.longitude,
-                latitude: data.latitude,
-                location: result.title,
-                lane: result.subtitle
-            )
-            
-            self.dismiss(animated: true)
-        })
+        delegate?.dataSend(
+            longitude: longitude,
+            latitude: latitude,
+            location: stationName,
+            lane: laneName
+        )
+        
+        dismiss(animated: true)
     }
 }
 
 // MARK: - UITableViewDataSource
 
-extension AddressSearchListViewController: UITableViewDataSource {
+extension BusSearchListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.searchResults.count
+        return stationList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -154,7 +170,8 @@ extension AddressSearchListViewController: UITableViewDataSource {
             withIdentifier: SearchListTableViewCell.identifier,
             for: indexPath
         ) as? SearchListTableViewCell {
-            cell.titleLabel.text = viewModel.searchResults[indexPath.row].title
+            cell.titleLabel.text = stationList[indexPath.row].stationName
+            cell.subTitleLabel.text = stationList[indexPath.row].laneName
             cell.backgroundColor = .systemBackground
             cell.selectionStyle = .none
             
@@ -171,7 +188,7 @@ extension AddressSearchListViewController: UITableViewDataSource {
 
 // MARK: - UISearchBarDelegate
 
-extension AddressSearchListViewController: UISearchBarDelegate {
+extension BusSearchListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         viewModel.searchCompleter.queryFragment = searchText
     }
@@ -179,10 +196,27 @@ extension AddressSearchListViewController: UISearchBarDelegate {
 
 // MARK: - MKLocalSearchCompleterDelegate
 
-extension AddressSearchListViewController: MKLocalSearchCompleterDelegate {
+extension BusSearchListViewController: MKLocalSearchCompleterDelegate {
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
         viewModel.searchResults = completer.results
-        listTableView.reloadData()
+        
+        let observable = Observable<[MKLocalSearchCompletion]>.just(viewModel.searchResults)
+        
+        observable
+            .observe(on: ConcurrentDispatchQueueScheduler(qos: .default))
+            .subscribe { result in
+                if let firstResult = result.first {
+                    self.viewModel.search(for: firstResult, completion: { data in
+                        let observable = Observable<String>.just("\(data.latitude) \(data.longitude)")
+                        
+                        observable
+                            .observe(on: ConcurrentDispatchQueueScheduler(qos: .default))
+                            .subscribe(onNext: self.viewModel.xyData.onNext)
+                            .disposed(by: self.disposeBag)
+                    })
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
     func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
@@ -192,7 +226,7 @@ extension AddressSearchListViewController: MKLocalSearchCompleterDelegate {
 
 // MARK: - View & Layout Configure
 
-extension AddressSearchListViewController {
+extension BusSearchListViewController {
     private func configureView() {
         view.backgroundColor = .systemBackground.withAlphaComponent(0.5)
     }

@@ -23,7 +23,7 @@ class ListViewModel {
     let stationName: Observable<[POI]>
     
     init(
-        domain: SubwayService = SubwayService()
+        domain: PublicTransportService = PublicTransportService()
     ) {
         let station = PublishSubject<String>()
         let fetching = PublishSubject<Void>()

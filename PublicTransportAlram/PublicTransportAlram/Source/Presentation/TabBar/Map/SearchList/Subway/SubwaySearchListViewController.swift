@@ -131,9 +131,9 @@ extension SubwaySearchListViewController: UITableViewDelegate {
         
         let station = stationList[indexPath.row]
         let stationName = station.stationName
-        let laneName = station.laneName
         let longitude = station.x
         let latitude = station.y
+        let laneName = station.laneName ?? String()
         
         delegate?.dataSend(
             longitude: longitude,

@@ -20,7 +20,7 @@ struct PublicTransitPoi: Request {
     let apiKey: String = "DnMRoATHlXeGpeewYG0b6A"
     let lang: String = String(Lang.korean.rawValue)
     let output: String = "json"
-    let radius: String = "250"
+    let radius: String = "500"
     
     init(type: StationClass, latitude: Double, longitude: Double) {
         queryList.updateValue(apiKey, forKey: "apiKey")

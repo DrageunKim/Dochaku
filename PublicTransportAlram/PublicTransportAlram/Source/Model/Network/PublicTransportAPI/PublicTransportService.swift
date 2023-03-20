@@ -8,7 +8,7 @@
 import Foundation
 import RxSwift
 
-class SubwayService {
+class PublicTransportService {
     var startStationName: String = String()
     var nowStationCode: Int = 0
     var targetStationCode: Int = 0

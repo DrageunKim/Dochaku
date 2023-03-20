@@ -22,8 +22,8 @@ struct POI: Decodable {
     let x: Double
     let y: Double
     let arsID: String
-    let type: Int
-    let laneName: String
-    let laneCity: String
+    let type: Int?
+    let laneName: String?
+    let laneCity: String?
     let ebid: String
 }

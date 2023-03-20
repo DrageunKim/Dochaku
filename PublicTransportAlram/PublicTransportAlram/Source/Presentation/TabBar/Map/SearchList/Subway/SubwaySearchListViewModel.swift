@@ -8,11 +8,6 @@
 import RxSwift
 import RxCocoa
 
-enum PublicTransportType {
-    case subway
-    case bus
-}
-
 class SubwaySearchListViewModel {
     
     let disposeBag = DisposeBag()
@@ -25,9 +20,7 @@ class SubwaySearchListViewModel {
     
     let stationName: Observable<[POI]>
     
-    init(
-        domain: SubwayService = SubwayService()
-    ) {
+    init(domain: PublicTransportService = PublicTransportService()) {
         let station = PublishSubject<String>()
         let fetching = PublishSubject<Void>()
         let poi = PublishSubject<PublicTransitPoiDTO>()

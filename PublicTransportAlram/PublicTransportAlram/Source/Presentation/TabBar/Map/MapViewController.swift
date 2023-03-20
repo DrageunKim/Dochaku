@@ -17,6 +17,7 @@ class MapViewController: UIViewController {
         case address
     }
     
+    private var myAnnotations = [MKPointAnnotation]()
     private let topStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -57,7 +58,16 @@ class MapViewController: UIViewController {
         map.isZoomEnabled = true
         map.showsUserLocation = true
         map.setUserTrackingMode(.follow, animated: true)
+        map.layer.cornerRadius = 20
         return map
+    }()
+    private let myLocationButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "location.circle.fill"), for: .normal)
+        button.contentHorizontalAlignment = .fill
+        button.contentVerticalAlignment = .fill
+        return button
     }()
     private let locationManager: CLLocationManager = {
         let location = CLLocationManager()
@@ -197,7 +207,7 @@ class MapViewController: UIViewController {
         locationManager.delegate = self
     }
     
-    func configureAnnotation(
+    private func configureAnnotation(
         latitude: CLLocationDegrees,
         longitude: CLLocationDegrees,
         title: String? = nil,
@@ -206,7 +216,7 @@ class MapViewController: UIViewController {
         mapView.removeAnnotations(mapView.annotations)
         
         let center = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        let region = MKCoordinateRegion(center: center, latitudinalMeters: 500, longitudinalMeters: 500)
+        let region = MKCoordinateRegion(center: center, latitudinalMeters: 1000, longitudinalMeters: 1000)
         
         mapView.setRegion(region, animated: true)
         
@@ -227,7 +237,11 @@ class MapViewController: UIViewController {
 
 extension MapViewController: Sendable {
     func dataSend(longitude: Double, latitude: Double, location: String, lane: String) {
-        locationSearchBar.text = location + " " + "(\(lane))"
+        if lane != String() {
+            locationSearchBar.text = location + " " + "(\(lane))"
+        } else {
+            locationSearchBar.text = location
+        }
         
         configureAnnotation(
             latitude: latitude,
@@ -259,11 +273,25 @@ extension MapViewController: CLLocationManagerDelegate {
 
 extension MapViewController {
     private func configureButtonAction() {
+        var longGesture = UILongPressGestureRecognizer(
+            target: self,
+            action: #selector(addWaypoint)
+        )
+        longGesture.minimumPressDuration = 1.0
+
+        mapView.addGestureRecognizer(longGesture)
+        myLocationButton.addTarget(self, action: #selector(tappedMyLocationButton), for: .touchDown)
         locationSearchBar.searchTextField.addTarget(
             self,
             action: #selector(tappedLocationSearchBar),
             for: .touchDown
         )
+    }
+    
+    @objc
+    private func tappedMyLocationButton() {
+        mapView.showsUserLocation = true
+        mapView.setUserTrackingMode(.follow, animated: true)
     }
     
     @objc
@@ -274,16 +302,28 @@ extension MapViewController {
             presentViewController.delegate = self
             present(presentViewController, animated: true)
         case SearchType.bus.rawValue:
-            let presentViewController = SubwaySearchListViewController()
+            let presentViewController = BusSearchListViewController()
             presentViewController.delegate = self
             present(presentViewController, animated: true)
         case SearchType.address.rawValue:
             let presentViewController = AddressSearchListViewController()
-//            presentViewController.delegate = self
+            presentViewController.delegate = self
             present(presentViewController, animated: true)
         default:
             break
         }
+    }
+    
+    @objc
+    private func addWaypoint(longGesture: UIGestureRecognizer) {
+        mapView.removeAnnotations(mapView.annotations)
+        
+        let touchPoint = longGesture.location(in: mapView)
+        let newCoordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
+        let annotation = MKPointAnnotation()
+        
+        annotation.coordinate = newCoordinates
+        mapView.addAnnotation(annotation)
     }
 }
 
@@ -321,6 +361,8 @@ extension MapViewController {
         view.addSubview(borderLine)
         view.addSubview(buttonStackView)
         
+        mapView.addSubview(myLocationButton)
+        
         NSLayoutConstraint.activate([
             topStackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
             topStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.55),
@@ -347,7 +389,21 @@ extension MapViewController {
             buttonStackView.widthAnchor.constraint(equalTo: topStackView.widthAnchor, multiplier: 0.9),
             buttonStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
             buttonStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            buttonStackView.topAnchor.constraint(equalTo: borderLine.bottomAnchor, constant: 20)
+            buttonStackView.topAnchor.constraint(equalTo: borderLine.bottomAnchor, constant: 20),
+            
+            myLocationButton.leadingAnchor.constraint(
+                equalTo: mapView.leadingAnchor,
+                constant: view.frame.width * 0.04
+            ),
+            myLocationButton.widthAnchor.constraint(
+                equalTo: view.widthAnchor,
+                multiplier: 0.08
+            ),
+            myLocationButton.heightAnchor.constraint(equalTo: myLocationButton.widthAnchor),
+            myLocationButton.bottomAnchor.constraint(
+                equalTo: mapView.bottomAnchor,
+                constant: view.frame.height * -0.04
+            )
         ])
     }
 }
