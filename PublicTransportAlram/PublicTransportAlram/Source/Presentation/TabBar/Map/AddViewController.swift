@@ -1,5 +1,5 @@
 //
-//  MapViewController.swift
+//  AddViewController.swift
 //  PublicTransportAlram
 //
 //  Created by yonggeun Kim on 2023/03/19.
@@ -9,7 +9,7 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class MapViewController: UIViewController {
+class AddViewController: UIViewController {
     
     enum SearchType: Int {
         case subway = 0
@@ -98,7 +98,7 @@ class MapViewController: UIViewController {
         label.backgroundColor = .systemBackground
         label.text = "요일 / 시간"
         label.textColor = .label
-        label.font = .preferredFont(forTextStyle: .headline).withSize(16)
+        label.font = .preferredFont(forTextStyle: .headline).withSize(17)
         return label
     }()
     private let dataSettingLabel: UILabel = {
@@ -106,7 +106,7 @@ class MapViewController: UIViewController {
         label.backgroundColor = .systemBackground
         label.text = "월,화,수,목 / 00:00~24:00"
         label.textColor = .label
-        label.font = .preferredFont(forTextStyle: .subheadline).withSize(14)
+        label.font = .preferredFont(forTextStyle: .subheadline).withSize(15)
         return label
     }()
     private let dateSettingButton: UIButton = {
@@ -114,7 +114,8 @@ class MapViewController: UIViewController {
         button.backgroundColor = .systemBackground
         button.setImage(.add, for: .normal)
         button.setTitleColor(.label, for: .normal)
-        button.titleLabel?.font = .preferredFont(forTextStyle: .headline)
+        button.contentHorizontalAlignment = .fill
+        button.contentVerticalAlignment = .fill
         return button
     }()
     private let timeStackView: UIStackView = {
@@ -130,7 +131,7 @@ class MapViewController: UIViewController {
         label.backgroundColor = .systemBackground
         label.text = "반경 / 알람횟수"
         label.textColor = .label
-        label.font = .preferredFont(forTextStyle: .headline).withSize(16)
+        label.font = .preferredFont(forTextStyle: .headline).withSize(17)
         return label
     }()
     private let timeSettingLabel: UILabel = {
@@ -138,7 +139,7 @@ class MapViewController: UIViewController {
         label.backgroundColor = .systemBackground
         label.text = "500m / 5번"
         label.textColor = .label
-        label.font = .preferredFont(forTextStyle: .subheadline).withSize(14)
+        label.font = .preferredFont(forTextStyle: .subheadline).withSize(15)
         return label
     }()
     private let timeSettingButton: UIButton = {
@@ -146,7 +147,8 @@ class MapViewController: UIViewController {
         button.backgroundColor = .systemBackground
         button.setImage(.add, for: .normal)
         button.setTitleColor(.label, for: .normal)
-        button.titleLabel?.font = .preferredFont(forTextStyle: .headline)
+        button.contentHorizontalAlignment = .fill
+        button.contentVerticalAlignment = .fill
         return button
     }()
     private let buttonStackView: UIStackView = {
@@ -235,7 +237,7 @@ class MapViewController: UIViewController {
 
 // MARK: - Sendable
 
-extension MapViewController: Sendable {
+extension AddViewController: Sendable {
     func dataSend(longitude: Double, latitude: Double, location: String, lane: String) {
         if lane != String() {
             locationSearchBar.text = location + " " + "(\(lane))"
@@ -254,7 +256,7 @@ extension MapViewController: Sendable {
 
 // MARK: - CLLocationManagerDelegate
 
-extension MapViewController: CLLocationManagerDelegate {
+extension AddViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
             configureAnnotation(
@@ -271,7 +273,7 @@ extension MapViewController: CLLocationManagerDelegate {
 
 // MARK: - Configure Button Action
 
-extension MapViewController {
+extension AddViewController {
     private func configureButtonAction() {
         let longGesture = UILongPressGestureRecognizer(
             target: self,
@@ -286,6 +288,7 @@ extension MapViewController {
             action: #selector(tappedLocationSearchBar),
             for: .touchDown
         )
+        dateSettingButton.addTarget(self, action: #selector(tappedDateSettingButton), for: .touchDown)
     }
     
     @objc
@@ -325,11 +328,18 @@ extension MapViewController {
         annotation.coordinate = newCoordinates
         mapView.addAnnotation(annotation)
     }
+    
+    @objc
+    private func tappedDateSettingButton() {
+        let presentViewController = DateSelectViewController()
+        
+        present(presentViewController, animated: true)
+    }
 }
 
 // MARK: - Configure View & Layout
 
-extension MapViewController {
+extension AddViewController {
     private func configureView() {
         view.backgroundColor = .systemBackground
     }
@@ -376,21 +386,6 @@ extension MapViewController {
             locationSearchBar.widthAnchor.constraint(equalTo: topStackView.widthAnchor),
             mapView.widthAnchor.constraint(equalTo: topStackView.widthAnchor),
             
-            dateTimeStackView.widthAnchor.constraint(equalTo: topStackView.widthAnchor, multiplier: 0.9),
-            dateTimeStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1),
-            dateTimeStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            dateTimeStackView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: 20),
-            
-            borderLine.widthAnchor.constraint(equalTo: topStackView.widthAnchor),
-            borderLine.heightAnchor.constraint(equalToConstant: 1),
-            borderLine.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            borderLine.topAnchor.constraint(equalTo: dateTimeStackView.bottomAnchor, constant: 20),
-            
-            buttonStackView.widthAnchor.constraint(equalTo: topStackView.widthAnchor, multiplier: 0.9),
-            buttonStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
-            buttonStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            buttonStackView.topAnchor.constraint(equalTo: borderLine.bottomAnchor, constant: 20),
-            
             myLocationButton.leadingAnchor.constraint(
                 equalTo: mapView.leadingAnchor,
                 constant: view.frame.width * 0.04
@@ -403,7 +398,27 @@ extension MapViewController {
             myLocationButton.bottomAnchor.constraint(
                 equalTo: mapView.bottomAnchor,
                 constant: view.frame.height * -0.04
-            )
+            ),
+            
+            dateTimeStackView.widthAnchor.constraint(equalTo: topStackView.widthAnchor),
+            dateTimeStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1),
+            dateTimeStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            dateTimeStackView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: 20),
+            
+            dateSettingButton.widthAnchor.constraint(equalToConstant: 25),
+            dateSettingButton.heightAnchor.constraint(equalTo: dateSettingButton.widthAnchor),
+            timeSettingButton.widthAnchor.constraint(equalToConstant: 25),
+            timeSettingButton.heightAnchor.constraint(equalTo: timeSettingButton.widthAnchor),
+            
+            borderLine.widthAnchor.constraint(equalTo: topStackView.widthAnchor),
+            borderLine.heightAnchor.constraint(equalToConstant: 1),
+            borderLine.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            borderLine.topAnchor.constraint(equalTo: dateTimeStackView.bottomAnchor, constant: 20),
+            
+            buttonStackView.widthAnchor.constraint(equalTo: topStackView.widthAnchor, multiplier: 0.9),
+            buttonStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
+            buttonStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            buttonStackView.topAnchor.constraint(equalTo: borderLine.bottomAnchor, constant: 20)
         ])
     }
 }
