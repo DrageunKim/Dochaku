@@ -13,21 +13,21 @@ class CustomTabBarController: UITabBarController {
         let viewController = MapViewController()
         viewController.view.backgroundColor = .systemBackground
         viewController.tabBarItem.title = "알림 추가"
-        viewController.tabBarItem.image = UIImage(systemName: "bus.fill")
+        viewController.tabBarItem.image = UIImage(systemName: "alarm")
         return viewController
     }()
-//    private let subwayViewController: UIViewController = {
-//        let viewController = UINavigationController(rootViewController: SubwayViewController())
-//        viewController.view.backgroundColor = .systemBackground
-//        viewController.tabBarItem.title = "지하철"
-//        viewController.tabBarItem.image = UIImage(systemName: "tram.fill")
-//        return viewController
-//    }()
-//    private let busViewController: UIViewController = {
+    private let listViewController: UIViewController = {
+        let viewController = UINavigationController(rootViewController: ListViewController())
+        viewController.view.backgroundColor = .systemBackground
+        viewController.tabBarItem.title = "지하철"
+        viewController.tabBarItem.image = UIImage(systemName: "list.bullet")
+        return viewController
+    }()
+//    private let settingViewController: UIViewController = {
 //        let viewController = UINavigationController(rootViewController: BusViewController())
 //        viewController.view.backgroundColor = .systemBackground
 //        viewController.tabBarItem.title = "버스"
-//        viewController.tabBarItem.image = UIImage(systemName: "bus.fill")
+//        viewController.tabBarItem.image = UIImage(systemName: "gearshape")
 //        return viewController
 //    }()
     
@@ -45,7 +45,7 @@ class CustomTabBarController: UITabBarController {
         tabBar.layer.cornerRadius = 10
         
         viewControllers = [
-            mapViewController
+            mapViewController, listViewController
         ]
     }
 }

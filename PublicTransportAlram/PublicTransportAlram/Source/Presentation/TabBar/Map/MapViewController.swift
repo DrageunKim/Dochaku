@@ -96,17 +96,17 @@ class MapViewController: UIViewController {
     private let dateLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .systemBackground
-        label.text = "요일 설정"
+        label.text = "요일 / 시간"
         label.textColor = .label
-        label.font = .preferredFont(forTextStyle: .headline)
+        label.font = .preferredFont(forTextStyle: .headline).withSize(16)
         return label
     }()
     private let dataSettingLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .systemBackground
-        label.text = "[월, 화, 수, 목]"
+        label.text = "월,화,수,목 / 00:00~24:00"
         label.textColor = .label
-        label.font = .preferredFont(forTextStyle: .subheadline)
+        label.font = .preferredFont(forTextStyle: .subheadline).withSize(14)
         return label
     }()
     private let dateSettingButton: UIButton = {
@@ -128,17 +128,17 @@ class MapViewController: UIViewController {
     private let timeLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .systemBackground
-        label.text = "시간 설정"
+        label.text = "반경 / 알람횟수"
         label.textColor = .label
-        label.font = .preferredFont(forTextStyle: .headline)
+        label.font = .preferredFont(forTextStyle: .headline).withSize(16)
         return label
     }()
     private let timeSettingLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .systemBackground
-        label.text = "00:00 ~ 24:00"
+        label.text = "500m / 5번"
         label.textColor = .label
-        label.font = .preferredFont(forTextStyle: .subheadline)
+        label.font = .preferredFont(forTextStyle: .subheadline).withSize(14)
         return label
     }()
     private let timeSettingButton: UIButton = {
@@ -273,7 +273,7 @@ extension MapViewController: CLLocationManagerDelegate {
 
 extension MapViewController {
     private func configureButtonAction() {
-        var longGesture = UILongPressGestureRecognizer(
+        let longGesture = UILongPressGestureRecognizer(
             target: self,
             action: #selector(addWaypoint)
         )
