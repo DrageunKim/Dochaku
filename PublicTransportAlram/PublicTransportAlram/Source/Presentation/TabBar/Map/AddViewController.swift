@@ -37,7 +37,7 @@ class AddViewController: UIViewController {
     private let segmentedControl: UISegmentedControl = {
         let control = UISegmentedControl(items: ["지하철", "버스", "주소"])
         control.selectedSegmentIndex = 0
-        control.backgroundColor = .lightGray
+        control.backgroundColor = .systemOrange.withAlphaComponent(0.4)
         control.selectedSegmentTintColor = .systemBackground
         control.layer.borderColor = UIColor.label.cgColor
         control.layer.borderWidth = 0.5
@@ -126,7 +126,7 @@ class AddViewController: UIViewController {
         stackView.spacing = 20
         return stackView
     }()
-    private let timeLabel: UILabel = {
+    private let optionsLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .systemBackground
         label.text = "반경 / 알람횟수"
@@ -134,7 +134,7 @@ class AddViewController: UIViewController {
         label.font = .preferredFont(forTextStyle: .headline).withSize(17)
         return label
     }()
-    private let timeSettingLabel: UILabel = {
+    private let optionsSettingLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .systemBackground
         label.text = "500m / 5번"
@@ -142,7 +142,7 @@ class AddViewController: UIViewController {
         label.font = .preferredFont(forTextStyle: .subheadline).withSize(15)
         return label
     }()
-    private let timeSettingButton: UIButton = {
+    private let optionsSettingButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .systemBackground
         button.setImage(.add, for: .normal)
@@ -289,6 +289,7 @@ extension AddViewController {
             for: .touchDown
         )
         dateSettingButton.addTarget(self, action: #selector(tappedDateSettingButton), for: .touchDown)
+        optionsSettingButton.addTarget(self, action: #selector(tappedOptionsSettingButton), for: .touchDown)
     }
     
     @objc
@@ -335,6 +336,13 @@ extension AddViewController {
         
         present(presentViewController, animated: true)
     }
+    
+    @objc
+    private func tappedOptionsSettingButton() {
+        let presentViewController = OptionsSelectViewController()
+        
+        present(presentViewController, animated: true)
+    }
 }
 
 // MARK: - Configure View & Layout
@@ -354,9 +362,9 @@ extension AddViewController {
         dateStackView.addArrangedSubview(dataSettingLabel)
         dateStackView.addArrangedSubview(dateSettingButton)
         
-        timeStackView.addArrangedSubview(timeLabel)
-        timeStackView.addArrangedSubview(timeSettingLabel)
-        timeStackView.addArrangedSubview(timeSettingButton)
+        timeStackView.addArrangedSubview(optionsLabel)
+        timeStackView.addArrangedSubview(optionsSettingLabel)
+        timeStackView.addArrangedSubview(optionsSettingButton)
         
         dateTimeStackView.addArrangedSubview(dateStackView)
         dateTimeStackView.addArrangedSubview(timeStackView)
@@ -407,8 +415,8 @@ extension AddViewController {
             
             dateSettingButton.widthAnchor.constraint(equalToConstant: 25),
             dateSettingButton.heightAnchor.constraint(equalTo: dateSettingButton.widthAnchor),
-            timeSettingButton.widthAnchor.constraint(equalToConstant: 25),
-            timeSettingButton.heightAnchor.constraint(equalTo: timeSettingButton.widthAnchor),
+            optionsSettingButton.widthAnchor.constraint(equalToConstant: 25),
+            optionsSettingButton.heightAnchor.constraint(equalTo: optionsSettingButton.widthAnchor),
             
             borderLine.widthAnchor.constraint(equalTo: topStackView.widthAnchor),
             borderLine.heightAnchor.constraint(equalToConstant: 1),
