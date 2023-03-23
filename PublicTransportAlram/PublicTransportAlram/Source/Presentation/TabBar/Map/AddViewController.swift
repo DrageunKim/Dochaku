@@ -98,12 +98,13 @@ class AddViewController: UIViewController {
         label.backgroundColor = .systemBackground
         label.text = "요일 / 시간"
         label.textColor = .label
-        label.font = .preferredFont(forTextStyle: .headline).withSize(17)
+        label.font = .preferredFont(forTextStyle: .headline).withSize(16)
         return label
     }()
     private let dataSettingLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .systemBackground
+        label.text = "설정이 필요합니다."
         label.textColor = .label
         label.font = .preferredFont(forTextStyle: .subheadline).withSize(14)
         return label
@@ -117,7 +118,7 @@ class AddViewController: UIViewController {
         button.contentVerticalAlignment = .fill
         return button
     }()
-    private let timeStackView: UIStackView = {
+    private let optionsStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.alignment = .center
         stackView.axis = .horizontal
@@ -130,15 +131,15 @@ class AddViewController: UIViewController {
         label.backgroundColor = .systemBackground
         label.text = "반경 / 알람횟수"
         label.textColor = .label
-        label.font = .preferredFont(forTextStyle: .headline).withSize(17)
+        label.font = .preferredFont(forTextStyle: .headline).withSize(16)
         return label
     }()
     private let optionsSettingLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .systemBackground
-        label.text = "500m / 5번"
+        label.text = "설정이 필요합니다."
         label.textColor = .label
-        label.font = .preferredFont(forTextStyle: .subheadline).withSize(15)
+        label.font = .preferredFont(forTextStyle: .subheadline).withSize(14)
         return label
     }()
     private let optionsSettingButton: UIButton = {
@@ -236,6 +237,10 @@ class AddViewController: UIViewController {
     private func configureDataSettingLabelText(_ date: String, _ startTime: String, _ endTime: String) {
         dataSettingLabel.text = "\(date) / \(startTime)~\(endTime)"
     }
+    
+    private func configureOptionsSettingLabelText(_ radius: String, _ times: String) {
+        optionsSettingLabel.text = "\(radius) / \(times)"
+    }
 }
 
 // MARK: - LocationDataSendable
@@ -262,6 +267,14 @@ extension AddViewController: LocationDataSendable {
 extension AddViewController: DateDataSendable {
     func DateDataSend(date: String, startTime: String, endTime: String) {
         configureDataSettingLabelText(date, startTime, endTime)
+    }
+}
+
+// MARK: - OptionsDataSendable
+
+extension AddViewController: OptionsDataSendable {
+    func OptionsDataSend(radius: String, times: String) {
+        configureOptionsSettingLabelText(radius, times)
     }
 }
 
@@ -344,16 +357,14 @@ extension AddViewController {
     @objc
     private func tappedDateSettingButton() {
         let presentViewController = DateSelectViewController()
-        
         presentViewController.delegate = self
-        
         present(presentViewController, animated: true)
     }
     
     @objc
     private func tappedOptionsSettingButton() {
         let presentViewController = OptionsSelectViewController()
-        
+        presentViewController.delegate = self
         present(presentViewController, animated: true)
     }
 }
@@ -375,12 +386,12 @@ extension AddViewController {
         dateStackView.addArrangedSubview(dataSettingLabel)
         dateStackView.addArrangedSubview(dateSettingButton)
         
-        timeStackView.addArrangedSubview(optionsLabel)
-        timeStackView.addArrangedSubview(optionsSettingLabel)
-        timeStackView.addArrangedSubview(optionsSettingButton)
+        optionsStackView.addArrangedSubview(optionsLabel)
+        optionsStackView.addArrangedSubview(optionsSettingLabel)
+        optionsStackView.addArrangedSubview(optionsSettingButton)
         
         dateTimeStackView.addArrangedSubview(dateStackView)
-        dateTimeStackView.addArrangedSubview(timeStackView)
+        dateTimeStackView.addArrangedSubview(optionsStackView)
         
         buttonStackView.addArrangedSubview(okButton)
         buttonStackView.addArrangedSubview(initButton)

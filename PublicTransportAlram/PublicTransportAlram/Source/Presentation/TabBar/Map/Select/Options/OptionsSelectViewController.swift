@@ -6,9 +6,34 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class OptionsSelectViewController: UIViewController {
-
+    
+    var delegate: OptionsDataSendable?
+    
+    private var radius = String()
+    private var alarmTimes = String()
+    
+    private let disposeBag = DisposeBag()
+    
+    private let settingButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("설정", for: .normal)
+        button.setTitleColor(.systemBlue.withAlphaComponent(0.8), for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        return button
+    }()
+    private let cancelButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("취소", for: .normal)
+        button.setTitleColor(.systemRed.withAlphaComponent(0.8), for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        return button
+    }()
     private let totalStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -73,8 +98,73 @@ class OptionsSelectViewController: UIViewController {
         configureView()
         configureStackView()
         configureLayout()
+        configureBinding()
     }
     
+    private func configureBinding() {
+        settingButton.rx.tap
+            .subscribe { _ in
+                self.delegate?.OptionsDataSend(radius: self.radius, times: self.alarmTimes)
+                
+                self.dismiss(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        cancelButton.rx.tap
+            .subscribe { _ in
+                self.dismiss(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        radiusSegmentedControl.rx.selectedSegmentIndex
+            .subscribe { index in
+                self.checkRadiusSegmentedControl(index)
+            }
+            .disposed(by: disposeBag)
+        
+        timesSegmentedControl.rx.selectedSegmentIndex
+            .subscribe { index in
+                self.checkTimesSegmentedControl(index)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func checkRadiusSegmentedControl(_ index: Int) {
+        switch index {
+        case 0:
+            self.radius = "250m"
+        case 1:
+            self.radius = "500m"
+        case 2:
+            self.radius = "1km"
+        case 3:
+            self.radius = "1.5km"
+        case 4:
+            self.radius = "2km"
+        default:
+            break
+        }
+    }
+    
+    private func checkTimesSegmentedControl(_ index: Int) {
+        switch index {
+        case 0:
+            self.alarmTimes = "1회"
+        case 1:
+            self.alarmTimes = "3회"
+        case 2:
+            self.alarmTimes = "5회"
+        case 3:
+            self.alarmTimes = "7회"
+        case 4:
+            self.alarmTimes = "10회"
+        default:
+            break
+        }
+    }
+}
+
+extension OptionsSelectViewController {
     private func configureView() {
         view.backgroundColor = .systemBackground
     }
@@ -90,14 +180,26 @@ class OptionsSelectViewController: UIViewController {
     }
     
     private func configureLayout() {
+        view.addSubview(settingButton)
+        view.addSubview(cancelButton)
         view.addSubview(totalStackView)
         
         NSLayoutConstraint.activate([
+            settingButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
+            settingButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            settingButton.widthAnchor.constraint(equalToConstant: 40),
+            settingButton.heightAnchor.constraint(equalTo: settingButton.widthAnchor),
+            
+            cancelButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
+            cancelButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            cancelButton.widthAnchor.constraint(equalToConstant: 40),
+            cancelButton.heightAnchor.constraint(equalTo: settingButton.widthAnchor),
+
             totalStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             totalStackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
             totalStackView.topAnchor.constraint(
                 equalTo: view.topAnchor,
-                constant: 30
+                constant: 50
             ),
             
             radiusSegmentedControl.widthAnchor.constraint(equalTo: totalStackView.widthAnchor),

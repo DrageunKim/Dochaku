@@ -381,12 +381,12 @@ extension DateSelectViewController {
         NSLayoutConstraint.activate([
             settingButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
             settingButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            settingButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.1),
+            settingButton.widthAnchor.constraint(equalToConstant: 40),
             settingButton.heightAnchor.constraint(equalTo: settingButton.widthAnchor),
             
             cancelButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
             cancelButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            cancelButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.1),
+            cancelButton.widthAnchor.constraint(equalToConstant: 40),
             cancelButton.heightAnchor.constraint(equalTo: settingButton.widthAnchor),
             
             dayStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
