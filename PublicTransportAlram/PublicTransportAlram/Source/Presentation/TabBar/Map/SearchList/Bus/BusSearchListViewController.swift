@@ -12,7 +12,7 @@ import RxCocoa
 
 class BusSearchListViewController: UIViewController {
     
-    var delegate: Sendable?
+    var delegate: LocationDataSendable?
     
     private let viewModel = BusSearchListViewModel()
     private let disposeBag = DisposeBag()
@@ -147,7 +147,7 @@ extension BusSearchListViewController: UITableViewDelegate {
         let latitude = station.y
         let laneName = station.laneName ?? String()
         
-        delegate?.dataSend(
+        delegate?.locationDataSend(
             longitude: longitude,
             latitude: latitude,
             location: stationName,

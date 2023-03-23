@@ -104,9 +104,8 @@ class AddViewController: UIViewController {
     private let dataSettingLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .systemBackground
-        label.text = "월,화,수,목 / 00:00~24:00"
         label.textColor = .label
-        label.font = .preferredFont(forTextStyle: .subheadline).withSize(15)
+        label.font = .preferredFont(forTextStyle: .subheadline).withSize(14)
         return label
     }()
     private let dateSettingButton: UIButton = {
@@ -233,12 +232,16 @@ class AddViewController: UIViewController {
             mapView.addAnnotation(annotation)
         }
     }
+    
+    private func configureDataSettingLabelText(_ date: String, _ startTime: String, _ endTime: String) {
+        dataSettingLabel.text = "\(date) / \(startTime)~\(endTime)"
+    }
 }
 
-// MARK: - Sendable
+// MARK: - LocationDataSendable
 
-extension AddViewController: Sendable {
-    func dataSend(longitude: Double, latitude: Double, location: String, lane: String) {
+extension AddViewController: LocationDataSendable {
+    func locationDataSend(longitude: Double, latitude: Double, location: String, lane: String) {
         if lane != String() {
             locationSearchBar.text = location + " " + "(\(lane))"
         } else {
@@ -251,6 +254,14 @@ extension AddViewController: Sendable {
             title: location,
             subTitle: lane
         )
+    }
+}
+
+// MARK: - DateDataSendable
+
+extension AddViewController: DateDataSendable {
+    func DateDataSend(date: String, startTime: String, endTime: String) {
+        configureDataSettingLabelText(date, startTime, endTime)
     }
 }
 
@@ -333,6 +344,8 @@ extension AddViewController {
     @objc
     private func tappedDateSettingButton() {
         let presentViewController = DateSelectViewController()
+        
+        presentViewController.delegate = self
         
         present(presentViewController, animated: true)
     }

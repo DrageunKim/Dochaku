@@ -12,7 +12,7 @@ import RxCocoa
 
 class SubwaySearchListViewController: UIViewController {
     
-    var delegate: Sendable?
+    var delegate: LocationDataSendable?
     
     private let viewModel = SubwaySearchListViewModel()
     private let disposeBag = DisposeBag()
@@ -135,7 +135,7 @@ extension SubwaySearchListViewController: UITableViewDelegate {
         let latitude = station.y
         let laneName = station.laneName ?? String()
         
-        delegate?.dataSend(
+        delegate?.locationDataSend(
             longitude: longitude,
             latitude: latitude,
             location: stationName,

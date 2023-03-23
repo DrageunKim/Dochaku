@@ -10,11 +10,12 @@
 		D055594A29C8354A00850785 /* AddressSearchListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D055594929C8354A00850785 /* AddressSearchListViewModel.swift */; };
 		D055594E29C83E2700850785 /* SubwaySearchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D055594D29C83E2700850785 /* SubwaySearchListViewController.swift */; };
 		D055595029C83ECE00850785 /* SubwaySearchListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D055594F29C83ECE00850785 /* SubwaySearchListViewModel.swift */; };
-		D055595229C83F0500850785 /* Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D055595129C83F0500850785 /* Sendable.swift */; };
+		D055595229C83F0500850785 /* LocationDataSendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D055595129C83F0500850785 /* LocationDataSendable.swift */; };
 		D055595729C888CB00850785 /* BusSearchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D055595629C888CB00850785 /* BusSearchListViewController.swift */; };
 		D055595929C8898800850785 /* BusSearchListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D055595829C8898800850785 /* BusSearchListViewModel.swift */; };
 		D055595C29C9807100850785 /* DateSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D055595B29C9807100850785 /* DateSelectViewController.swift */; };
 		D055595E29C980F400850785 /* OptionsSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D055595D29C980F400850785 /* OptionsSelectViewController.swift */; };
+		D05559B229CCA36C00850785 /* DateDataSendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05559B129CCA36C00850785 /* DateDataSendable.swift */; };
 		D08122BA29B88DFD00CA5664 /* StationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08122B929B88DFD00CA5664 /* StationInfo.swift */; };
 		D081233729C0DA5800CA5664 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D081233629C0DA5800CA5664 /* RxCocoa */; };
 		D081233929C0DA5800CA5664 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D081233829C0DA5800CA5664 /* RxSwift */; };
@@ -79,11 +80,12 @@
 		D055594929C8354A00850785 /* AddressSearchListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSearchListViewModel.swift; sourceTree = "<group>"; };
 		D055594D29C83E2700850785 /* SubwaySearchListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwaySearchListViewController.swift; sourceTree = "<group>"; };
 		D055594F29C83ECE00850785 /* SubwaySearchListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwaySearchListViewModel.swift; sourceTree = "<group>"; };
-		D055595129C83F0500850785 /* Sendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sendable.swift; sourceTree = "<group>"; };
+		D055595129C83F0500850785 /* LocationDataSendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDataSendable.swift; sourceTree = "<group>"; };
 		D055595629C888CB00850785 /* BusSearchListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusSearchListViewController.swift; sourceTree = "<group>"; };
 		D055595829C8898800850785 /* BusSearchListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusSearchListViewModel.swift; sourceTree = "<group>"; };
 		D055595B29C9807100850785 /* DateSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSelectViewController.swift; sourceTree = "<group>"; };
 		D055595D29C980F400850785 /* OptionsSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsSelectViewController.swift; sourceTree = "<group>"; };
+		D05559B129CCA36C00850785 /* DateDataSendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDataSendable.swift; sourceTree = "<group>"; };
 		D08122B929B88DFD00CA5664 /* StationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationInfo.swift; sourceTree = "<group>"; };
 		D081237529C1E5C000CA5664 /* PublicTransitPoi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicTransitPoi.swift; sourceTree = "<group>"; };
 		D081237729C1EB3300CA5664 /* PublicTransitPoiDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicTransitPoiDTO.swift; sourceTree = "<group>"; };
@@ -172,10 +174,26 @@
 		D055595A29C97E5500850785 /* Select */ = {
 			isa = PBXGroup;
 			children = (
-				D055595B29C9807100850785 /* DateSelectViewController.swift */,
-				D055595D29C980F400850785 /* OptionsSelectViewController.swift */,
+				D05559AB29CC8B1300850785 /* Date */,
+				D05559AC29CC8B1E00850785 /* Options */,
 			);
 			path = Select;
+			sourceTree = "<group>";
+		};
+		D05559AB29CC8B1300850785 /* Date */ = {
+			isa = PBXGroup;
+			children = (
+				D055595B29C9807100850785 /* DateSelectViewController.swift */,
+			);
+			path = Date;
+			sourceTree = "<group>";
+		};
+		D05559AC29CC8B1E00850785 /* Options */ = {
+			isa = PBXGroup;
+			children = (
+				D055595D29C980F400850785 /* OptionsSelectViewController.swift */,
+			);
+			path = Options;
 			sourceTree = "<group>";
 		};
 		D081668029A77CA700A67C1C = {
@@ -377,7 +395,8 @@
 			isa = PBXGroup;
 			children = (
 				D0FE2C1929B4CE28001C83F7 /* Identifiable.swift */,
-				D055595129C83F0500850785 /* Sendable.swift */,
+				D055595129C83F0500850785 /* LocationDataSendable.swift */,
+				D05559B129CCA36C00850785 /* DateDataSendable.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -503,6 +522,7 @@
 				D08166B929A7973400A67C1C /* HTTPMethod.swift in Sources */,
 				D08316F329C3736F00E86676 /* ServiceEnum.swift in Sources */,
 				D0FE2C1A29B4CE28001C83F7 /* Identifiable.swift in Sources */,
+				D05559B229CCA36C00850785 /* DateDataSendable.swift in Sources */,
 				D08166D229A7A66F00A67C1C /* JSONDecoder +.swift in Sources */,
 				D08316EF29C36FA900E86676 /* RealtimeStationArrival.swift in Sources */,
 				D055595729C888CB00850785 /* BusSearchListViewController.swift in Sources */,
@@ -520,7 +540,7 @@
 				D0FE2BF929B4CA73001C83F7 /* ListViewModel.swift in Sources */,
 				D08316F129C370A400E86676 /* RealTimeStationArrivalDTO.swift in Sources */,
 				D0FE2BF729B4CA69001C83F7 /* ListViewController.swift in Sources */,
-				D055595229C83F0500850785 /* Sendable.swift in Sources */,
+				D055595229C83F0500850785 /* LocationDataSendable.swift in Sources */,
 				D081681B29AF7E6800A67C1C /* JSONError.swift in Sources */,
 				D055595E29C980F400850785 /* OptionsSelectViewController.swift in Sources */,
 				D081681E29AF82AF00A67C1C /* PublicTransportService.swift in Sources */,

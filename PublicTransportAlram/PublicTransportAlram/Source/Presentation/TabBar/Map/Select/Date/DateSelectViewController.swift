@@ -11,6 +11,30 @@ import RxCocoa
 
 class DateSelectViewController: UIViewController {
     
+    var delegate: DateDataSendable?
+    
+    private var dateList = [false, false, false, false, false, false, false]
+    private var startTime = String()
+    private var endTime = String()
+    
+    private let disposeBag = DisposeBag()
+    
+    private let settingButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("설정", for: .normal)
+        button.setTitleColor(.systemBlue.withAlphaComponent(0.8), for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        return button
+    }()
+    private let cancelButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("취소", for: .normal)
+        button.setTitleColor(.systemRed.withAlphaComponent(0.8), for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        return button
+    }()
     private let dayStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -138,6 +162,7 @@ class DateSelectViewController: UIViewController {
         let picker = UIDatePicker()
         picker.preferredDatePickerStyle = .wheels
         picker.datePickerMode = .time
+        picker.minuteInterval = 30
         return picker
     }()
     private let endTimeSelectLabel: UILabel = {
@@ -151,6 +176,7 @@ class DateSelectViewController: UIViewController {
         let picker = UIDatePicker()
         picker.preferredDatePickerStyle = .wheels
         picker.datePickerMode = .time
+        picker.minuteInterval = 30
         return picker
     }()
     
@@ -164,84 +190,162 @@ class DateSelectViewController: UIViewController {
     }
     
     private func configureBinding() {
-        mondayButton.rx.tap
-            .map {
-                self.buttonSelectedToggle(sender: self.mondayButton)
-                self.buttonColorToggle(sender: self.mondayButton)
-            }
+        settingButton.rx.tap
             .subscribe { _ in
-                print("mondayButton")
+                self.delegate?.DateDataSend(
+                    date: self.convertDateButtonSelectedToString(self.dateList),
+                    startTime: self.startTime,
+                    endTime: self.endTime
+                )
+                
+                self.dismiss(animated: true)
             }
+            .disposed(by: disposeBag)
+        
+        cancelButton.rx.tap
+            .subscribe { _ in
+                self.dismiss(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        mondayButton.rx.tap
+            .scan(false) { lastState, newState in !lastState }
+            .subscribe(onNext: { bool in
+                self.toggleButtonColor(self.mondayButton, bool)
+                self.checkDateButtonSelected(self.mondayButton, bool)
+            })
+            .disposed(by: disposeBag)
         
         tuesdayButton.rx.tap
-            .map {
-                self.buttonSelectedToggle(sender: self.tuesdayButton)
-                self.buttonColorToggle(sender: self.tuesdayButton)
-            }
-            .subscribe { _ in
-                print("tuesdayButton")
-            }
+            .scan(false) { lastState, newState in !lastState }
+            .subscribe(onNext: { bool in
+                self.toggleButtonColor(self.tuesdayButton, bool)
+                self.checkDateButtonSelected(self.tuesdayButton, bool)
+            })
+            .disposed(by: disposeBag)
         
         wednesdayButton.rx.tap
-            .map {
-                self.buttonSelectedToggle(sender: self.wednesdayButton)
-                self.buttonColorToggle(sender: self.wednesdayButton)
-            }
-            .subscribe { _ in
-                print("wednesdayButton")
-            }
+            .scan(false) { lastState, newState in !lastState }
+            .subscribe(onNext: { bool in
+                self.toggleButtonColor(self.wednesdayButton, bool)
+                self.checkDateButtonSelected(self.wednesdayButton, bool)
+            })
+            .disposed(by: disposeBag)
         
         thursdayButton.rx.tap
-            .map {
-                self.buttonSelectedToggle(sender: self.thursdayButton)
-                self.buttonColorToggle(sender: self.thursdayButton)
-            }
-            .subscribe { _ in
-                print("thursdayButton")
-            }
-        
+            .scan(false) { lastState, newState in !lastState }
+            .subscribe(onNext: { bool in
+                self.toggleButtonColor(self.thursdayButton, bool)
+                self.checkDateButtonSelected(self.thursdayButton, bool)
+            })
+            .disposed(by: disposeBag)
+                
         fridayButton.rx.tap
-            .map {
-                self.buttonSelectedToggle(sender: self.fridayButton)
-                self.buttonColorToggle(sender: self.fridayButton)
-            }
-            .subscribe { _ in
-                print("fridayButton")
-            }
+            .scan(false) { lastState, newState in !lastState }
+            .subscribe(onNext: { bool in
+                self.toggleButtonColor(self.fridayButton, bool)
+                self.checkDateButtonSelected(self.fridayButton, bool)
+            })
+            .disposed(by: disposeBag)
         
         saturdayButton.rx.tap
-            .map {
-                self.buttonSelectedToggle(sender: self.saturdayButton)
-                self.buttonColorToggle(sender: self.saturdayButton)
-            }
-            .subscribe { _ in
-                print("saturdayButton")
-            }
+            .scan(false) { lastState, newState in !lastState }
+            .subscribe(onNext: { bool in
+                self.toggleButtonColor(self.saturdayButton, bool)
+                self.checkDateButtonSelected(self.saturdayButton, bool)
+            })
+            .disposed(by: disposeBag)
         
         sundayButton.rx.tap
-            .map {
-                self.buttonSelectedToggle(sender: self.sundayButton)
-                self.buttonColorToggle(sender: self.sundayButton)
+            .scan(false) { lastState, newState in !lastState }
+            .subscribe(onNext: { bool in
+                self.toggleButtonColor(self.sundayButton, bool)
+                self.checkDateButtonSelected(self.sundayButton, bool)
+            })
+            .disposed(by: disposeBag)
+        
+        startTimeSelectPicker.rx.date
+            .subscribe { date in
+                self.startTime = self.convertDateToString(date)
             }
-            .subscribe { _ in
-                print("sundayButton")
+            .disposed(by: disposeBag)
+        
+        endTimeSelectPicker.rx.date
+            .subscribe { date in
+                self.endTime = self.convertDateToString(date)
             }
+            .disposed(by: disposeBag)
     }
     
-    private func buttonSelectedToggle(sender: UIButton) {
-        if sender.isSelected {
-            sender.isSelected = false
+    private func toggleButtonColor(_ button: UIButton, _ clicked: Bool) {
+        if clicked {
+            button.backgroundColor = .systemBlue.withAlphaComponent(0.6)
         } else {
-            sender.isSelected = true
+            button.backgroundColor = .systemBackground
         }
     }
     
-    private func buttonColorToggle(sender: UIButton) {
-        if sender.isSelected {
-            sender.backgroundColor = .systemBlue.withAlphaComponent(0.7)
-        } else {
-            sender.backgroundColor = .systemBackground
+    private func checkDateButtonSelected(_ button: UIButton, _ clicked: Bool) {
+        switch button {
+        case mondayButton:
+            dateList[0] = clicked
+        case tuesdayButton:
+            dateList[1] = clicked
+        case wednesdayButton:
+            dateList[2] = clicked
+        case thursdayButton:
+            dateList[3] = clicked
+        case fridayButton:
+            dateList[4] = clicked
+        case saturdayButton:
+            dateList[5] = clicked
+        case sundayButton:
+            dateList[6] = clicked
+        default:
+            break
         }
+    }
+    
+    private func convertDateButtonSelectedToString(_ selectedList: [Bool]) -> String {
+        var dateString = String()
+        
+        if selectedList[0] == true {
+            dateString += "월"
+        }
+        if selectedList[1] == true {
+            dateString += "화"
+        }
+        if selectedList[2] == true {
+            dateString += "수"
+        }
+        if selectedList[3] == true {
+            dateString += "목"
+        }
+        if selectedList[4] == true {
+            dateString += "금"
+        }
+        if selectedList[5] == true {
+            dateString += "토"
+        }
+        if selectedList[6] == true {
+            dateString += "일"
+        }
+        
+        if dateString == "월화수목금" {
+            dateString = "주중"
+        } else if dateString == "토일" {
+            dateString = "주말"
+        }
+        
+        return dateString
+    }
+    
+    private func convertDateToString(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        
+        formatter.dateFormat = "HH:mm"
+        
+        return formatter.string(from: date)
     }
 }
 
@@ -249,12 +353,7 @@ extension DateSelectViewController {
     private func configureView() {
         view.backgroundColor = .systemBackground
     }
-    
-    @objc
-    private func tappedRightBarButtonItem() {
-        dismiss(animated: true)
-    }
-    
+
     private func configureStackView() {
         dayButtonStackView.addArrangedSubview(mondayButton)
         dayButtonStackView.addArrangedSubview(tuesdayButton)
@@ -273,11 +372,23 @@ extension DateSelectViewController {
     }
     
     private func configureLayout() {
+        view.addSubview(settingButton)
+        view.addSubview(cancelButton)
         view.addSubview(dayStackView)
         view.addSubview(borderLine)
         view.addSubview(timeStackView)
 
         NSLayoutConstraint.activate([
+            settingButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
+            settingButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            settingButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.1),
+            settingButton.heightAnchor.constraint(equalTo: settingButton.widthAnchor),
+            
+            cancelButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
+            cancelButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            cancelButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.1),
+            cancelButton.heightAnchor.constraint(equalTo: settingButton.widthAnchor),
+            
             dayStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             dayStackView.topAnchor.constraint(
                 equalTo: view.topAnchor,

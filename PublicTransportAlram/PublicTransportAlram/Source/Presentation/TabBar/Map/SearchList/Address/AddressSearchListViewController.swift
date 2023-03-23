@@ -12,7 +12,7 @@ import RxCocoa
 
 class AddressSearchListViewController: UIViewController {
     
-    var delegate: Sendable?
+    var delegate: LocationDataSendable?
     
     private let viewModel = AddressSearchListViewModel()
     private let disposeBag = DisposeBag()
@@ -130,7 +130,7 @@ extension AddressSearchListViewController: UITableViewDelegate {
         let result = viewModel.searchResults[indexPath.row]
         
         viewModel.search(for: result, completion: { data in
-            self.delegate?.dataSend(
+            self.delegate?.locationDataSend(
                 longitude: data.longitude,
                 latitude: data.latitude,
                 location: result.title,
