@@ -8,6 +8,8 @@
 import UIKit
 import MapKit
 import CoreLocation
+import RxSwift
+import RxCocoa
 
 class AddViewController: UIViewController {
     
@@ -17,7 +19,10 @@ class AddViewController: UIViewController {
         case address
     }
     
+    private var alarmInformation: AlarmInformation?
     private var myAnnotations = [MKPointAnnotation]()
+    private let disposeBag = DisposeBag()
+    
     private let topStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -197,6 +202,7 @@ class AddViewController: UIViewController {
         configureLayout()
         configureLocationManager()
         configureButtonAction()
+        configureBinding()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -205,8 +211,23 @@ class AddViewController: UIViewController {
         locationManager.stopUpdatingLocation()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+    }
+    
     private func configureLocationManager() {
         locationManager.delegate = self
+    }
+    
+    private func configureBinding() {
+        okButton.rx.tap
+            .subscribe { _ in
+                if let alarm = self.createAlarm() {
+                    print(alarm)
+                    self.save(alarm: alarm)
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
     private func configureAnnotation(
@@ -236,10 +257,22 @@ class AddViewController: UIViewController {
     
     private func configureDataSettingLabelText(_ date: String, _ startTime: String, _ endTime: String) {
         dataSettingLabel.text = "\(date) / \(startTime)~\(endTime)"
+        alarmInformation?.week = date
+        alarmInformation?.time = startTime + " " + endTime
     }
     
     private func configureOptionsSettingLabelText(_ radius: String, _ times: String) {
         optionsSettingLabel.text = "\(radius) / \(times)"
+        
+        alarmInformation?.radius = radius
+        alarmInformation?.times = times
+    }
+    
+    private func createAlarm() -> AlarmInformation? {
+        alarmInformation?.id = UUID()
+        alarmInformation?.type = "123"
+        
+        return alarmInformation
     }
 }
 
@@ -259,6 +292,10 @@ extension AddViewController: LocationDataSendable {
             title: location,
             subTitle: lane
         )
+        
+        alarmInformation?.latitude = String(latitude)
+        alarmInformation?.longitude = String(longitude)
+        alarmInformation?.location = location
     }
 }
 
@@ -275,6 +312,41 @@ extension AddViewController: DateDataSendable {
 extension AddViewController: OptionsDataSendable {
     func OptionsDataSend(radius: String, times: String) {
         configureOptionsSettingLabelText(radius, times)
+    }
+}
+
+extension AddViewController: CoreDataProcessable {
+    func save(alarm: AlarmInformation) {
+        let result = saveCoreData(alarm: alarm)
+        
+        switch result {
+        case .success(_):
+            break
+        case .failure(let error):
+            print(error)
+        }
+    }
+    
+    func update(alarm: AlarmInformation) {
+        let result = updateCoreData(alarm: alarm)
+        
+        switch result {
+        case .success(_):
+            break
+        case .failure(let error):
+            print(error)
+        }
+    }
+    
+    func delete(alarm: AlarmInformation) {
+        let result = deleteCoreData(alarm: alarm)
+        
+        switch result {
+        case .success(_):
+            break
+        case .failure(let error):
+            print(error)
+        }
     }
 }
 

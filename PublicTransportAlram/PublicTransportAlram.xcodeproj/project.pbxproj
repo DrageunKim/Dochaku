@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D011B34029D32323004EA2C1 /* OptionsDataSendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D011B33F29D32323004EA2C1 /* OptionsDataSendable.swift */; };
 		D055594A29C8354A00850785 /* AddressSearchListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D055594929C8354A00850785 /* AddressSearchListViewModel.swift */; };
 		D055594E29C83E2700850785 /* SubwaySearchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D055594D29C83E2700850785 /* SubwaySearchListViewController.swift */; };
 		D055595029C83ECE00850785 /* SubwaySearchListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D055594F29C83ECE00850785 /* SubwaySearchListViewModel.swift */; };
@@ -16,7 +17,12 @@
 		D055595C29C9807100850785 /* DateSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D055595B29C9807100850785 /* DateSelectViewController.swift */; };
 		D055595E29C980F400850785 /* OptionsSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D055595D29C980F400850785 /* OptionsSelectViewController.swift */; };
 		D05559B229CCA36C00850785 /* DateDataSendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05559B129CCA36C00850785 /* DateDataSendable.swift */; };
-		D05559B429CCB14200850785 /* OptionsDataSendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05559B329CCB14200850785 /* OptionsDataSendable.swift */; };
+		D064A11229D323C800902AB4 /* CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D064A11029D323C800902AB4 /* CoreData.xcdatamodeld */; };
+		D064A11C29D3313900902AB4 /* CoreDataProcessable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D064A11B29D3313900902AB4 /* CoreDataProcessable.swift */; };
+		D064A11E29D3318000902AB4 /* AlarmInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D064A11D29D3318000902AB4 /* AlarmInformation.swift */; };
+		D064A12029D331C300902AB4 /* CoreDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D064A11F29D331C300902AB4 /* CoreDataError.swift */; };
+		D064A12B29D3361700902AB4 /* AlarmInfo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D064A12929D3361700902AB4 /* AlarmInfo+CoreDataClass.swift */; };
+		D064A12C29D3361700902AB4 /* AlarmInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D064A12A29D3361700902AB4 /* AlarmInfo+CoreDataProperties.swift */; };
 		D08122BA29B88DFD00CA5664 /* StationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08122B929B88DFD00CA5664 /* StationInfo.swift */; };
 		D081233729C0DA5800CA5664 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D081233629C0DA5800CA5664 /* RxCocoa */; };
 		D081233929C0DA5800CA5664 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D081233829C0DA5800CA5664 /* RxSwift */; };
@@ -78,6 +84,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D011B33F29D32323004EA2C1 /* OptionsDataSendable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsDataSendable.swift; sourceTree = "<group>"; };
 		D055594929C8354A00850785 /* AddressSearchListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSearchListViewModel.swift; sourceTree = "<group>"; };
 		D055594D29C83E2700850785 /* SubwaySearchListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwaySearchListViewController.swift; sourceTree = "<group>"; };
 		D055594F29C83ECE00850785 /* SubwaySearchListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwaySearchListViewModel.swift; sourceTree = "<group>"; };
@@ -87,7 +94,12 @@
 		D055595B29C9807100850785 /* DateSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSelectViewController.swift; sourceTree = "<group>"; };
 		D055595D29C980F400850785 /* OptionsSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsSelectViewController.swift; sourceTree = "<group>"; };
 		D05559B129CCA36C00850785 /* DateDataSendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDataSendable.swift; sourceTree = "<group>"; };
-		D05559B329CCB14200850785 /* OptionsDataSendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsDataSendable.swift; sourceTree = "<group>"; };
+		D064A11129D323C800902AB4 /* CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreData.xcdatamodel; sourceTree = "<group>"; };
+		D064A11B29D3313900902AB4 /* CoreDataProcessable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataProcessable.swift; sourceTree = "<group>"; };
+		D064A11D29D3318000902AB4 /* AlarmInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmInformation.swift; sourceTree = "<group>"; };
+		D064A11F29D331C300902AB4 /* CoreDataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataError.swift; sourceTree = "<group>"; };
+		D064A12929D3361700902AB4 /* AlarmInfo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlarmInfo+CoreDataClass.swift"; sourceTree = "<group>"; };
+		D064A12A29D3361700902AB4 /* AlarmInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlarmInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D08122B929B88DFD00CA5664 /* StationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationInfo.swift; sourceTree = "<group>"; };
 		D081237529C1E5C000CA5664 /* PublicTransitPoi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicTransitPoi.swift; sourceTree = "<group>"; };
 		D081237729C1EB3300CA5664 /* PublicTransitPoiDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicTransitPoiDTO.swift; sourceTree = "<group>"; };
@@ -232,6 +244,9 @@
 			children = (
 				D081669529A77CA900A67C1C /* Assets.xcassets */,
 				D081669729A77CA900A67C1C /* LaunchScreen.storyboard */,
+				D064A11029D323C800902AB4 /* CoreData.xcdatamodeld */,
+				D064A12929D3361700902AB4 /* AlarmInfo+CoreDataClass.swift */,
+				D064A12A29D3361700902AB4 /* AlarmInfo+CoreDataProperties.swift */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -329,6 +344,7 @@
 				D081237729C1EB3300CA5664 /* PublicTransitPoiDTO.swift */,
 				D08316F029C370A400E86676 /* RealTimeStationArrivalDTO.swift */,
 				D08122B929B88DFD00CA5664 /* StationInfo.swift */,
+				D064A11D29D3318000902AB4 /* AlarmInformation.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -339,6 +355,7 @@
 				D081681829AF78ED00A67C1C /* NetworkError.swift */,
 				D081681A29AF7E6800A67C1C /* JSONError.swift */,
 				D08166C029A79DC400A67C1C /* RequestError.swift */,
+				D064A11F29D331C300902AB4 /* CoreDataError.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -399,7 +416,8 @@
 				D0FE2C1929B4CE28001C83F7 /* Identifiable.swift */,
 				D055595129C83F0500850785 /* LocationDataSendable.swift */,
 				D05559B129CCA36C00850785 /* DateDataSendable.swift */,
-				D05559B329CCB14200850785 /* OptionsDataSendable.swift */,
+				D011B33F29D32323004EA2C1 /* OptionsDataSendable.swift */,
+				D064A11B29D3313900902AB4 /* CoreDataProcessable.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -524,14 +542,17 @@
 				D08166AD29A78BF300A67C1C /* CustomTabBarController.swift in Sources */,
 				D08166B929A7973400A67C1C /* HTTPMethod.swift in Sources */,
 				D08316F329C3736F00E86676 /* ServiceEnum.swift in Sources */,
-				D05559B429CCB14200850785 /* OptionsDataSendable.swift in Sources */,
+				D011B34029D32323004EA2C1 /* OptionsDataSendable.swift in Sources */,
 				D0FE2C1A29B4CE28001C83F7 /* Identifiable.swift in Sources */,
 				D05559B229CCA36C00850785 /* DateDataSendable.swift in Sources */,
 				D08166D229A7A66F00A67C1C /* JSONDecoder +.swift in Sources */,
 				D08316EF29C36FA900E86676 /* RealtimeStationArrival.swift in Sources */,
+				D064A12C29D3361700902AB4 /* AlarmInfo+CoreDataProperties.swift in Sources */,
 				D055595729C888CB00850785 /* BusSearchListViewController.swift in Sources */,
+				D064A11C29D3313900902AB4 /* CoreDataProcessable.swift in Sources */,
 				D08166B529A793C600A67C1C /* NetworkManager.swift in Sources */,
 				D081668F29A77CA700A67C1C /* SceneDelegate.swift in Sources */,
+				D064A12029D331C300902AB4 /* CoreDataError.swift in Sources */,
 				D08166BB29A7978C00A67C1C /* Request.swift in Sources */,
 				D055595C29C9807100850785 /* DateSelectViewController.swift in Sources */,
 				D0FE2BFB29B4CADA001C83F7 /* ListTableViewCell.swift in Sources */,
@@ -539,15 +560,18 @@
 				D055595029C83ECE00850785 /* SubwaySearchListViewModel.swift in Sources */,
 				D08166BD29A79A7900A67C1C /* SubwayRouteSearch.swift in Sources */,
 				D08166C129A79DC400A67C1C /* RequestError.swift in Sources */,
+				D064A12B29D3361700902AB4 /* AlarmInfo+CoreDataClass.swift in Sources */,
 				D08166A929A78A3100A67C1C /* SubwayViewModel.swift in Sources */,
 				D08166BF29A79B0D00A67C1C /* SubwayRouteSearchDTO.swift in Sources */,
 				D0FE2BF929B4CA73001C83F7 /* ListViewModel.swift in Sources */,
 				D08316F129C370A400E86676 /* RealTimeStationArrivalDTO.swift in Sources */,
 				D0FE2BF729B4CA69001C83F7 /* ListViewController.swift in Sources */,
 				D055595229C83F0500850785 /* LocationDataSendable.swift in Sources */,
+				D064A11229D323C800902AB4 /* CoreData.xcdatamodeld in Sources */,
 				D081681B29AF7E6800A67C1C /* JSONError.swift in Sources */,
 				D055595E29C980F400850785 /* OptionsSelectViewController.swift in Sources */,
 				D081681E29AF82AF00A67C1C /* PublicTransportService.swift in Sources */,
+				D064A11E29D3318000902AB4 /* AlarmInformation.swift in Sources */,
 				D055594E29C83E2700850785 /* SubwaySearchListViewController.swift in Sources */,
 				D055595929C8898800850785 /* BusSearchListViewModel.swift in Sources */,
 				D081237829C1EB3300CA5664 /* PublicTransitPoiDTO.swift in Sources */,
@@ -866,6 +890,19 @@
 			productName = RxSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		D064A11029D323C800902AB4 /* CoreData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D064A11129D323C800902AB4 /* CoreData.xcdatamodel */,
+			);
+			currentVersion = D064A11129D323C800902AB4 /* CoreData.xcdatamodel */;
+			path = CoreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = D081668129A77CA700A67C1C /* Project object */;
 }
