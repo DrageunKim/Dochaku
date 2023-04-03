@@ -12,7 +12,7 @@ class CustomTabBarController: UITabBarController {
     private let mapViewController: UIViewController = {
         let viewController = AddViewController()
         viewController.view.backgroundColor = .systemBackground
-        viewController.tabBarItem.title = "알림 추가"
+        viewController.tabBarItem.title = "알람 추가"
         viewController.tabBarItem.image = UIImage(systemName: "alarm")
         return viewController
     }()

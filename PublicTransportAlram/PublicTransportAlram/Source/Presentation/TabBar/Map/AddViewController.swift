@@ -6,10 +6,17 @@
 //
 
 import UIKit
+import UserNotifications
 import MapKit
 import CoreLocation
 import RxSwift
 import RxCocoa
+
+enum SettingType {
+    case alarm
+    case alarmAndBookMark
+    case bookMark
+}
 
 class AddViewController: UIViewController {
     
@@ -34,7 +41,7 @@ class AddViewController: UIViewController {
     }()
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "⏰ 알림 추가"
+        label.text = "⏰ 알람 추가"
         label.textColor = .label
         label.font = .preferredFont(forTextStyle: .headline).withSize(20)
         return label
@@ -51,7 +58,7 @@ class AddViewController: UIViewController {
     private let locationSearchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.backgroundColor = .systemBackground
-        searchBar.placeholder = "목적지"
+        searchBar.placeholder = "목적지를 입력해주세요."
         searchBar.searchTextField.font = .systemFont(ofSize: 15)
         searchBar.searchBarStyle = .minimal
         return searchBar
@@ -134,7 +141,7 @@ class AddViewController: UIViewController {
         return label
     }()
     private let timesSegmentedControl: UISegmentedControl = {
-        let control = UISegmentedControl(items: ["1회", "3회", "5회", "7회", "10회"])
+        let control = UISegmentedControl(items: ["1회", "2회", "3회", "4회", "5회"])
         control.selectedSegmentIndex = 2
         control.backgroundColor = .systemTeal.withAlphaComponent(0.4)
         control.selectedSegmentTintColor = .systemBackground
@@ -214,7 +221,11 @@ class AddViewController: UIViewController {
                 self.locationSearchBar.text != String()
             }
             .subscribe { _ in
-                self.presentActionSheet(self.setBookMarkAlarm, self.setAlarm)
+                self.presentAlarmSettingActionSheet(
+                    alarm: self.setAlarm,
+                    bookMark: self.setBookMark,
+                    alarmAndBookMark: self.setAlarmAndBookMark
+                )
             }
             .disposed(by: disposeBag)
         
@@ -231,20 +242,86 @@ class AddViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    private func setBookMarkAlarm() {
-        let alarm = self.createAlarm()
+    private func checkAlarmEnable() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { (didAllow, error) in
+            guard let err = error else { return }
+            
+            print(err.localizedDescription)
+        }
+    }
     
+    private func pushArriveAlarm() {
+        guard let latitude = alarmInformation["latitude"],
+              let longitude = alarmInformation["longitude"],
+              let times = alarmInformation["times"],
+              let radius = alarmInformation["radius"] else { return }
+        
+        if let latitude = Double(latitude),
+           let longitude = Double(longitude),
+           let times = Int(times),
+           let radius = Double(radius) {
+            let content = UNMutableNotificationContent()
+            
+            content.title = "⏰ 목적지 도착"
+            content.body = "설정하신 위치에 근접하였습니다."
+            content.sound = .default
+            
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+//            let trigger = UNLocationNotificationTrigger(region: region, repeats: false)
+            
+            let center = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            let region = CLCircularRegion(center: center, radius: radius, identifier: "settingLocation")
+
+            region.notifyOnEntry = true
+            region.notifyOnExit = false
+
+            var requestList: [UNNotificationRequest] = []
+            var requestIdentifierList: [String] = []
+            
+            for i in 0..<times {
+                requestIdentifierList.append("timer" + String(i))
+                requestList.append(
+                    UNNotificationRequest(identifier: requestIdentifierList[i], content: content, trigger: trigger)
+                )
+                
+                UNUserNotificationCenter.current().add(requestList[i], withCompletionHandler: nil)
+            }
+            
+            presentSettingSuccessAlert()
+        } else {
+            presentSettingFailedAlert()
+        }
+    }
+    
+    private func setAlarm() {
+        checkAlarmRadius()
+        checkAlarmTimes()
+        checkAlarmEnable()
+        pushArriveAlarm()
+    }
+    
+    private func setAlarmAndBookMark() {
+        let alarm = self.createAlarm()
+        
         switch alarm {
         case .success(let data):
-            print(data)
-            self.save(alarm: data)
+            save(alarm: data)
         case .failure(_):
             break
         }
     }
     
-    private func setAlarm() {
+    private func setBookMark() {
+        let alarm = self.createAlarm()
         
+        switch alarm {
+        case .success(let data):
+            save(alarm: data)
+            checkAlarmEnable()
+            pushArriveAlarm()
+        case .failure(_):
+            break
+        }
     }
     
     private func configureAnnotation(
@@ -273,7 +350,6 @@ class AddViewController: UIViewController {
     }
     
     private func createAlarm() -> Result<AlarmInformation, CoreDataError> {
-        checkAlarmType()
         checkAlarmRadius()
         checkAlarmTimes()
         
@@ -313,18 +389,24 @@ class AddViewController: UIViewController {
         }
     }
     
+    private func checkAlarmLocation(location: String, latitude: String, longitude: String) {
+        alarmInformation.updateValue(location, forKey: "location")
+        alarmInformation.updateValue(latitude, forKey: "latitude")
+        alarmInformation.updateValue(longitude, forKey: "longitude")
+    }
+    
     private func checkAlarmRadius() {
         switch radiusSegmentedControl.selectedSegmentIndex {
         case 0:
-            alarmInformation.updateValue("250m", forKey: "radius")
+            alarmInformation.updateValue("250", forKey: "radius")
         case 1:
-            alarmInformation.updateValue("500m", forKey: "radius")
+            alarmInformation.updateValue("500", forKey: "radius")
         case 2:
-            alarmInformation.updateValue("1km", forKey: "radius")
+            alarmInformation.updateValue("1000", forKey: "radius")
         case 3:
-            alarmInformation.updateValue("1.5km", forKey: "radius")
+            alarmInformation.updateValue("1500", forKey: "radius")
         case 4:
-            alarmInformation.updateValue("2km", forKey: "radius")
+            alarmInformation.updateValue("2000", forKey: "radius")
         default:
             break
         }
@@ -333,15 +415,15 @@ class AddViewController: UIViewController {
     private func checkAlarmTimes() {
         switch timesSegmentedControl.selectedSegmentIndex {
         case 0:
-            alarmInformation.updateValue("1회", forKey: "times")
+            alarmInformation.updateValue("1", forKey: "times")
         case 1:
-            alarmInformation.updateValue("3회", forKey: "times")
+            alarmInformation.updateValue("2", forKey: "times")
         case 2:
-            alarmInformation.updateValue("5회", forKey: "times")
+            alarmInformation.updateValue("3", forKey: "times")
         case 3:
-            alarmInformation.updateValue("7회", forKey: "times")
+            alarmInformation.updateValue("4", forKey: "times")
         case 4:
-            alarmInformation.updateValue("10회", forKey: "times")
+            alarmInformation.updateValue("5", forKey: "times")
         default:
             break
         }
@@ -362,16 +444,10 @@ extension AddViewController: LocationDataSendable {
             locationSearchBar.text = location
         }
         
-        configureAnnotation(
-            latitude: latitude,
-            longitude: longitude,
-            title: location,
-            subTitle: lane
-        )
+        configureAnnotation(latitude: latitude, longitude: longitude, title: location, subTitle: lane)
         
-        alarmInformation.updateValue(String(latitude), forKey: "latitude")
-        alarmInformation.updateValue(String(longitude), forKey: "longitude")
-        alarmInformation.updateValue(location, forKey: "location")
+        checkAlarmType()
+        checkAlarmLocation(location: location, latitude: String(latitude), longitude: String(longitude))
     }
 }
 
@@ -449,7 +525,7 @@ extension AddViewController {
             action: #selector(addWaypoint)
         )
         longGesture.minimumPressDuration = 1.0
-
+        
         mapView.addGestureRecognizer(longGesture)
         locationSearchBar.searchTextField.addTarget(
             self,
@@ -497,7 +573,7 @@ extension AddViewController {
     private func configureView() {
         view.backgroundColor = .systemBackground
     }
-
+    
     private func configureStackView() {
         topStackView.addArrangedSubview(titleLabel)
         topStackView.addArrangedSubview(segmentedControl)
