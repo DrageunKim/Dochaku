@@ -29,7 +29,7 @@ class AddViewController: UIViewController {
         stackView.alignment = .center
         stackView.axis = .vertical
         stackView.distribution = .fill
-        stackView.spacing = 20
+        stackView.spacing = 10
         return stackView
     }()
     private let titleLabel: UILabel = {
@@ -109,7 +109,7 @@ class AddViewController: UIViewController {
     }()
     private let radiusSegmentedControl: UISegmentedControl = {
         let control = UISegmentedControl(items: ["250m", "500m", "1km", "1.5km", "2km"])
-        control.selectedSegmentIndex = 1
+        control.selectedSegmentIndex = 2
         control.backgroundColor = .systemMint.withAlphaComponent(0.4)
         control.selectedSegmentTintColor = .systemBackground
         control.layer.borderColor = UIColor.label.cgColor
@@ -135,7 +135,7 @@ class AddViewController: UIViewController {
     }()
     private let timesSegmentedControl: UISegmentedControl = {
         let control = UISegmentedControl(items: ["1회", "3회", "5회", "7회", "10회"])
-        control.selectedSegmentIndex = 1
+        control.selectedSegmentIndex = 2
         control.backgroundColor = .systemTeal.withAlphaComponent(0.4)
         control.selectedSegmentTintColor = .systemBackground
         control.layer.borderColor = UIColor.label.cgColor
@@ -202,6 +202,13 @@ class AddViewController: UIViewController {
     }
     
     private func configureBinding() {
+        myLocationButton.rx.tap
+            .subscribe { _ in
+                self.mapView.showsUserLocation = true
+                self.mapView.setUserTrackingMode(.follow, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
         okButton.rx.tap
             .subscribe { _ in
                 let alarm = self.createAlarm()
@@ -254,6 +261,34 @@ class AddViewController: UIViewController {
     }
     
     private func createAlarm() -> Result<AlarmInformation, CoreDataError> {
+        checkAlarmType()
+        checkAlarmRadius()
+        checkAlarmTimes()
+        
+        if let latitude = alarmInformation["latitude"],
+           let longitude = alarmInformation["longitude"],
+           let location = alarmInformation["location"],
+           let times = alarmInformation["times"],
+           let radius = alarmInformation["radius"],
+           let type = alarmInformation["type"] {
+            
+            let alarm = AlarmInformation(
+                id: UUID(),
+                type: type,
+                latitude: latitude,
+                longitude: longitude,
+                location: location,
+                radius: radius,
+                times: times
+            )
+            
+            return .success(alarm)
+        }
+        
+        return .failure(.saveError)
+    }
+    
+    private func checkAlarmType() {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             alarmInformation.updateValue("subway", forKey: "type")
@@ -264,32 +299,40 @@ class AddViewController: UIViewController {
         default:
             break
         }
-        
-        if let latitude = alarmInformation["latitude"],
-           let longitude = alarmInformation["longitude"],
-           let location = alarmInformation["location"],
-           let week = alarmInformation["week"],
-           let time = alarmInformation["time"],
-           let times = alarmInformation["times"],
-           let radius = alarmInformation["radius"],
-           let type = alarmInformation["type"] {
-            
-            let alarm = AlarmInformation(
-                id: UUID(),
-                latitude: latitude,
-                longitude: longitude,
-                location: location,
-                week: week,
-                time: time,
-                times: times,
-                radius: radius,
-                type: type
-            )
-            
-            return .success(alarm)
+    }
+    
+    private func checkAlarmRadius() {
+        switch radiusSegmentedControl.selectedSegmentIndex {
+        case 0:
+            alarmInformation.updateValue("250m", forKey: "radius")
+        case 1:
+            alarmInformation.updateValue("500m", forKey: "radius")
+        case 2:
+            alarmInformation.updateValue("1km", forKey: "radius")
+        case 3:
+            alarmInformation.updateValue("1.5km", forKey: "radius")
+        case 4:
+            alarmInformation.updateValue("2km", forKey: "radius")
+        default:
+            break
         }
-        
-        return .failure(.saveError)
+    }
+    
+    private func checkAlarmTimes() {
+        switch timesSegmentedControl.selectedSegmentIndex {
+        case 0:
+            alarmInformation.updateValue("1회", forKey: "times")
+        case 1:
+            alarmInformation.updateValue("3회", forKey: "times")
+        case 2:
+            alarmInformation.updateValue("5회", forKey: "times")
+        case 3:
+            alarmInformation.updateValue("7회", forKey: "times")
+        case 4:
+            alarmInformation.updateValue("10회", forKey: "times")
+        default:
+            break
+        }
     }
 }
 
@@ -316,27 +359,7 @@ extension AddViewController: LocationDataSendable {
     }
 }
 
-// MARK: - DateDataSendable
-
-extension AddViewController: DateDataSendable {
-    func DateDataSend(date: String, startTime: String, endTime: String) {
-//        configureDataSettingLabelText(date, startTime, endTime)
-        
-        alarmInformation.updateValue(date, forKey: "week")
-        alarmInformation.updateValue(startTime + " " + endTime, forKey: "time")
-    }
-}
-
-// MARK: - OptionsDataSendable
-
-extension AddViewController: OptionsDataSendable {
-    func OptionsDataSend(radius: String, times: String) {
-//        configureOptionsSettingLabelText(radius, times)
-        
-        alarmInformation.updateValue(radius, forKey: "radius")
-        alarmInformation.updateValue(times, forKey: "times")
-    }
-}
+// MARK: - CoreDataProcessable
 
 extension AddViewController: CoreDataProcessable {
     func save(alarm: AlarmInformation) {
@@ -372,7 +395,7 @@ extension AddViewController: CoreDataProcessable {
         }
     }
     
-    func fetchDiaryData() -> [AlarmInfo]? {
+    func fetchDiaryData() -> [AlarmData]? {
         let result = readCoreData()
         
         switch result {
@@ -412,18 +435,11 @@ extension AddViewController {
         longGesture.minimumPressDuration = 1.0
 
         mapView.addGestureRecognizer(longGesture)
-        myLocationButton.addTarget(self, action: #selector(tappedMyLocationButton), for: .touchDown)
         locationSearchBar.searchTextField.addTarget(
             self,
             action: #selector(tappedLocationSearchBar),
             for: .touchDown
         )
-    }
-    
-    @objc
-    private func tappedMyLocationButton() {
-        mapView.showsUserLocation = true
-        mapView.setUserTrackingMode(.follow, animated: true)
     }
     
     @objc
@@ -456,20 +472,6 @@ extension AddViewController {
         
         annotation.coordinate = newCoordinates
         mapView.addAnnotation(annotation)
-    }
-    
-    @objc
-    private func tappedDateSettingButton() {
-        let presentViewController = DateSelectViewController()
-        presentViewController.delegate = self
-        present(presentViewController, animated: true)
-    }
-    
-    @objc
-    private func tappedOptionsSettingButton() {
-        let presentViewController = OptionsSelectViewController()
-        presentViewController.delegate = self
-        present(presentViewController, animated: true)
     }
 }
 
@@ -513,7 +515,7 @@ extension AddViewController {
             topStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             topStackView.topAnchor.constraint(
                 equalTo: view.topAnchor,
-                constant: view.bounds.height * 0.1
+                constant: view.bounds.height * 0.09
             ),
             
             segmentedControl.widthAnchor.constraint(equalTo: topStackView.widthAnchor, multiplier: 0.8),
@@ -538,6 +540,9 @@ extension AddViewController {
             optionsStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1),
             optionsStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             optionsStackView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: 20),
+            
+            timesLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.15),
+            radiusLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.15),
             
             borderLine.widthAnchor.constraint(equalTo: topStackView.widthAnchor),
             borderLine.heightAnchor.constraint(equalToConstant: 1),

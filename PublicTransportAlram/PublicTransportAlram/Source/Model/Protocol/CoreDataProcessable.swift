@@ -10,7 +10,7 @@ import CoreData
 
 protocol CoreDataProcessable {
     func saveCoreData(alarm: AlarmInformation) -> Result<Bool, CoreDataError>
-    func readCoreData() -> Result<[AlarmInfo], CoreDataError>
+    func readCoreData() -> Result<[AlarmData], CoreDataError>
     func updateCoreData(alarm: AlarmInformation) -> Result<Bool, CoreDataError>
     func deleteCoreData(alarm: AlarmInformation) -> Result<Bool, CoreDataError>
 }
@@ -23,7 +23,7 @@ extension CoreDataProcessable {
         
         let managedContext = appDelegate.persistentContainer.viewContext
         guard let entity = NSEntityDescription.entity(
-            forEntityName: "AlarmInfo",
+            forEntityName: "AlarmData",
             in: managedContext
         ) else {
             return .failure(.entityError)
@@ -36,8 +36,6 @@ extension CoreDataProcessable {
         object.setValue(alarm.location, forKey: "location")
         object.setValue(alarm.latitude, forKey: "latitude")
         object.setValue(alarm.longitude, forKey: "longitude")
-        object.setValue(alarm.week, forKey: "week")
-        object.setValue(alarm.time, forKey: "time")
         object.setValue(alarm.radius, forKey: "radius")
         object.setValue(alarm.times, forKey: "times")
         
@@ -49,13 +47,13 @@ extension CoreDataProcessable {
         }
     }
     
-    func readCoreData() -> Result<[AlarmInfo], CoreDataError> {
+    func readCoreData() -> Result<[AlarmData], CoreDataError> {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return .failure(.appDelegateError)
         }
         
         let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<AlarmInfo>(entityName: "AlarmInfo")
+        let fetchRequest = NSFetchRequest<AlarmData>(entityName: "AlarmData")
         
         do {
             let result = try managedContext.fetch(fetchRequest)
@@ -71,7 +69,7 @@ extension CoreDataProcessable {
         }
         
         let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "AlarmInfo")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "AlarmData")
         
         fetchRequest.predicate = NSPredicate(format: "id = %@", alarm.id.uuidString)
         
@@ -86,8 +84,6 @@ extension CoreDataProcessable {
         object.setValue(alarm.location, forKey: "location")
         object.setValue(alarm.latitude, forKey: "latitude")
         object.setValue(alarm.longitude, forKey: "longitude")
-        object.setValue(alarm.week, forKey: "week")
-        object.setValue(alarm.time, forKey: "time")
         object.setValue(alarm.radius, forKey: "radius")
         object.setValue(alarm.times, forKey: "times")
         
@@ -105,7 +101,7 @@ extension CoreDataProcessable {
         }
         
         let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "AlarmInfo")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "AlarmData")
         
         fetchRequest.predicate = NSPredicate(format: "id = %@", alarm.id.uuidString)
         

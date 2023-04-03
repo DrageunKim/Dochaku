@@ -9,12 +9,10 @@ import Foundation
 
 struct AlarmInformation {
     let id: UUID
+    let type: String
     let latitude: String
     let longitude: String
     let location: String
-    let week: String
-    let time: String
-    let times: String
     let radius: String
-    let type: String
+    let times: String
 }

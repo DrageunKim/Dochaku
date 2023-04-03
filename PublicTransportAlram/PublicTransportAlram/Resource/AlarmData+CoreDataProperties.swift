@@ -1,8 +1,8 @@
 //
-//  AlarmInfo+CoreDataProperties.swift
+//  AlarmData+CoreDataProperties.swift
 //  PublicTransportAlram
 //
-//  Created by yonggeun Kim on 2023/03/28.
+//  Created by yonggeun Kim on 2023/04/03.
 //
 //
 
@@ -10,17 +10,15 @@ import Foundation
 import CoreData
 
 
-extension AlarmInfo {
+extension AlarmData {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<AlarmInfo> {
-        return NSFetchRequest<AlarmInfo>(entityName: "AlarmInfo")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<AlarmData> {
+        return NSFetchRequest<AlarmData>(entityName: "AlarmData")
     }
 
     @NSManaged public var latitude: String?
     @NSManaged public var longitude: String?
     @NSManaged public var location: String?
-    @NSManaged public var week: String?
-    @NSManaged public var time: String?
     @NSManaged public var times: String?
     @NSManaged public var radius: String?
     @NSManaged public var type: String?
@@ -28,6 +26,6 @@ extension AlarmInfo {
 
 }
 
-extension AlarmInfo : Identifiable {
+extension AlarmData : Identifiable {
 
 }
