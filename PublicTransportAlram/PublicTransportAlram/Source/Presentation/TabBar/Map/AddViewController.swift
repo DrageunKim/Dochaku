@@ -19,7 +19,7 @@ class AddViewController: UIViewController {
         case address
     }
     
-    private var alarmInformation: AlarmInformation?
+    private var alarmInformation: [String: String] = [:]
     private var myAnnotations = [MKPointAnnotation]()
     private let disposeBag = DisposeBag()
     
@@ -34,7 +34,7 @@ class AddViewController: UIViewController {
     }()
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "⏰ 알림 설정"
+        label.text = "⏰ 알림 추가"
         label.textColor = .label
         label.font = .preferredFont(forTextStyle: .headline).withSize(20)
         return label
@@ -81,80 +81,72 @@ class AddViewController: UIViewController {
         location.requestWhenInUseAuthorization()
         return location
     }()
-    private let dateTimeStackView: UIStackView = {
+    private let optionsStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.alignment = .fill
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
-        stackView.spacing = 10
-        return stackView
-    }()
-    private let dateStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.alignment = .center
-        stackView.axis = .horizontal
-        stackView.distribution = .equalCentering
         stackView.spacing = 20
         return stackView
     }()
-    private let dateLabel: UILabel = {
-        let label = UILabel()
-        label.backgroundColor = .systemBackground
-        label.text = "요일 / 시간"
-        label.textColor = .label
-        label.font = .preferredFont(forTextStyle: .headline).withSize(16)
-        return label
-    }()
-    private let dataSettingLabel: UILabel = {
-        let label = UILabel()
-        label.backgroundColor = .systemBackground
-        label.text = "설정이 필요합니다."
-        label.textColor = .label
-        label.font = .preferredFont(forTextStyle: .subheadline).withSize(14)
-        return label
-    }()
-    private let dateSettingButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .systemBackground
-        button.setImage(.add, for: .normal)
-        button.setTitleColor(.label, for: .normal)
-        button.contentHorizontalAlignment = .fill
-        button.contentVerticalAlignment = .fill
-        return button
-    }()
-    private let optionsStackView: UIStackView = {
+    private let radiusStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.alignment = .center
+        stackView.alignment = .fill
         stackView.axis = .horizontal
-        stackView.distribution = .equalCentering
+        stackView.distribution = .fill
         stackView.spacing = 20
         return stackView
     }()
-    private let optionsLabel: UILabel = {
+    private let radiusLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .systemBackground
-        label.text = "반경 / 알람횟수"
+        label.text = "반경"
         label.textColor = .label
+        label.textAlignment = .center
         label.font = .preferredFont(forTextStyle: .headline).withSize(16)
         return label
     }()
-    private let optionsSettingLabel: UILabel = {
+    private let radiusSegmentedControl: UISegmentedControl = {
+        let control = UISegmentedControl(items: ["250m", "500m", "1km", "1.5km", "2km"])
+        control.selectedSegmentIndex = 1
+        control.backgroundColor = .systemMint.withAlphaComponent(0.4)
+        control.selectedSegmentTintColor = .systemBackground
+        control.layer.borderColor = UIColor.label.cgColor
+        control.layer.borderWidth = 0.5
+        return control
+    }()
+    private let timesStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.alignment = .fill
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
+        stackView.spacing = 20
+        return stackView
+    }()
+    private let timesLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .systemBackground
-        label.text = "설정이 필요합니다."
+        label.text = "알람횟수"
         label.textColor = .label
-        label.font = .preferredFont(forTextStyle: .subheadline).withSize(14)
+        label.textAlignment = .center
+        label.font = .preferredFont(forTextStyle: .headline).withSize(16)
         return label
     }()
-    private let optionsSettingButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .systemBackground
-        button.setImage(.add, for: .normal)
-        button.setTitleColor(.label, for: .normal)
-        button.contentHorizontalAlignment = .fill
-        button.contentVerticalAlignment = .fill
-        return button
+    private let timesSegmentedControl: UISegmentedControl = {
+        let control = UISegmentedControl(items: ["1회", "3회", "5회", "7회", "10회"])
+        control.selectedSegmentIndex = 1
+        control.backgroundColor = .systemTeal.withAlphaComponent(0.4)
+        control.selectedSegmentTintColor = .systemBackground
+        control.layer.borderColor = UIColor.label.cgColor
+        control.layer.borderWidth = 0.5
+        return control
+    }()
+    private let borderLine: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .label
+        return view
     }()
     private let buttonStackView: UIStackView = {
         let stackView = UIStackView()
@@ -164,12 +156,6 @@ class AddViewController: UIViewController {
         stackView.distribution = .fillEqually
         stackView.spacing = 20
         return stackView
-    }()
-    private let borderLine: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .label
-        return view
     }()
     private let okButton: UIButton = {
         let button = UIButton()
@@ -211,10 +197,6 @@ class AddViewController: UIViewController {
         locationManager.stopUpdatingLocation()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
-    }
-    
     private func configureLocationManager() {
         locationManager.delegate = self
     }
@@ -222,12 +204,28 @@ class AddViewController: UIViewController {
     private func configureBinding() {
         okButton.rx.tap
             .subscribe { _ in
-                if let alarm = self.createAlarm() {
-                    print(alarm)
-                    self.save(alarm: alarm)
+                let alarm = self.createAlarm()
+            
+                switch alarm {
+                case .success(let data):
+                    print(data)
+                    self.save(alarm: data)
+                case .failure(_):
+                    break
                 }
             }
             .disposed(by: disposeBag)
+        
+        initButton.rx.tap
+            .subscribe { _ in
+                self.initAlarmData()
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func initAlarmData() {
+        locationSearchBar.text = .init()
+        mapView.removeAnnotations(mapView.annotations)
     }
     
     private func configureAnnotation(
@@ -255,24 +253,43 @@ class AddViewController: UIViewController {
         }
     }
     
-    private func configureDataSettingLabelText(_ date: String, _ startTime: String, _ endTime: String) {
-        dataSettingLabel.text = "\(date) / \(startTime)~\(endTime)"
-        alarmInformation?.week = date
-        alarmInformation?.time = startTime + " " + endTime
-    }
-    
-    private func configureOptionsSettingLabelText(_ radius: String, _ times: String) {
-        optionsSettingLabel.text = "\(radius) / \(times)"
+    private func createAlarm() -> Result<AlarmInformation, CoreDataError> {
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
+            alarmInformation.updateValue("subway", forKey: "type")
+        case 1:
+            alarmInformation.updateValue("bus", forKey: "type")
+        case 2:
+            alarmInformation.updateValue("address", forKey: "type")
+        default:
+            break
+        }
         
-        alarmInformation?.radius = radius
-        alarmInformation?.times = times
-    }
-    
-    private func createAlarm() -> AlarmInformation? {
-        alarmInformation?.id = UUID()
-        alarmInformation?.type = "123"
+        if let latitude = alarmInformation["latitude"],
+           let longitude = alarmInformation["longitude"],
+           let location = alarmInformation["location"],
+           let week = alarmInformation["week"],
+           let time = alarmInformation["time"],
+           let times = alarmInformation["times"],
+           let radius = alarmInformation["radius"],
+           let type = alarmInformation["type"] {
+            
+            let alarm = AlarmInformation(
+                id: UUID(),
+                latitude: latitude,
+                longitude: longitude,
+                location: location,
+                week: week,
+                time: time,
+                times: times,
+                radius: radius,
+                type: type
+            )
+            
+            return .success(alarm)
+        }
         
-        return alarmInformation
+        return .failure(.saveError)
     }
 }
 
@@ -293,9 +310,9 @@ extension AddViewController: LocationDataSendable {
             subTitle: lane
         )
         
-        alarmInformation?.latitude = String(latitude)
-        alarmInformation?.longitude = String(longitude)
-        alarmInformation?.location = location
+        alarmInformation.updateValue(String(latitude), forKey: "latitude")
+        alarmInformation.updateValue(String(longitude), forKey: "longitude")
+        alarmInformation.updateValue(location, forKey: "location")
     }
 }
 
@@ -303,7 +320,10 @@ extension AddViewController: LocationDataSendable {
 
 extension AddViewController: DateDataSendable {
     func DateDataSend(date: String, startTime: String, endTime: String) {
-        configureDataSettingLabelText(date, startTime, endTime)
+//        configureDataSettingLabelText(date, startTime, endTime)
+        
+        alarmInformation.updateValue(date, forKey: "week")
+        alarmInformation.updateValue(startTime + " " + endTime, forKey: "time")
     }
 }
 
@@ -311,7 +331,10 @@ extension AddViewController: DateDataSendable {
 
 extension AddViewController: OptionsDataSendable {
     func OptionsDataSend(radius: String, times: String) {
-        configureOptionsSettingLabelText(radius, times)
+//        configureOptionsSettingLabelText(radius, times)
+        
+        alarmInformation.updateValue(radius, forKey: "radius")
+        alarmInformation.updateValue(times, forKey: "times")
     }
 }
 
@@ -346,6 +369,17 @@ extension AddViewController: CoreDataProcessable {
             break
         case .failure(let error):
             print(error)
+        }
+    }
+    
+    func fetchDiaryData() -> [AlarmInfo]? {
+        let result = readCoreData()
+        
+        switch result {
+        case .success(let entity):
+            return entity
+        case .failure(_):
+            return nil
         }
     }
 }
@@ -384,8 +418,6 @@ extension AddViewController {
             action: #selector(tappedLocationSearchBar),
             for: .touchDown
         )
-        dateSettingButton.addTarget(self, action: #selector(tappedDateSettingButton), for: .touchDown)
-        optionsSettingButton.addTarget(self, action: #selector(tappedOptionsSettingButton), for: .touchDown)
     }
     
     @objc
@@ -454,24 +486,22 @@ extension AddViewController {
         topStackView.addArrangedSubview(locationSearchBar)
         topStackView.addArrangedSubview(mapView)
         
-        dateStackView.addArrangedSubview(dateLabel)
-        dateStackView.addArrangedSubview(dataSettingLabel)
-        dateStackView.addArrangedSubview(dateSettingButton)
+        radiusStackView.addArrangedSubview(radiusLabel)
+        radiusStackView.addArrangedSubview(radiusSegmentedControl)
         
-        optionsStackView.addArrangedSubview(optionsLabel)
-        optionsStackView.addArrangedSubview(optionsSettingLabel)
-        optionsStackView.addArrangedSubview(optionsSettingButton)
-        
-        dateTimeStackView.addArrangedSubview(dateStackView)
-        dateTimeStackView.addArrangedSubview(optionsStackView)
+        timesStackView.addArrangedSubview(timesLabel)
+        timesStackView.addArrangedSubview(timesSegmentedControl)
         
         buttonStackView.addArrangedSubview(okButton)
         buttonStackView.addArrangedSubview(initButton)
+        
+        optionsStackView.addArrangedSubview(radiusStackView)
+        optionsStackView.addArrangedSubview(timesStackView)
     }
     
     private func configureLayout() {
         view.addSubview(topStackView)
-        view.addSubview(dateTimeStackView)
+        view.addSubview(optionsStackView)
         view.addSubview(borderLine)
         view.addSubview(buttonStackView)
         
@@ -504,20 +534,15 @@ extension AddViewController {
                 constant: view.frame.height * -0.04
             ),
             
-            dateTimeStackView.widthAnchor.constraint(equalTo: topStackView.widthAnchor),
-            dateTimeStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1),
-            dateTimeStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            dateTimeStackView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: 20),
-            
-            dateSettingButton.widthAnchor.constraint(equalToConstant: 25),
-            dateSettingButton.heightAnchor.constraint(equalTo: dateSettingButton.widthAnchor),
-            optionsSettingButton.widthAnchor.constraint(equalToConstant: 25),
-            optionsSettingButton.heightAnchor.constraint(equalTo: optionsSettingButton.widthAnchor),
+            optionsStackView.widthAnchor.constraint(equalTo: topStackView.widthAnchor),
+            optionsStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1),
+            optionsStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            optionsStackView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: 20),
             
             borderLine.widthAnchor.constraint(equalTo: topStackView.widthAnchor),
             borderLine.heightAnchor.constraint(equalToConstant: 1),
             borderLine.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            borderLine.topAnchor.constraint(equalTo: dateTimeStackView.bottomAnchor, constant: 20),
+            borderLine.topAnchor.constraint(equalTo: optionsStackView.bottomAnchor, constant: 20),
             
             buttonStackView.widthAnchor.constraint(equalTo: topStackView.widthAnchor, multiplier: 0.9),
             buttonStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),

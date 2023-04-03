@@ -8,13 +8,13 @@
 import Foundation
 
 struct AlarmInformation {
-    var id: UUID
-    var latitude: String
-    var longitude: String
-    var location: String
-    var week: String
-    var time: String
-    var times: String
-    var radius: String
-    var type: String
+    let id: UUID
+    let latitude: String
+    let longitude: String
+    let location: String
+    let week: String
+    let time: String
+    let times: String
+    let radius: String
+    let type: String
 }
