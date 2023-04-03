@@ -20,6 +20,7 @@
 		D064A12E29D33EC600902AB4 /* AddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D064A12D29D33EC600902AB4 /* AddViewModel.swift */; };
 		D064A19429DB1F1200902AB4 /* AlarmData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D064A19229DB1F1200902AB4 /* AlarmData+CoreDataClass.swift */; };
 		D064A19529DB1F1200902AB4 /* AlarmData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D064A19329DB1F1200902AB4 /* AlarmData+CoreDataProperties.swift */; };
+		D064A19729DB260100902AB4 /* AlertPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D064A19629DB260100902AB4 /* AlertPresentable.swift */; };
 		D08122BA29B88DFD00CA5664 /* StationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08122B929B88DFD00CA5664 /* StationInfo.swift */; };
 		D081233729C0DA5800CA5664 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D081233629C0DA5800CA5664 /* RxCocoa */; };
 		D081233929C0DA5800CA5664 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D081233829C0DA5800CA5664 /* RxSwift */; };
@@ -93,6 +94,7 @@
 		D064A12D29D33EC600902AB4 /* AddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewModel.swift; sourceTree = "<group>"; };
 		D064A19229DB1F1200902AB4 /* AlarmData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlarmData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D064A19329DB1F1200902AB4 /* AlarmData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlarmData+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D064A19629DB260100902AB4 /* AlertPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresentable.swift; sourceTree = "<group>"; };
 		D08122B929B88DFD00CA5664 /* StationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationInfo.swift; sourceTree = "<group>"; };
 		D081237529C1E5C000CA5664 /* PublicTransitPoi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicTransitPoi.swift; sourceTree = "<group>"; };
 		D081237729C1EB3300CA5664 /* PublicTransitPoiDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicTransitPoiDTO.swift; sourceTree = "<group>"; };
@@ -382,6 +384,7 @@
 				D0FE2C1929B4CE28001C83F7 /* Identifiable.swift */,
 				D055595129C83F0500850785 /* LocationDataSendable.swift */,
 				D064A11B29D3313900902AB4 /* CoreDataProcessable.swift */,
+				D064A19629DB260100902AB4 /* AlertPresentable.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -524,6 +527,7 @@
 				D08166BF29A79B0D00A67C1C /* SubwayRouteSearchDTO.swift in Sources */,
 				D0FE2BF929B4CA73001C83F7 /* ListViewModel.swift in Sources */,
 				D08316F129C370A400E86676 /* RealTimeStationArrivalDTO.swift in Sources */,
+				D064A19729DB260100902AB4 /* AlertPresentable.swift in Sources */,
 				D0FE2BF729B4CA69001C83F7 /* ListViewController.swift in Sources */,
 				D055595229C83F0500850785 /* LocationDataSendable.swift in Sources */,
 				D064A12E29D33EC600902AB4 /* AddViewModel.swift in Sources */,

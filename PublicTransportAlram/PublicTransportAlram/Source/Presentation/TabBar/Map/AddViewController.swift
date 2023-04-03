@@ -210,29 +210,41 @@ class AddViewController: UIViewController {
             .disposed(by: disposeBag)
         
         okButton.rx.tap
+            .filter {
+                self.locationSearchBar.text != String()
+            }
             .subscribe { _ in
-                let alarm = self.createAlarm()
-            
-                switch alarm {
-                case .success(let data):
-                    print(data)
-                    self.save(alarm: data)
-                case .failure(_):
-                    break
-                }
+                self.presentActionSheet(self.setBookMarkAlarm, self.setAlarm)
             }
             .disposed(by: disposeBag)
         
         initButton.rx.tap
+            .filter {
+                self.locationSearchBar.text != String()
+            }
             .subscribe { _ in
-                self.initAlarmData()
+                self.presentInitAlert {
+                    self.locationSearchBar.text = .init()
+                    self.mapView.removeAnnotations(self.mapView.annotations)
+                }
             }
             .disposed(by: disposeBag)
     }
     
-    private func initAlarmData() {
-        locationSearchBar.text = .init()
-        mapView.removeAnnotations(mapView.annotations)
+    private func setBookMarkAlarm() {
+        let alarm = self.createAlarm()
+    
+        switch alarm {
+        case .success(let data):
+            print(data)
+            self.save(alarm: data)
+        case .failure(_):
+            break
+        }
+    }
+    
+    private func setAlarm() {
+        
     }
     
     private func configureAnnotation(
@@ -335,6 +347,10 @@ class AddViewController: UIViewController {
         }
     }
 }
+
+// MARK: - AlertPresentable
+
+extension AddViewController: AlertPresentable {}
 
 // MARK: - LocationDataSendable
 
