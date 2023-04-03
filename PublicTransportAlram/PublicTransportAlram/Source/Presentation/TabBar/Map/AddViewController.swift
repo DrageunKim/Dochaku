@@ -520,13 +520,6 @@ extension AddViewController: CLLocationManagerDelegate {
 
 extension AddViewController {
     private func configureButtonAction() {
-        let longGesture = UILongPressGestureRecognizer(
-            target: self,
-            action: #selector(addWaypoint)
-        )
-        longGesture.minimumPressDuration = 1.0
-        
-        mapView.addGestureRecognizer(longGesture)
         locationSearchBar.searchTextField.addTarget(
             self,
             action: #selector(tappedLocationSearchBar),
@@ -552,18 +545,6 @@ extension AddViewController {
         default:
             break
         }
-    }
-    
-    @objc
-    private func addWaypoint(longGesture: UIGestureRecognizer) {
-        mapView.removeAnnotations(mapView.annotations)
-        
-        let touchPoint = longGesture.location(in: mapView)
-        let newCoordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
-        let annotation = MKPointAnnotation()
-        
-        annotation.coordinate = newCoordinates
-        mapView.addAnnotation(annotation)
     }
 }
 
