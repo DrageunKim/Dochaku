@@ -237,7 +237,7 @@ class AddViewController: UIViewController {
         checkAlarmRadius()
         checkAlarmTimes()
         checkAlarmEnable()
-        pushArriveAlarm()
+        setPushAlarm()
     }
     
     private func setAlarmAndBookMark() {
@@ -258,9 +258,25 @@ class AddViewController: UIViewController {
         case .success(let data):
             viewModel.save(alarm: data)
             checkAlarmEnable()
-            pushArriveAlarm()
+            setPushAlarm()
         case .failure(_):
             break
+        }
+    }
+    
+    private func setPushAlarm() {
+        guard let latitude = viewModel.alarmInformation["latitude"],
+              let longitude = viewModel.alarmInformation["longitude"],
+              let times = viewModel.alarmInformation["times"],
+              let radius = viewModel.alarmInformation["radius"] else {
+            presentSettingFailedAlert()
+            return
+        }
+        
+        if pushArriveAlarm(latitude: latitude, longitude: longitude, times: times, radius: radius) {
+            presentSettingSuccessAlert()
+        } else {
+            presentSettingFailedAlert()
         }
     }
     
@@ -324,11 +340,11 @@ class AddViewController: UIViewController {
     private func checkAlarmType() {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
-            viewModel.alarmInformation.updateValue("subway", forKey: "type")
+            viewModel.alarmInformation.updateValue("지하철", forKey: "type")
         case 1:
-            viewModel.alarmInformation.updateValue("bus", forKey: "type")
+            viewModel.alarmInformation.updateValue("버스", forKey: "type")
         case 2:
-            viewModel.alarmInformation.updateValue("address", forKey: "type")
+            viewModel.alarmInformation.updateValue("주소", forKey: "type")
         default:
             break
         }
@@ -379,6 +395,10 @@ class AddViewController: UIViewController {
 
 extension AddViewController: AlertPresentable {}
 
+// MARK: - LocalAlarmPushable
+
+extension AddViewController: LocalAlarmPushable {}
+
 // MARK: - LocationDataSendable
 
 extension AddViewController: LocationDataSendable {
@@ -410,61 +430,6 @@ extension AddViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("error: \(error.localizedDescription)")
-    }
-}
-
-// MARK: - AlarmSetting
-
-extension AddViewController {
-    func checkAlarmEnable() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { (didAllow, error) in
-            guard let err = error else { return }
-            
-            print(err.localizedDescription)
-        }
-    }
-    
-    func pushArriveAlarm() {
-        guard let latitude = viewModel.alarmInformation["latitude"],
-              let longitude = viewModel.alarmInformation["longitude"],
-              let times = viewModel.alarmInformation["times"],
-              let radius = viewModel.alarmInformation["radius"] else { return }
-        
-        if let latitude = Double(latitude),
-           let longitude = Double(longitude),
-           let times = Int(times),
-           let radius = Double(radius) {
-            let content = UNMutableNotificationContent()
-            
-            content.title = "⏰ 목적지 도착"
-            content.body = "설정하신 위치에 근접하였습니다."
-            content.sound = .default
-            
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-//            let trigger = UNLocationNotificationTrigger(region: region, repeats: false)
-            
-            let center = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            let region = CLCircularRegion(center: center, radius: radius, identifier: "settingLocation")
-
-            region.notifyOnEntry = true
-            region.notifyOnExit = false
-
-            var requestList: [UNNotificationRequest] = []
-            var requestIdentifierList: [String] = []
-            
-            for i in 0..<times {
-                requestIdentifierList.append("timer" + String(i))
-                requestList.append(
-                    UNNotificationRequest(identifier: requestIdentifierList[i], content: content, trigger: trigger)
-                )
-                
-                UNUserNotificationCenter.current().add(requestList[i], withCompletionHandler: nil)
-            }
-            
-            presentSettingSuccessAlert()
-        } else {
-            presentSettingFailedAlert()
-        }
     }
 }
 

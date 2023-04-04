@@ -21,6 +21,7 @@
 		D064A19429DB1F1200902AB4 /* AlarmData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D064A19229DB1F1200902AB4 /* AlarmData+CoreDataClass.swift */; };
 		D064A19529DB1F1200902AB4 /* AlarmData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D064A19329DB1F1200902AB4 /* AlarmData+CoreDataProperties.swift */; };
 		D064A19729DB260100902AB4 /* AlertPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D064A19629DB260100902AB4 /* AlertPresentable.swift */; };
+		D064A19929DBF94300902AB4 /* LocalAlarmPushable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D064A19829DBF94300902AB4 /* LocalAlarmPushable.swift */; };
 		D08122BA29B88DFD00CA5664 /* StationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08122B929B88DFD00CA5664 /* StationInfo.swift */; };
 		D081233729C0DA5800CA5664 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D081233629C0DA5800CA5664 /* RxCocoa */; };
 		D081233929C0DA5800CA5664 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D081233829C0DA5800CA5664 /* RxSwift */; };
@@ -95,6 +96,7 @@
 		D064A19229DB1F1200902AB4 /* AlarmData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlarmData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D064A19329DB1F1200902AB4 /* AlarmData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlarmData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D064A19629DB260100902AB4 /* AlertPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresentable.swift; sourceTree = "<group>"; };
+		D064A19829DBF94300902AB4 /* LocalAlarmPushable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAlarmPushable.swift; sourceTree = "<group>"; };
 		D08122B929B88DFD00CA5664 /* StationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationInfo.swift; sourceTree = "<group>"; };
 		D081237529C1E5C000CA5664 /* PublicTransitPoi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicTransitPoi.swift; sourceTree = "<group>"; };
 		D081237729C1EB3300CA5664 /* PublicTransitPoiDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicTransitPoiDTO.swift; sourceTree = "<group>"; };
@@ -385,6 +387,7 @@
 				D055595129C83F0500850785 /* LocationDataSendable.swift */,
 				D064A11B29D3313900902AB4 /* CoreDataProcessable.swift */,
 				D064A19629DB260100902AB4 /* AlertPresentable.swift */,
+				D064A19829DBF94300902AB4 /* LocalAlarmPushable.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -534,6 +537,7 @@
 				D064A11229D323C800902AB4 /* CoreData.xcdatamodeld in Sources */,
 				D081681B29AF7E6800A67C1C /* JSONError.swift in Sources */,
 				D081681E29AF82AF00A67C1C /* PublicTransportService.swift in Sources */,
+				D064A19929DBF94300902AB4 /* LocalAlarmPushable.swift in Sources */,
 				D064A11E29D3318000902AB4 /* AlarmInformation.swift in Sources */,
 				D055594E29C83E2700850785 /* SubwaySearchListViewController.swift in Sources */,
 				D055595929C8898800850785 /* BusSearchListViewModel.swift in Sources */,

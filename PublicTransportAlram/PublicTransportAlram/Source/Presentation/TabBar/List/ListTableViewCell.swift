@@ -9,30 +9,70 @@ import UIKit
 
 class ListTableViewCell: UITableViewCell {
     
-    // MARK: Private Properties
+    // MARK: Properties
     
-    let stationLabel: UILabel = {
+    private let totalStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.alignment = .leading
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        return stackView
+    }()
+    
+    private let destinationStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.alignment = .fill
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
+        stackView.spacing = 10
+        return stackView
+    }()
+    private let typeLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 15, weight: .bold)
+        label.font = .systemFont(ofSize: 15, weight: .semibold)
         label.textColor = .label
         label.numberOfLines = 1
         return label
     }()
-    let laneLabel: UILabel = {
+    private let locationLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 12, weight: .semibold)
+        label.font = .systemFont(ofSize: 16, weight: .bold)
         label.textColor = .label
         label.numberOfLines = 1
         return label
     }()
     
-    // MARK: Lifecycle
+    private let optionsStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.alignment = .fill
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
+        stackView.spacing = 10
+        return stackView
+    }()
+    private let radiusLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 15, weight: .light)
+        label.textColor = .label
+        label.numberOfLines = 1
+        return label
+    }()
+    private let timesLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 15, weight: .light)
+        label.textColor = .label
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    // MARK: LifeCycle
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        accessoryType = .disclosureIndicator
+        configureStackView()
         configureLayout()
     }
     
@@ -43,39 +83,62 @@ class ListTableViewCell: UITableViewCell {
     // MARK: PrepareForReuse
     
     override func prepareForReuse() {
-        stationLabel.text = nil
+        super.prepareForReuse()
+        
+        typeLabel.text = nil
+        locationLabel.text = nil
+        radiusLabel.text = nil
+        timesLabel.text = nil
     }
     
-    // MARK: Private Methods
-
-    private func configureLayout() {
-        contentView.addSubview(stationLabel)
-        contentView.addSubview(laneLabel)
-        
-        NSLayoutConstraint.activate([
-            stationLabel.leadingAnchor.constraint(
-                equalTo: contentView.leadingAnchor,
-                constant: 10
-            ),
-            stationLabel.trailingAnchor.constraint(
-                equalTo: contentView.trailingAnchor,
-                constant: 10
-            ),
-            stationLabel.topAnchor.constraint(
-                equalTo: contentView.topAnchor,
-                constant: 10
-            ),
-            
-            laneLabel.leadingAnchor.constraint(equalTo: stationLabel.leadingAnchor),
-            laneLabel.trailingAnchor.constraint(equalTo: stationLabel.trailingAnchor),
-            laneLabel.topAnchor.constraint(
-                equalTo: stationLabel.bottomAnchor,
-                constant: 2
-            )
-        ])
+    // MARK: Methods
+    
+    func configureCellText(with alarm: AlarmInformation) {
+        typeLabel.text = "[" + alarm.type + "]"
+        locationLabel.text = alarm.location
+        radiusLabel.text = "반경: " + alarm.radius + "미터"
+        timesLabel.text = "알람횟수: " + alarm.times + "회"
     }
 }
 
 // MARK: - Identifiable
 
 extension ListTableViewCell: Identifiable {}
+
+// MARK: - Configure Layout
+
+extension ListTableViewCell {
+    private func configureStackView() {
+        destinationStackView.addArrangedSubview(typeLabel)
+        destinationStackView.addArrangedSubview(locationLabel)
+        
+        optionsStackView.addArrangedSubview(radiusLabel)
+        optionsStackView.addArrangedSubview(timesLabel)
+        
+        totalStackView.addArrangedSubview(destinationStackView)
+        totalStackView.addArrangedSubview(optionsStackView)
+    }
+    
+    private func configureLayout() {
+        contentView.addSubview(totalStackView)
+        
+        NSLayoutConstraint.activate([
+            totalStackView.leadingAnchor.constraint(
+                equalTo: contentView.leadingAnchor,
+                constant: 15
+            ),
+            totalStackView.trailingAnchor.constraint(
+                equalTo: contentView.trailingAnchor,
+                constant: -15
+            ),
+            totalStackView.topAnchor.constraint(
+                equalTo: contentView.topAnchor,
+                constant: 5
+            ),
+            totalStackView.bottomAnchor.constraint(
+                equalTo: contentView.bottomAnchor,
+                constant: -5
+            )
+        ])
+    }
+}

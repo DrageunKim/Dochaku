@@ -12,50 +12,75 @@ import RxCocoa
 class ListViewModel {
     
     let disposeBag = DisposeBag()
-
-    // MARK: Input
     
-    let stationText: AnyObserver<String>
-    let fetchSubwayInfo: AnyObserver<Void>
+    var alarmList: [AlarmInformation] = []
+    var alarm: [String: String] = [:]
     
-    // MARK: Output
-    
-    let stationName: Observable<[POI]>
-    
-    init(
-        domain: PublicTransportService = PublicTransportService()
-    ) {
-        let station = PublishSubject<String>()
-        let fetching = PublishSubject<Void>()
-        let poi = PublishSubject<PublicTransitPoiDTO>()
+    func convertToDiary(from dataArray: [AlarmData]) -> [AlarmInformation] {
+        var alarmArray: [AlarmInformation] = []
         
-        stationText = station.asObserver()
-        fetchSubwayInfo = fetching.asObserver()
-        
-        station
-            .filter { $0.count > 0 }
-            .map(domain.fetchStationLatitudeAndLongitude)
-            .filter { $0.split(separator: " ").count == 2 }
-            .map {
-                let data = $0.split(separator: " ").compactMap { String($0) }
-                
-                if let latitude = Double(data[0]),
-                   let longitude = Double(data[1]) {
-                    domain.stationLatitude = latitude
-                    domain.stationLongitude = longitude
-                }
+        dataArray.forEach { data in
+            guard let id = data.id,
+                  let type = data.type,
+                  let location = data.location,
+                  let latitude = data.latitude,
+                  let longitude = data.longitude,
+                  let radius = data.radius,
+                  let times = data.times
+            else {
+                return
             }
-            .subscribe(onNext: fetching.onNext)
-            .disposed(by: disposeBag)
+            
+            let alarm = AlarmInformation(
+                id: id,
+                type: type,
+                latitude: latitude,
+                longitude: longitude,
+                location: location,
+                radius: radius,
+                times: times
+            )
+            
+            alarmArray.append(alarm)
+        }
         
-        fetching
-            .map(domain.checkValidLatitudeAndLongitude)
-            .filter { domain.isValidLatitudeAndLongitude }
-            .flatMap(domain.fetchSubwayPOIRx)
-            .subscribe(onNext: poi.onNext)
-            .disposed(by: disposeBag)
-        
-        stationName = poi
-            .map { $0.result.station }
+        return alarmArray
+    }
+}
+
+// MARK: - CoreDataProcessable
+
+extension ListViewModel: CoreDataProcessable {
+    func update(alarm: AlarmInformation) {
+        let result = updateCoreData(alarm: alarm)
+
+        switch result {
+        case .success(_):
+            break
+        case .failure(let error):
+            print(error)
+        }
+    }
+
+    func delete(alarm: AlarmInformation) {
+        let result = deleteCoreData(alarm: alarm)
+
+        switch result {
+        case .success(_):
+            break
+        case .failure(let error):
+            print(error)
+        }
+    }
+
+    func fetchData() -> [AlarmData]? {
+        let result = readCoreData()
+
+        switch result {
+        case .success(let entity):
+            return entity
+        case .failure(_):
+            return nil
+        }
     }
 }

@@ -14,6 +14,7 @@ protocol AlertPresentable: UIViewController {
     func presentInitAlert(_ initHandler: @escaping () -> Void)
     func presentSettingSuccessAlert()
     func presentSettingFailedAlert()
+    func presentDeleteAlert(_ deleteHandler: @escaping () -> Void)
 }
 
 extension AlertPresentable {
@@ -97,6 +98,30 @@ extension AlertPresentable {
         
         present(alert, animated: true)
     }
+    
+    func presentDeleteAlert(_ deleteHandler: @escaping () -> Void) {
+        let alert = UIAlertController(
+            title: NameSpace.alarmDeleteTitle,
+            message: NameSpace.alarmDeleteMessage,
+            preferredStyle: .alert
+        )
+        let cancelAction = UIAlertAction(
+            title: NameSpace.cancelTitle,
+            style: .default,
+            handler: nil
+        )
+        let deleteAction = UIAlertAction(
+            title: NameSpace.deleteTitle,
+            style: .destructive
+        ) { _ in
+            deleteHandler()
+        }
+        
+        alert.addAction(cancelAction)
+        alert.addAction(deleteAction)
+        
+        present(alert, animated: true)
+    }
 }
 
 private enum NameSpace {
@@ -113,6 +138,10 @@ private enum NameSpace {
     static let initAlertMessage = "초기화하시겠습니까?"
     static let initTitle = "초기화"
     
+    static let alarmDeleteTitle = "알람 삭제"
+    static let alarmDeleteMessage = "알람 정보를 삭제하시겠습니까?"
+    
     static let okTitle = "확인"
     static let cancelTitle = "취소"
+    static let deleteTitle = "삭제"
 }

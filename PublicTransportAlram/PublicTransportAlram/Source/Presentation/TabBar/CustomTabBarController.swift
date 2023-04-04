@@ -17,7 +17,7 @@ class CustomTabBarController: UITabBarController {
         return viewController
     }()
     private let listViewController: UIViewController = {
-        let viewController = UINavigationController(rootViewController: ListViewController())
+        let viewController = ListViewController()
         viewController.view.backgroundColor = .systemBackground
         viewController.tabBarItem.title = "즐겨찾기"
         viewController.tabBarItem.image = UIImage(systemName: "list.bullet")
