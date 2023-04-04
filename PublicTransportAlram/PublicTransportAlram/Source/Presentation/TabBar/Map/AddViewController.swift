@@ -12,22 +12,14 @@ import CoreLocation
 import RxSwift
 import RxCocoa
 
-enum SettingType {
-    case alarm
-    case alarmAndBookMark
-    case bookMark
-}
-
 class AddViewController: UIViewController {
-    
     enum SearchType: Int {
         case subway = 0
         case bus
         case address
     }
     
-    private var alarmInformation: [String: String] = [:]
-    private var myAnnotations = [MKPointAnnotation]()
+    private let viewModel = AddViewModel()
     private let disposeBag = DisposeBag()
     
     private let topStackView: UIStackView = {
@@ -235,14 +227,196 @@ class AddViewController: UIViewController {
             }
             .subscribe { _ in
                 self.presentInitAlert {
-                    self.locationSearchBar.text = .init()
-                    self.mapView.removeAnnotations(self.mapView.annotations)
+                    self.initLocation()
                 }
             }
             .disposed(by: disposeBag)
     }
     
-    private func checkAlarmEnable() {
+    private func setAlarm() {
+        checkAlarmRadius()
+        checkAlarmTimes()
+        checkAlarmEnable()
+        pushArriveAlarm()
+    }
+    
+    private func setAlarmAndBookMark() {
+        let alarm = self.createAlarm()
+        
+        switch alarm {
+        case .success(let data):
+            viewModel.save(alarm: data)
+        case .failure(_):
+            break
+        }
+    }
+    
+    private func setBookMark() {
+        let alarm = self.createAlarm()
+        
+        switch alarm {
+        case .success(let data):
+            viewModel.save(alarm: data)
+            checkAlarmEnable()
+            pushArriveAlarm()
+        case .failure(_):
+            break
+        }
+    }
+    
+    private func initLocation() {
+        locationSearchBar.text = .init()
+        mapView.removeAnnotations(self.mapView.annotations)
+    }
+    
+    private func configureAnnotation(
+        latitude: CLLocationDegrees,
+        longitude: CLLocationDegrees,
+        title: String? = nil,
+        subTitle: String? = nil
+    ) {
+        mapView.removeAnnotations(mapView.annotations)
+        
+        let center = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let region = MKCoordinateRegion(center: center, latitudinalMeters: 1000, longitudinalMeters: 1000)
+        
+        mapView.setRegion(region, animated: true)
+        
+        if let title = title,
+           let subTitle = subTitle {
+            let annotation = MKPointAnnotation()
+            
+            annotation.coordinate = center
+            annotation.title = title
+            annotation.subtitle = subTitle
+            
+            mapView.addAnnotation(annotation)
+        }
+    }
+    
+    private func createAlarm() -> Result<AlarmInformation, CoreDataError> {
+        checkAlarmRadius()
+        checkAlarmTimes()
+        
+        if let latitude = viewModel.alarmInformation["latitude"],
+           let longitude = viewModel.alarmInformation["longitude"],
+           let location = viewModel.alarmInformation["location"],
+           let times = viewModel.alarmInformation["times"],
+           let radius = viewModel.alarmInformation["radius"],
+           let type = viewModel.alarmInformation["type"] {
+            
+            let alarm = AlarmInformation(
+                id: UUID(),
+                type: type,
+                latitude: latitude,
+                longitude: longitude,
+                location: location,
+                radius: radius,
+                times: times
+            )
+            
+            return .success(alarm)
+        }
+        
+        return .failure(.saveError)
+    }
+    
+    private func checkAlarmType() {
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
+            viewModel.alarmInformation.updateValue("subway", forKey: "type")
+        case 1:
+            viewModel.alarmInformation.updateValue("bus", forKey: "type")
+        case 2:
+            viewModel.alarmInformation.updateValue("address", forKey: "type")
+        default:
+            break
+        }
+    }
+    
+    private func checkAlarmLocation(location: String, latitude: String, longitude: String) {
+        viewModel.alarmInformation.updateValue(location, forKey: "location")
+        viewModel.alarmInformation.updateValue(latitude, forKey: "latitude")
+        viewModel.alarmInformation.updateValue(longitude, forKey: "longitude")
+    }
+    
+    private func checkAlarmRadius() {
+        switch radiusSegmentedControl.selectedSegmentIndex {
+        case 0:
+            viewModel.alarmInformation.updateValue("250", forKey: "radius")
+        case 1:
+            viewModel.alarmInformation.updateValue("500", forKey: "radius")
+        case 2:
+            viewModel.alarmInformation.updateValue("1000", forKey: "radius")
+        case 3:
+            viewModel.alarmInformation.updateValue("1500", forKey: "radius")
+        case 4:
+            viewModel.alarmInformation.updateValue("2000", forKey: "radius")
+        default:
+            break
+        }
+    }
+    
+    private func checkAlarmTimes() {
+        switch timesSegmentedControl.selectedSegmentIndex {
+        case 0:
+            viewModel.alarmInformation.updateValue("1", forKey: "times")
+        case 1:
+            viewModel.alarmInformation.updateValue("2", forKey: "times")
+        case 2:
+            viewModel.alarmInformation.updateValue("3", forKey: "times")
+        case 3:
+            viewModel.alarmInformation.updateValue("4", forKey: "times")
+        case 4:
+            viewModel.alarmInformation.updateValue("5", forKey: "times")
+        default:
+            break
+        }
+    }
+}
+
+// MARK: - AlertPresentable
+
+extension AddViewController: AlertPresentable {}
+
+// MARK: - LocationDataSendable
+
+extension AddViewController: LocationDataSendable {
+    func locationDataSend(longitude: Double, latitude: Double, location: String, lane: String) {
+        if lane != String() {
+            locationSearchBar.text = location + " " + "(\(lane))"
+        } else {
+            locationSearchBar.text = location
+        }
+        
+        configureAnnotation(latitude: latitude, longitude: longitude, title: location, subTitle: lane)
+        
+        checkAlarmType()
+        checkAlarmLocation(location: location, latitude: String(latitude), longitude: String(longitude))
+    }
+}
+
+// MARK: - CLLocationManagerDelegate
+
+extension AddViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            configureAnnotation(
+                latitude: location.coordinate.latitude,
+                longitude: location.coordinate.longitude
+            )
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("error: \(error.localizedDescription)")
+    }
+}
+
+// MARK: - AlarmSetting
+
+extension AddViewController {
+    func checkAlarmEnable() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { (didAllow, error) in
             guard let err = error else { return }
             
@@ -250,11 +424,11 @@ class AddViewController: UIViewController {
         }
     }
     
-    private func pushArriveAlarm() {
-        guard let latitude = alarmInformation["latitude"],
-              let longitude = alarmInformation["longitude"],
-              let times = alarmInformation["times"],
-              let radius = alarmInformation["radius"] else { return }
+    func pushArriveAlarm() {
+        guard let latitude = viewModel.alarmInformation["latitude"],
+              let longitude = viewModel.alarmInformation["longitude"],
+              let times = viewModel.alarmInformation["times"],
+              let radius = viewModel.alarmInformation["radius"] else { return }
         
         if let latitude = Double(latitude),
            let longitude = Double(longitude),
@@ -291,228 +465,6 @@ class AddViewController: UIViewController {
         } else {
             presentSettingFailedAlert()
         }
-    }
-    
-    private func setAlarm() {
-        checkAlarmRadius()
-        checkAlarmTimes()
-        checkAlarmEnable()
-        pushArriveAlarm()
-    }
-    
-    private func setAlarmAndBookMark() {
-        let alarm = self.createAlarm()
-        
-        switch alarm {
-        case .success(let data):
-            save(alarm: data)
-        case .failure(_):
-            break
-        }
-    }
-    
-    private func setBookMark() {
-        let alarm = self.createAlarm()
-        
-        switch alarm {
-        case .success(let data):
-            save(alarm: data)
-            checkAlarmEnable()
-            pushArriveAlarm()
-        case .failure(_):
-            break
-        }
-    }
-    
-    private func configureAnnotation(
-        latitude: CLLocationDegrees,
-        longitude: CLLocationDegrees,
-        title: String? = nil,
-        subTitle: String? = nil
-    ) {
-        mapView.removeAnnotations(mapView.annotations)
-        
-        let center = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        let region = MKCoordinateRegion(center: center, latitudinalMeters: 1000, longitudinalMeters: 1000)
-        
-        mapView.setRegion(region, animated: true)
-        
-        if let title = title,
-           let subTitle = subTitle {
-            let annotation = MKPointAnnotation()
-            
-            annotation.coordinate = center
-            annotation.title = title
-            annotation.subtitle = subTitle
-            
-            mapView.addAnnotation(annotation)
-        }
-    }
-    
-    private func createAlarm() -> Result<AlarmInformation, CoreDataError> {
-        checkAlarmRadius()
-        checkAlarmTimes()
-        
-        if let latitude = alarmInformation["latitude"],
-           let longitude = alarmInformation["longitude"],
-           let location = alarmInformation["location"],
-           let times = alarmInformation["times"],
-           let radius = alarmInformation["radius"],
-           let type = alarmInformation["type"] {
-            
-            let alarm = AlarmInformation(
-                id: UUID(),
-                type: type,
-                latitude: latitude,
-                longitude: longitude,
-                location: location,
-                radius: radius,
-                times: times
-            )
-            
-            return .success(alarm)
-        }
-        
-        return .failure(.saveError)
-    }
-    
-    private func checkAlarmType() {
-        switch segmentedControl.selectedSegmentIndex {
-        case 0:
-            alarmInformation.updateValue("subway", forKey: "type")
-        case 1:
-            alarmInformation.updateValue("bus", forKey: "type")
-        case 2:
-            alarmInformation.updateValue("address", forKey: "type")
-        default:
-            break
-        }
-    }
-    
-    private func checkAlarmLocation(location: String, latitude: String, longitude: String) {
-        alarmInformation.updateValue(location, forKey: "location")
-        alarmInformation.updateValue(latitude, forKey: "latitude")
-        alarmInformation.updateValue(longitude, forKey: "longitude")
-    }
-    
-    private func checkAlarmRadius() {
-        switch radiusSegmentedControl.selectedSegmentIndex {
-        case 0:
-            alarmInformation.updateValue("250", forKey: "radius")
-        case 1:
-            alarmInformation.updateValue("500", forKey: "radius")
-        case 2:
-            alarmInformation.updateValue("1000", forKey: "radius")
-        case 3:
-            alarmInformation.updateValue("1500", forKey: "radius")
-        case 4:
-            alarmInformation.updateValue("2000", forKey: "radius")
-        default:
-            break
-        }
-    }
-    
-    private func checkAlarmTimes() {
-        switch timesSegmentedControl.selectedSegmentIndex {
-        case 0:
-            alarmInformation.updateValue("1", forKey: "times")
-        case 1:
-            alarmInformation.updateValue("2", forKey: "times")
-        case 2:
-            alarmInformation.updateValue("3", forKey: "times")
-        case 3:
-            alarmInformation.updateValue("4", forKey: "times")
-        case 4:
-            alarmInformation.updateValue("5", forKey: "times")
-        default:
-            break
-        }
-    }
-}
-
-// MARK: - AlertPresentable
-
-extension AddViewController: AlertPresentable {}
-
-// MARK: - LocationDataSendable
-
-extension AddViewController: LocationDataSendable {
-    func locationDataSend(longitude: Double, latitude: Double, location: String, lane: String) {
-        if lane != String() {
-            locationSearchBar.text = location + " " + "(\(lane))"
-        } else {
-            locationSearchBar.text = location
-        }
-        
-        configureAnnotation(latitude: latitude, longitude: longitude, title: location, subTitle: lane)
-        
-        checkAlarmType()
-        checkAlarmLocation(location: location, latitude: String(latitude), longitude: String(longitude))
-    }
-}
-
-// MARK: - CoreDataProcessable
-
-extension AddViewController: CoreDataProcessable {
-    func save(alarm: AlarmInformation) {
-        let result = saveCoreData(alarm: alarm)
-        
-        switch result {
-        case .success(_):
-            break
-        case .failure(let error):
-            print(error)
-        }
-    }
-    
-    func update(alarm: AlarmInformation) {
-        let result = updateCoreData(alarm: alarm)
-        
-        switch result {
-        case .success(_):
-            break
-        case .failure(let error):
-            print(error)
-        }
-    }
-    
-    func delete(alarm: AlarmInformation) {
-        let result = deleteCoreData(alarm: alarm)
-        
-        switch result {
-        case .success(_):
-            break
-        case .failure(let error):
-            print(error)
-        }
-    }
-    
-    func fetchDiaryData() -> [AlarmData]? {
-        let result = readCoreData()
-        
-        switch result {
-        case .success(let entity):
-            return entity
-        case .failure(_):
-            return nil
-        }
-    }
-}
-
-// MARK: - CLLocationManagerDelegate
-
-extension AddViewController: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.first {
-            configureAnnotation(
-                latitude: location.coordinate.latitude,
-                longitude: location.coordinate.longitude
-            )
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("error: \(error.localizedDescription)")
     }
 }
 
