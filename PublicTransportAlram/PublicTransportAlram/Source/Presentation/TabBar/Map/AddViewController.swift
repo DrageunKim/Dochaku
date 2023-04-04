@@ -53,6 +53,7 @@ class AddViewController: UIViewController {
         searchBar.placeholder = "목적지를 입력해주세요."
         searchBar.searchTextField.font = .systemFont(ofSize: 15)
         searchBar.searchBarStyle = .minimal
+        searchBar.searchTextField.clearButtonMode = .never
         return searchBar
     }()
     private let mapView: MKMapView = {
