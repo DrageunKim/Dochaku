@@ -6,190 +6,139 @@
 //
 
 import UIKit
-import RxSwift
-import RxCocoa
-import MapKit
 
 class SettingViewController: UIViewController {
+    private let settingLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "⚙️ 설정&정보 확인"
+        label.textColor = .label
+        label.textAlignment = .center
+        label.font = .preferredFont(forTextStyle: .headline).withSize(20)
+        return label
+    }()
     
-    // MARK: Private Properties
-    
-    private let disposeBag: DisposeBag = DisposeBag()
-    
-    private let settingStackView: UIStackView = {
+    private let versionStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.alignment = .center
-        stackView.axis = .vertical
-        stackView.distribution = .equalSpacing
+        stackView.alignment = .leading
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
         stackView.spacing = 10
         return stackView
     }()
-    
-    private let targetStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.alignment = .fill
-        stackView.axis = .horizontal
-        stackView.distribution = .fill
-        stackView.spacing = 5
-        return stackView
+    private let versionImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "exclamationmark.circle")
+        imageView.tintColor = .label
+        return imageView
     }()
-    private let segmentedControl: UISegmentedControl = {
-        let control = UISegmentedControl(items: ["지하철", "버스", "위치"])
-        control.selectedSegmentIndex = 0
-        control.backgroundColor = .lightGray
-        control.selectedSegmentTintColor = .systemBackground
-        control.layer.borderColor = UIColor.label.cgColor
-        control.layer.borderWidth = 0.5
-        return control
-    }()
-    private let targetStationLabel: UILabel = {
+    private let versionLabel: UILabel = {
         let label = UILabel()
-        label.text = "목적지 :"
-        label.font = .preferredFont(forTextStyle: .headline)
-        label.numberOfLines = 1
-        label.textAlignment = .right
+        label.text = "버전 : 1.0.0"
         label.textColor = .label
+        label.font = .preferredFont(forTextStyle: .headline).withSize(20)
         return label
     }()
-    private let targetStationBar: UISearchBar = {
-        let searchBar = UISearchBar()
-        searchBar.backgroundColor = .systemBackground
-        searchBar.placeholder = "역명"
-        searchBar.searchTextField.font = .systemFont(ofSize: 15)
-        return searchBar
-    }()
     
-    private let buttonStackView: UIStackView = {
+    private let guideStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.alignment = .center
-        stackView.axis = .horizontal
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.alignment = .leading
+        stackView.axis = .vertical
         stackView.distribution = .fillEqually
-        stackView.spacing = 20
+        stackView.layer.borderColor = UIColor.label.cgColor
+        stackView.layer.borderWidth = 2
+        stackView.layer.cornerRadius = 10
         return stackView
     }()
-    private let okButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .label
-        button.setTitle("설정", for: .normal)
-        button.setTitleColor(.label, for: .normal)
-        button.titleLabel?.font = .preferredFont(forTextStyle: .headline)
-        button.layer.backgroundColor = UIColor.systemBlue.cgColor
-        button.layer.borderWidth = 1
-        button.layer.cornerRadius = 10
-        return button
+    private let alarmGuideStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.alignment = .leading
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
+        stackView.spacing = 10
+        return stackView
     }()
-    private let initButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .label
-        button.setTitle("초기화", for: .normal)
-        button.setTitleColor(.label, for: .normal)
-        button.titleLabel?.font = .preferredFont(forTextStyle: .headline)
-        button.layer.backgroundColor = UIColor.systemRed.cgColor
-        button.layer.borderWidth = 1
-        button.layer.cornerRadius = 10
-        return button
+    private let alarmGuideImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "bell.and.waves.left.and.right")
+        imageView.tintColor = .label
+        return imageView
     }()
-    
-    // MARK: Life Cycle
+    private let alarmGuideLabel: UILabel = {
+        let label = UILabel()
+        label.text = "알람이 오지 않을 경우!"
+        label.textColor = .label
+        label.font = .preferredFont(forTextStyle: .headline).withSize(20)
+        return label
+    }()
+    private let locationGuideLabel: UILabel = {
+        let label = UILabel()
+        label.text = "1. 설정-도차쿠-위치(항상)으로 설정"
+        label.textColor = .label
+        label.font = .preferredFont(forTextStyle: .caption1).withSize(18)
+        return label
+    }()
+    private let pushGuideLabel: UILabel = {
+        let label = UILabel()
+        label.text = "2. 설정-도차쿠-알림(알림 허용)으로 설정"
+        label.textColor = .label
+        label.font = .preferredFont(forTextStyle: .caption1).withSize(18)
+        return label
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        configureView()
+
         configureStackView()
         configureLayout()
-        configureDelegate()
-        configureButtonAction()
-        configureBindings()
-    }
-    
-    // MARK: Configure Keyboard
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        targetStationBar.resignFirstResponder()
-    }
-    
-    // MARK: Private Methods
-    
-    private func configureDelegate() {
-        targetStationBar.delegate = self
-    }
-
-    private func configureBindings() {
-    }
-}
-
-// MARK: - UISearchBarDelegate
-
-extension SettingViewController: UISearchBarDelegate {
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-    }
-}
-
-extension SettingViewController: Sendable {
-    func dataSend(location: String, lane: String, code: Int) {
-    }
-}
-
-// MARK: - Button Action
-
-extension SettingViewController {
-    private func configureButtonAction() {
-        targetStationBar.searchTextField.addTarget(
-            self,
-            action: #selector(tappedTargetStationBar),
-            for: .touchDown
-        )
-    }
-    
-    @objc
-    private func tappedTargetStationBar() {
-        let presentViewController = ListViewController()
-        
-        presentViewController.delegate = self
-        
-        present(presentViewController, animated: true)
     }
 }
 
 // MARK: - View & Layout Configure
 
 extension SettingViewController {
-    private func configureView() {
-        view.backgroundColor = .systemBackground
-        
-        navigationItem.title = "🔔  도착알림 설정   🔔"
-    }
-    
     private func configureStackView() {
-        targetStackView.addArrangedSubview(targetStationLabel)
-        targetStackView.addArrangedSubview(targetStationBar)
+        versionStackView.addArrangedSubview(versionImageView)
+        versionStackView.addArrangedSubview(versionLabel)
         
-        buttonStackView.addArrangedSubview(okButton)
-        buttonStackView.addArrangedSubview(initButton)
+        alarmGuideStackView.addArrangedSubview(alarmGuideImageView)
+        alarmGuideStackView.addArrangedSubview(alarmGuideLabel)
         
-        settingStackView.addArrangedSubview(segmentedControl)
-        settingStackView.addArrangedSubview(targetStackView)
-        settingStackView.addArrangedSubview(buttonStackView)
+        guideStackView.addArrangedSubview(alarmGuideStackView)
+        guideStackView.addArrangedSubview(locationGuideLabel)
+        guideStackView.addArrangedSubview(pushGuideLabel)
     }
     
     private func configureLayout() {
-        view.addSubview(settingStackView)
-        
+        view.addSubview(settingLabel)
+        view.addSubview(versionStackView)
+        view.addSubview(guideStackView)
+
         NSLayoutConstraint.activate([
-            segmentedControl.widthAnchor.constraint(equalTo: settingStackView.widthAnchor),
-            targetStackView.widthAnchor.constraint(equalTo: settingStackView.widthAnchor),
-            buttonStackView.widthAnchor.constraint(equalTo: settingStackView.widthAnchor),
+            settingLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            settingLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height * 0.09),
+            settingLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.03),
+            settingLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
             
-            settingStackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.75),
-            settingStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.23),
-            settingStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            settingStackView.topAnchor.constraint(
-                equalTo: view.topAnchor,
-                constant: view.bounds.height * 0.2
-            )
+            versionImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.05),
+            
+            versionStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.bounds.width * 0.05),
+            versionStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: view.bounds.width * -0.05),
+            versionStackView.topAnchor.constraint(equalTo: settingLabel.bottomAnchor, constant: view.bounds.height * 0.03),
+            versionStackView.heightAnchor.constraint(equalToConstant: 30),
+            
+            alarmGuideImageView.leadingAnchor.constraint(equalTo: guideStackView.leadingAnchor, constant: 10),
+            alarmGuideImageView.topAnchor.constraint(equalTo: guideStackView.topAnchor, constant: 10),
+            locationGuideLabel.leadingAnchor.constraint(equalTo: guideStackView.leadingAnchor, constant: 20),
+            pushGuideLabel.leadingAnchor.constraint(equalTo: guideStackView.leadingAnchor, constant: 20),
+            pushGuideLabel.bottomAnchor.constraint(equalTo: guideStackView.bottomAnchor, constant: -20),
+            
+            guideStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.bounds.width * 0.05),
+            guideStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: view.bounds.width * -0.05),
+            guideStackView.topAnchor.constraint(equalTo: versionStackView.bottomAnchor, constant: view.bounds.height * 0.03),
+            guideStackView.heightAnchor.constraint(equalToConstant: 120)
         ])
     }
 }

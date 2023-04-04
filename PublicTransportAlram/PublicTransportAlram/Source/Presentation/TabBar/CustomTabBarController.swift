@@ -24,7 +24,7 @@ class CustomTabBarController: UITabBarController {
         return viewController
     }()
     private let settingViewController: UIViewController = {
-        let viewController = UINavigationController(rootViewController: SettingViewController())
+        let viewController = SettingViewController()
         viewController.view.backgroundColor = .systemBackground
         viewController.tabBarItem.title = "설정"
         viewController.tabBarItem.image = UIImage(systemName: "gearshape")

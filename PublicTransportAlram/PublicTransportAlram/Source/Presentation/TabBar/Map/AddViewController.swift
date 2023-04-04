@@ -182,7 +182,6 @@ class AddViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureView()
         configureStackView()
         configureLayout()
         configureLocationManager()
@@ -468,10 +467,6 @@ extension AddViewController {
 // MARK: - Configure View & Layout
 
 extension AddViewController {
-    private func configureView() {
-        view.backgroundColor = .systemBackground
-    }
-    
     private func configureStackView() {
         topStackView.addArrangedSubview(titleLabel)
         topStackView.addArrangedSubview(segmentedControl)

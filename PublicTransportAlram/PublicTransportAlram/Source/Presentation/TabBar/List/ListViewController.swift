@@ -8,12 +8,8 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import MapKit
 
 class ListViewController: UIViewController {
-    
-    var delegate: Sendable?
-    
     private let viewModel = ListViewModel()
     private let disposeBag = DisposeBag()
     
@@ -39,7 +35,6 @@ class ListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureView()
         configureLayout()
         configureTableView()
         configureBindings()
@@ -172,10 +167,6 @@ extension ListViewController: UITableViewDataSource {
 // MARK: - View & Layout Configure
 
 extension ListViewController {
-    private func configureView() {
-        view.backgroundColor = .systemBackground.withAlphaComponent(0.5)
-    }
-
     private func configureLayout() {
         view.addSubview(bookMarkLabel)
         view.addSubview(listTableView)
