@@ -123,26 +123,70 @@ extension SettingViewController {
 
         NSLayoutConstraint.activate([
             settingLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            settingLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height * 0.09),
-            settingLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.03),
-            settingLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
+            settingLabel.topAnchor.constraint(
+                equalTo: view.topAnchor,
+                constant: view.bounds.height * 0.09
+            ),
+            settingLabel.heightAnchor.constraint(
+                equalTo: view.heightAnchor,
+                multiplier: 0.03
+            ),
+            settingLabel.widthAnchor.constraint(
+                equalTo: view.widthAnchor,
+                multiplier: 0.5
+            ),
             
-            versionImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.05),
+            versionImageView.widthAnchor.constraint(
+                equalTo: view.widthAnchor,
+                multiplier: 0.05
+            ),
             
-            versionStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.bounds.width * 0.05),
-            versionStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: view.bounds.width * -0.05),
-            versionStackView.topAnchor.constraint(equalTo: settingLabel.bottomAnchor, constant: view.bounds.height * 0.03),
+            versionStackView.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor,
+                constant: view.bounds.width * 0.05
+            ),
+            versionStackView.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor,
+                constant: view.bounds.width * -0.05
+            ),
+            versionStackView.topAnchor.constraint(
+                equalTo: settingLabel.bottomAnchor,
+                constant: view.bounds.height * 0.03
+            ),
             versionStackView.heightAnchor.constraint(equalToConstant: 30),
             
-            alarmGuideImageView.leadingAnchor.constraint(equalTo: guideStackView.leadingAnchor, constant: 10),
-            alarmGuideImageView.topAnchor.constraint(equalTo: guideStackView.topAnchor, constant: 10),
-            locationGuideLabel.leadingAnchor.constraint(equalTo: guideStackView.leadingAnchor, constant: 20),
-            pushGuideLabel.leadingAnchor.constraint(equalTo: guideStackView.leadingAnchor, constant: 20),
-            pushGuideLabel.bottomAnchor.constraint(equalTo: guideStackView.bottomAnchor, constant: -20),
+            alarmGuideImageView.leadingAnchor.constraint(
+                equalTo: guideStackView.leadingAnchor,
+                constant: 10
+            ),
+            alarmGuideImageView.topAnchor.constraint(
+                equalTo: guideStackView.topAnchor,
+                constant: 10
+            ),
+            locationGuideLabel.leadingAnchor.constraint(
+                equalTo: guideStackView.leadingAnchor,
+                constant: 20
+            ),
+            pushGuideLabel.leadingAnchor.constraint(
+                equalTo: guideStackView.leadingAnchor,
+                constant: 20
+            ),
+            pushGuideLabel.bottomAnchor.constraint(
+                equalTo: guideStackView.bottomAnchor,
+                constant: -20
+            ),
             
-            guideStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.bounds.width * 0.05),
-            guideStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: view.bounds.width * -0.05),
-            guideStackView.topAnchor.constraint(equalTo: versionStackView.bottomAnchor, constant: view.bounds.height * 0.03),
+            guideStackView.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor,
+                constant: view.bounds.width * 0.05
+            ),
+            guideStackView.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor,
+                constant: view.bounds.width * -0.05
+            ),
+            guideStackView.topAnchor.constraint(
+                equalTo: versionStackView.bottomAnchor,
+                constant: view.bounds.height * 0.03),
             guideStackView.heightAnchor.constraint(equalToConstant: 120)
         ])
     }

@@ -77,6 +77,7 @@ class ListViewController: UIViewController {
               let times = viewModel.alarm["times"],
               let radius = viewModel.alarm["radius"] else {
             presentSettingFailedAlert()
+            
             return
         }
         
@@ -105,8 +106,7 @@ extension ListViewController: UITableViewDelegate {
     
     func tableView(
         _ tableView: UITableView,
-        trailingSwipeActionsConfigurationForRowAt
-        indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
             let setting = UIContextualAction(
                 style: .normal,
                 title: "알람 설정"
@@ -175,13 +175,25 @@ extension ListViewController {
 
         NSLayoutConstraint.activate([
             bookMarkLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            bookMarkLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height * 0.09),
-            bookMarkLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.03),
-            bookMarkLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
+            bookMarkLabel.topAnchor.constraint(
+                equalTo: view.topAnchor,
+                constant: view.bounds.height * 0.09
+            ),
+            bookMarkLabel.heightAnchor.constraint(
+                equalTo: view.heightAnchor,
+                multiplier: 0.03
+            ),
+            bookMarkLabel.widthAnchor.constraint(
+                equalTo: view.widthAnchor,
+                multiplier: 0.5
+            ),
             
             listTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             listTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            listTableView.topAnchor.constraint(equalTo: bookMarkLabel.bottomAnchor, constant: view.bounds.height * 0.03),
+            listTableView.topAnchor.constraint(
+                equalTo: bookMarkLabel.bottomAnchor,
+                constant: view.bounds.height * 0.03
+            ),
             listTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }

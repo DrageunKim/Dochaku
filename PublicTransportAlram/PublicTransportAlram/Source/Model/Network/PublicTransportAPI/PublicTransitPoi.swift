@@ -8,12 +8,17 @@
 import Foundation
 
 struct PublicTransitPoi: Request {
+    
+    // MARK: Typealias
+    
+    typealias Response = PublicTransitPoiDTO
+    
+    // MARK: Internal Properties
+    
     var baseURL: URL? {
         return URL(string: "https://api.odsay.com/v1/api")
     }
     var queryList: [String: String] = [:]
-    
-    typealias Response = PublicTransitPoiDTO
     
     let method: HTTPMethod = .get
     var path: String = "/pointSearch"
@@ -21,6 +26,8 @@ struct PublicTransitPoi: Request {
     let lang: String = String(Lang.korean.rawValue)
     let output: String = "json"
     let radius: String = "500"
+    
+    //MARK: Initializer
     
     init(type: StationClass, latitude: Double, longitude: Double) {
         queryList.updateValue(apiKey, forKey: "apiKey")

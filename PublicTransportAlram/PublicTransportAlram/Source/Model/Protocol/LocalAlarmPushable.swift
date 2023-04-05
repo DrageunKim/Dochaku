@@ -41,7 +41,6 @@ extension LocalAlarmPushable {
             
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
 //            let trigger = UNLocationNotificationTrigger(region: region, repeats: false)
-
             var requestList: [UNNotificationRequest] = []
             var requestIdentifierList: [String] = []
             

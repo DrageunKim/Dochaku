@@ -28,8 +28,7 @@ class AddressSearchListViewModel {
     
     func search(
         for suggestedCompletion: MKLocalSearchCompletion,
-        completion: @escaping (CLLocationCoordinate2D
-        ) -> Void) {
+        completion: @escaping (CLLocationCoordinate2D) -> Void) {
         let searchRequest = MKLocalSearch.Request(completion: suggestedCompletion)
         
         searchRequest.resultTypes = .address

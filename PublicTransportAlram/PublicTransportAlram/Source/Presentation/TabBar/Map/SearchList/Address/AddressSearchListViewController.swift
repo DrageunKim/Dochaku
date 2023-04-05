@@ -225,7 +225,10 @@ extension AddressSearchListViewController {
             topStackView.heightAnchor.constraint(equalToConstant: 100),
             
             searchBar.leadingAnchor.constraint(equalTo: topStackView.leadingAnchor),
-            searchBar.widthAnchor.constraint(equalTo: topStackView.widthAnchor, multiplier: 0.85),
+            searchBar.widthAnchor.constraint(
+                equalTo: topStackView.widthAnchor,
+                multiplier: 0.85
+            ),
             
             lineView.leadingAnchor.constraint(equalTo: topStackView.leadingAnchor),
             lineView.trailingAnchor.constraint(equalTo: topStackView.trailingAnchor),

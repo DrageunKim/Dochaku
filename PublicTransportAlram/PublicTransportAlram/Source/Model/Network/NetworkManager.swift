@@ -8,11 +8,18 @@
 import Foundation
 
 struct NetworkManager {
+    
+    // MARK: Private Properties
+    
     private let urlSession: URLSession
 
+    // MARK: Initializer
+    
     init(urlSession: URLSession) {
         self.urlSession = urlSession
     }
+    
+    // MARK: Internal MEthods
 
     func dataTask<R: Request>(_ request: R, completion: @escaping (Result<R.Response, NetworkError>) -> Void) {
         let urlRequest = request.create()

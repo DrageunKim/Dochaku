@@ -6,6 +6,7 @@
 //
 
 class AddViewModel {
+    
     // MARK: Internal Properties
     
     var alarmInformation: [String: String] = [:]

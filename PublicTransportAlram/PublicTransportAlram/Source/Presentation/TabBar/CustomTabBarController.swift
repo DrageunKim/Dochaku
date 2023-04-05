@@ -13,23 +13,29 @@ class CustomTabBarController: UITabBarController {
 
     private let mapViewController: UIViewController = {
         let viewController = AddViewController()
+        
         viewController.view.backgroundColor = .systemBackground
         viewController.tabBarItem.title = "알람 추가"
         viewController.tabBarItem.image = UIImage(systemName: "alarm")
+        
         return viewController
     }()
     private let listViewController: UIViewController = {
         let viewController = ListViewController()
+        
         viewController.view.backgroundColor = .systemBackground
         viewController.tabBarItem.title = "즐겨찾기"
         viewController.tabBarItem.image = UIImage(systemName: "list.bullet")
+        
         return viewController
     }()
     private let settingViewController: UIViewController = {
         let viewController = SettingViewController()
+        
         viewController.view.backgroundColor = .systemBackground
         viewController.tabBarItem.title = "설정"
         viewController.tabBarItem.image = UIImage(systemName: "gearshape")
+        
         return viewController
     }()
     
@@ -50,8 +56,6 @@ class CustomTabBarController: UITabBarController {
         tabBar.layer.borderColor = UIColor.label.cgColor
         tabBar.layer.cornerRadius = 10
         
-        viewControllers = [
-            mapViewController, listViewController, settingViewController
-        ]
+        viewControllers = [mapViewController, listViewController, settingViewController]
     }
 }

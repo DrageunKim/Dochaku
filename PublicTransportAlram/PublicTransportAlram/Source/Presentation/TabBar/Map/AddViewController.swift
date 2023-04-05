@@ -280,6 +280,7 @@ class AddViewController: UIViewController {
               let times = viewModel.alarmInformation["times"],
               let radius = viewModel.alarmInformation["radius"] else {
             presentSettingFailedAlert()
+            
             return
         }
         
@@ -476,14 +477,17 @@ extension AddViewController {
         switch segmentedControl.selectedSegmentIndex {
         case SearchType.subway.rawValue:
             let presentViewController = SubwaySearchListViewController()
+            
             presentViewController.delegate = self
             present(presentViewController, animated: true)
         case SearchType.bus.rawValue:
             let presentViewController = BusSearchListViewController()
+            
             presentViewController.delegate = self
             present(presentViewController, animated: true)
         case SearchType.address.rawValue:
             let presentViewController = AddressSearchListViewController()
+            
             presentViewController.delegate = self
             present(presentViewController, animated: true)
         default:
@@ -550,22 +554,46 @@ extension AddViewController {
             ),
             
             optionsStackView.widthAnchor.constraint(equalTo: topStackView.widthAnchor),
-            optionsStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1),
+            optionsStackView.heightAnchor.constraint(
+                equalTo: view.heightAnchor,
+                multiplier: 0.1
+            ),
             optionsStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            optionsStackView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: 20),
+            optionsStackView.topAnchor.constraint(
+                equalTo: topStackView.bottomAnchor,
+                constant: 20
+            ),
             
-            timesLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.15),
-            radiusLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.15),
+            timesLabel.widthAnchor.constraint(
+                equalTo: view.widthAnchor,
+                multiplier: 0.15
+            ),
+            radiusLabel.widthAnchor.constraint(
+                equalTo: view.widthAnchor,
+                multiplier: 0.15
+            ),
             
             borderLine.widthAnchor.constraint(equalTo: topStackView.widthAnchor),
             borderLine.heightAnchor.constraint(equalToConstant: 1),
             borderLine.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            borderLine.topAnchor.constraint(equalTo: optionsStackView.bottomAnchor, constant: 20),
+            borderLine.topAnchor.constraint(
+                equalTo: optionsStackView.bottomAnchor,
+                constant: 20
+            ),
             
-            buttonStackView.widthAnchor.constraint(equalTo: topStackView.widthAnchor, multiplier: 0.9),
-            buttonStackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
+            buttonStackView.widthAnchor.constraint(
+                equalTo: topStackView.widthAnchor,
+                multiplier: 0.9
+            ),
+            buttonStackView.heightAnchor.constraint(
+                equalTo: view.heightAnchor,
+                multiplier: 0.05
+            ),
             buttonStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            buttonStackView.topAnchor.constraint(equalTo: borderLine.bottomAnchor, constant: 20)
+            buttonStackView.topAnchor.constraint(
+                equalTo: borderLine.bottomAnchor,
+                constant: 20
+            )
         ])
     }
 }

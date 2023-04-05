@@ -9,13 +9,17 @@ import Foundation
 import RxSwift
 
 class PublicTransportService {
+    
+    // MARK: Internal Properties
+    
     var startStationName: String = String()
     var nowStationCode: Int = 0
     var targetStationCode: Int = 0
     var stationLatitude: Double = 0
     var stationLongitude: Double = 0
-    
     var isValidLatitudeAndLongitude = false
+    
+    // MARK: Internal Methods
     
     func checkValidLatitudeAndLongitude() {
         isValidLatitudeAndLongitude = stationLatitude != 0 && stationLongitude != 0
