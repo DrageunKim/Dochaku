@@ -12,8 +12,11 @@ protocol AlertPresentable: UIViewController {
                                         bookMark bookMarkHandler: @escaping () -> Void,
                                         alarmAndBookMark alarmAndBookMarkHandler: @escaping () -> Void)
     func presentInitAlert(_ initHandler: @escaping () -> Void)
-    func presentSettingSuccessAlert()
+    func presentAlarmSettingSuccessAlert()
+    func presentBookmarkSettingSuccessAlert()
+    func presentAlarmBookmarkSettingSuccessAlert()
     func presentSettingFailedAlert()
+    func presentLocationAuthAlert()
     func presentDeleteAlert(_ deleteHandler: @escaping () -> Void)
 }
 
@@ -41,10 +44,44 @@ extension AlertPresentable {
         present(actionSheet, animated: true)
     }
     
-    func presentSettingSuccessAlert() {
+    func presentAlarmSettingSuccessAlert() {
         let alert = UIAlertController(
-            title: NameSpace.settingSuccessAlertTitle,
-            message: NameSpace.settingSuccessAlertMessage,
+            title: NameSpace.alarmSettingSuccessAlertTitle,
+            message: NameSpace.alarmSettingSuccessAlertMessage,
+            preferredStyle: .alert
+        )
+        let okAction = UIAlertAction(
+            title: NameSpace.okTitle,
+            style: .default,
+            handler: nil
+        )
+        
+        alert.addAction(okAction)
+        
+        present(alert, animated: true)
+    }
+    
+    func presentBookmarkSettingSuccessAlert() {
+        let alert = UIAlertController(
+            title: NameSpace.bookmarkSettingSuccessAlertTitle,
+            message: NameSpace.bookmarkSettingSuccessAlertMessage,
+            preferredStyle: .alert
+        )
+        let okAction = UIAlertAction(
+            title: NameSpace.okTitle,
+            style: .default,
+            handler: nil
+        )
+        
+        alert.addAction(okAction)
+        
+        present(alert, animated: true)
+    }
+    
+    func presentAlarmBookmarkSettingSuccessAlert() {
+        let alert = UIAlertController(
+            title: NameSpace.alarmBookmarkSettingSuccessAlertTitle,
+            message: NameSpace.alarmBookmarkSettingSuccessAlertMessage,
             preferredStyle: .alert
         )
         let okAction = UIAlertAction(
@@ -62,6 +99,23 @@ extension AlertPresentable {
         let alert = UIAlertController(
             title: NameSpace.settingFailedAlertTitle,
             message: NameSpace.settingFailedAlertMessage,
+            preferredStyle: .alert
+        )
+        let okAction = UIAlertAction(
+            title: NameSpace.okTitle,
+            style: .default,
+            handler: nil
+        )
+        
+        alert.addAction(okAction)
+        
+        present(alert, animated: true)
+    }
+    
+    func presentLocationAuthAlert() {
+        let alert = UIAlertController(
+            title: NameSpace.locationAuthAlertTitle,
+            message: NameSpace.locationAuthAlertMessage,
             preferredStyle: .alert
         )
         let okAction = UIAlertAction(
@@ -129,10 +183,17 @@ private enum NameSpace {
     static let bookMarkSettingTitle = "즐겨찾기 추가"
     static let alarmBookMarkSettingTitle = "알람 설정 및 즐겨찾기 추가"
     
-    static let settingSuccessAlertTitle = "알람 추가 완료"
-    static let settingSuccessAlertMessage = "앱을 종료해도 됩니다."
+    static let alarmSettingSuccessAlertTitle = "알람 추가 완료"
+    static let alarmSettingSuccessAlertMessage = "앱을 종료해도 됩니다."
+    static let bookmarkSettingSuccessAlertTitle = "즐겨찾기 추가 완료"
+    static let bookmarkSettingSuccessAlertMessage = "즐겨찾기 탭에서 확인 가능합니다."
+    static let alarmBookmarkSettingSuccessAlertTitle = "알람 & 즐겨찾기 추가 완료"
+    static let alarmBookmarkSettingSuccessAlertMessage = "앱을 종료해도 됩니다."
     static let settingFailedAlertTitle = "알람 추가 실패"
     static let settingFailedAlertMessage = "알람 정보를 확인해주세요."
+    
+    static let locationAuthAlertTitle = "위치접근 권한 변경 필요"
+    static let locationAuthAlertMessage = "설정에서 위치접근 권한을 '항상 허용'으로 변경해주셔야 알람을 받을 수 있습니다."
     
     static let initAlertTitle = "위치 정보"
     static let initAlertMessage = "초기화하시겠습니까?"

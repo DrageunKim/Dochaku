@@ -428,6 +428,23 @@ extension AddViewController: CLLocationManagerDelegate {
         }
     }
     
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        switch manager.authorizationStatus {
+        case .authorizedAlways:
+            print("항상")
+        case .notDetermined:
+            presentLocationAuthAlert()
+        case .restricted:
+            presentLocationAuthAlert()
+        case .denied:
+            presentLocationAuthAlert()
+        case .authorizedWhenInUse:
+            presentLocationAuthAlert()
+        default:
+            presentLocationAuthAlert()
+        }
+    }
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("error: \(error.localizedDescription)")
     }

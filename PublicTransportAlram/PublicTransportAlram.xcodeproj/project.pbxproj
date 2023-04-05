@@ -36,16 +36,12 @@
 		D08166B529A793C600A67C1C /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08166B429A793C600A67C1C /* NetworkManager.swift */; };
 		D08166B929A7973400A67C1C /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08166B829A7973400A67C1C /* HTTPMethod.swift */; };
 		D08166BB29A7978C00A67C1C /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08166BA29A7978C00A67C1C /* Request.swift */; };
-		D08166BD29A79A7900A67C1C /* SubwayRouteSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08166BC29A79A7900A67C1C /* SubwayRouteSearch.swift */; };
-		D08166BF29A79B0D00A67C1C /* SubwayRouteSearchDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08166BE29A79B0D00A67C1C /* SubwayRouteSearchDTO.swift */; };
 		D08166C129A79DC400A67C1C /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08166C029A79DC400A67C1C /* RequestError.swift */; };
 		D08166CA29A7A4C700A67C1C /* JSONParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08166C929A7A4C700A67C1C /* JSONParsingTests.swift */; };
 		D08166D229A7A66F00A67C1C /* JSONDecoder +.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08166D129A7A66F00A67C1C /* JSONDecoder +.swift */; };
 		D081681929AF78ED00A67C1C /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081681829AF78ED00A67C1C /* NetworkError.swift */; };
 		D081681B29AF7E6800A67C1C /* JSONError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081681A29AF7E6800A67C1C /* JSONError.swift */; };
 		D081681E29AF82AF00A67C1C /* PublicTransportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081681D29AF82AF00A67C1C /* PublicTransportService.swift */; };
-		D08316EF29C36FA900E86676 /* RealtimeStationArrival.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08316EE29C36FA900E86676 /* RealtimeStationArrival.swift */; };
-		D08316F129C370A400E86676 /* RealTimeStationArrivalDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08316F029C370A400E86676 /* RealTimeStationArrivalDTO.swift */; };
 		D08316F329C3736F00E86676 /* ServiceEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08316F229C3736F00E86676 /* ServiceEnum.swift */; };
 		D08316F629C6D65400E86676 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08316F529C6D65400E86676 /* AddViewController.swift */; };
 		D08316FA29C6E3B700E86676 /* AddressSearchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08316F929C6E3B700E86676 /* AddressSearchListViewController.swift */; };
@@ -111,8 +107,6 @@
 		D08166B429A793C600A67C1C /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		D08166B829A7973400A67C1C /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		D08166BA29A7978C00A67C1C /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
-		D08166BC29A79A7900A67C1C /* SubwayRouteSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayRouteSearch.swift; sourceTree = "<group>"; };
-		D08166BE29A79B0D00A67C1C /* SubwayRouteSearchDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwayRouteSearchDTO.swift; sourceTree = "<group>"; };
 		D08166C029A79DC400A67C1C /* RequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestError.swift; sourceTree = "<group>"; };
 		D08166C729A7A4C700A67C1C /* JSONParsingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSONParsingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D08166C929A7A4C700A67C1C /* JSONParsingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParsingTests.swift; sourceTree = "<group>"; };
@@ -120,8 +114,6 @@
 		D081681829AF78ED00A67C1C /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		D081681A29AF7E6800A67C1C /* JSONError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONError.swift; sourceTree = "<group>"; };
 		D081681D29AF82AF00A67C1C /* PublicTransportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicTransportService.swift; sourceTree = "<group>"; };
-		D08316EE29C36FA900E86676 /* RealtimeStationArrival.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimeStationArrival.swift; sourceTree = "<group>"; };
-		D08316F029C370A400E86676 /* RealTimeStationArrivalDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealTimeStationArrivalDTO.swift; sourceTree = "<group>"; };
 		D08316F229C3736F00E86676 /* ServiceEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceEnum.swift; sourceTree = "<group>"; };
 		D08316F529C6D65400E86676 /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		D08316F929C6E3B700E86676 /* AddressSearchListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSearchListViewController.swift; sourceTree = "<group>"; };
@@ -310,9 +302,7 @@
 		D081681629AF787600A67C1C /* DTO */ = {
 			isa = PBXGroup;
 			children = (
-				D08166BE29A79B0D00A67C1C /* SubwayRouteSearchDTO.swift */,
 				D081237729C1EB3300CA5664 /* PublicTransitPoiDTO.swift */,
-				D08316F029C370A400E86676 /* RealTimeStationArrivalDTO.swift */,
 				D08122B929B88DFD00CA5664 /* StationInfo.swift */,
 				D064A11D29D3318000902AB4 /* AlarmInformation.swift */,
 			);
@@ -334,9 +324,7 @@
 			isa = PBXGroup;
 			children = (
 				D081681D29AF82AF00A67C1C /* PublicTransportService.swift */,
-				D08166BC29A79A7900A67C1C /* SubwayRouteSearch.swift */,
 				D081237529C1E5C000CA5664 /* PublicTransitPoi.swift */,
-				D08316EE29C36FA900E86676 /* RealtimeStationArrival.swift */,
 				D08316F229C3736F00E86676 /* ServiceEnum.swift */,
 			);
 			path = PublicTransportAPI;
@@ -514,7 +502,6 @@
 				D08316F329C3736F00E86676 /* ServiceEnum.swift in Sources */,
 				D0FE2C1A29B4CE28001C83F7 /* Identifiable.swift in Sources */,
 				D08166D229A7A66F00A67C1C /* JSONDecoder +.swift in Sources */,
-				D08316EF29C36FA900E86676 /* RealtimeStationArrival.swift in Sources */,
 				D055595729C888CB00850785 /* BusSearchListViewController.swift in Sources */,
 				D064A11C29D3313900902AB4 /* CoreDataProcessable.swift in Sources */,
 				D08166B529A793C600A67C1C /* NetworkManager.swift in Sources */,
@@ -524,12 +511,9 @@
 				D0FE2BFB29B4CADA001C83F7 /* ListTableViewCell.swift in Sources */,
 				D081681929AF78ED00A67C1C /* NetworkError.swift in Sources */,
 				D055595029C83ECE00850785 /* SubwaySearchListViewModel.swift in Sources */,
-				D08166BD29A79A7900A67C1C /* SubwayRouteSearch.swift in Sources */,
 				D064A19529DB1F1200902AB4 /* AlarmData+CoreDataProperties.swift in Sources */,
 				D08166C129A79DC400A67C1C /* RequestError.swift in Sources */,
-				D08166BF29A79B0D00A67C1C /* SubwayRouteSearchDTO.swift in Sources */,
 				D0FE2BF929B4CA73001C83F7 /* ListViewModel.swift in Sources */,
-				D08316F129C370A400E86676 /* RealTimeStationArrivalDTO.swift in Sources */,
 				D064A19729DB260100902AB4 /* AlertPresentable.swift in Sources */,
 				D0FE2BF729B4CA69001C83F7 /* ListViewController.swift in Sources */,
 				D055595229C83F0500850785 /* LocationDataSendable.swift in Sources */,

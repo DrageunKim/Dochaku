@@ -33,14 +33,14 @@ extension LocalAlarmPushable {
             content.body = "설정하신 위치에 근접하였습니다."
             content.sound = .default
             
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-//            let trigger = UNLocationNotificationTrigger(region: region, repeats: false)
-            
             let center = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
             let region = CLCircularRegion(center: center, radius: radius, identifier: "settingLocation")
 
             region.notifyOnEntry = true
             region.notifyOnExit = false
+            
+//            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+            let trigger = UNLocationNotificationTrigger(region: region, repeats: false)
 
             var requestList: [UNNotificationRequest] = []
             var requestIdentifierList: [String] = []
