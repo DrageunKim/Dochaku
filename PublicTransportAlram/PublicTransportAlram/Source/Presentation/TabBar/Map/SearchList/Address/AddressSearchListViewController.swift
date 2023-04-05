@@ -12,7 +12,11 @@ import RxCocoa
 
 class AddressSearchListViewController: UIViewController {
     
+    // MARK: Delegate
+    
     var delegate: LocationDataSendable?
+    
+    // MARK: Private Properties
     
     private let viewModel = AddressSearchListViewModel()
     private let disposeBag = DisposeBag()
@@ -86,6 +90,8 @@ class AddressSearchListViewController: UIViewController {
         return tableView
     }()
     
+    // MARK: Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -97,6 +103,8 @@ class AddressSearchListViewController: UIViewController {
         configureSearchBar()
         configureBinding()
     }
+    
+    // MARK: Private Methods
     
     private func configureTableView() {
         listTableView.delegate = self
@@ -190,7 +198,7 @@ extension AddressSearchListViewController: MKLocalSearchCompleterDelegate {
     }
 }
 
-// MARK: - View & Layout Configure
+// MARK: - Configure View & Layout 
 
 extension AddressSearchListViewController {
     private func configureView() {

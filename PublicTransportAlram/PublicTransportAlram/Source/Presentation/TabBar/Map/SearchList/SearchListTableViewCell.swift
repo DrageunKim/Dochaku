@@ -9,17 +9,8 @@ import UIKit
 
 class SearchListTableViewCell: UITableViewCell {
     
-    // MARK: - Private Properties
+    // MARK: Internal Properties
     
-    private let stackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.alignment = .fill
-        stackView.axis = .vertical
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 5
-        return stackView
-    }()
     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 17, weight: .semibold)
@@ -38,6 +29,18 @@ class SearchListTableViewCell: UITableViewCell {
         return label
     }()
     
+    // MARK: Private Properties
+    
+    private let stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.alignment = .fill
+        stackView.axis = .vertical
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 5
+        return stackView
+    }()
+    
     // MARK: - Initializer
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -50,12 +53,16 @@ class SearchListTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: PrepareForReuse
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         
         titleLabel.text = .init()
         subTitleLabel.text = .init()
     }
+    
+    // MARK: SetSelected
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -65,9 +72,15 @@ class SearchListTableViewCell: UITableViewCell {
             self.backgroundColor = .none
         }
     }
-    
-    // MARK: - Private Methods
-    
+}
+
+// MARK: - Identifiable
+
+extension SearchListTableViewCell: Identifiable {}
+
+// MARK: - Configure Layout
+
+extension SearchListTableViewCell {
     private func configureLayout() {
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(subTitleLabel)
@@ -94,5 +107,3 @@ class SearchListTableViewCell: UITableViewCell {
         ])
     }
 }
-
-extension SearchListTableViewCell: Identifiable {}

@@ -10,6 +10,9 @@ import RxSwift
 import RxCocoa
 
 class ListViewController: UIViewController {
+    
+    // MARK: Private Properties
+    
     private let viewModel = ListViewModel()
     private let disposeBag = DisposeBag()
     
@@ -32,12 +35,13 @@ class ListViewController: UIViewController {
         return tableView
     }()
     
+    // MARK: Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureLayout()
         configureTableView()
-        configureBindings()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,13 +50,11 @@ class ListViewController: UIViewController {
         fetchAlarmFromCoreData()
     }
     
+    // MARK: Private Methods
+    
     private func configureTableView() {
         listTableView.delegate = self
         listTableView.dataSource = self
-    }
-    
-    private func configureBindings() {
-        
     }
     
     private func showDeleteAlert(alarm: AlarmInformation) {
@@ -64,7 +66,7 @@ class ListViewController: UIViewController {
     
     private func fetchAlarmFromCoreData() {
         if let entity = viewModel.fetchData() {
-            viewModel.alarmList = viewModel.convertToDiary(from: entity)
+            viewModel.alarmList = viewModel.convertToAlarm(from: entity)
             listTableView.reloadData()
         }
     }
@@ -79,7 +81,7 @@ class ListViewController: UIViewController {
         }
         
         if pushArriveAlarm(latitude: latitude, longitude: longitude, times: times, radius: radius) {
-            presentSettingSuccessAlert()
+            presentAlarmSettingSuccessAlert()
         } else {
             presentSettingFailedAlert()
         }

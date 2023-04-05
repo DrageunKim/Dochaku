@@ -8,10 +8,13 @@
 import UIKit
 
 class SettingViewController: UIViewController {
+    
+    // MARK: Private Properties
+    
     private let settingLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "⚙️ 설정&정보 확인"
+        label.text = "⚙️ 정보 & 가이드"
         label.textColor = .label
         label.textAlignment = .center
         label.font = .preferredFont(forTextStyle: .headline).withSize(20)
@@ -88,6 +91,8 @@ class SettingViewController: UIViewController {
         return label
     }()
     
+    // MARK: Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -96,7 +101,7 @@ class SettingViewController: UIViewController {
     }
 }
 
-// MARK: - View & Layout Configure
+// MARK: - Configure Layout
 
 extension SettingViewController {
     private func configureStackView() {

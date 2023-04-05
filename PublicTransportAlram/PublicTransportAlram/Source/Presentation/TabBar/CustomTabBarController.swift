@@ -8,6 +8,8 @@
 import UIKit
 
 class CustomTabBarController: UITabBarController {
+    
+    // MARK: Private Properties
 
     private let mapViewController: UIViewController = {
         let viewController = AddViewController()
@@ -31,11 +33,15 @@ class CustomTabBarController: UITabBarController {
         return viewController
     }()
     
+    // MARK: Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configureTabBar()
     }
+    
+    // MARK: Private Methods
     
     private func configureTabBar() {
         tabBar.tintColor = .systemOrange

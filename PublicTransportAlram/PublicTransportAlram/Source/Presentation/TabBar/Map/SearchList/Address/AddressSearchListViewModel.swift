@@ -9,8 +9,13 @@ import MapKit
 
 class AddressSearchListViewModel {
     
+    // MARK: Internal Properties
+    
     var searchCompleter = MKLocalSearchCompleter()
     var searchResults = [MKLocalSearchCompletion]()
+    
+    // MARK: Private Properties
+    
     private var places: MKMapItem?
     private var localSearch: MKLocalSearch? {
         willSet {
@@ -18,6 +23,8 @@ class AddressSearchListViewModel {
             localSearch?.cancel()
         }
     }
+    
+    // MARK: Internal Methods
     
     func search(
         for suggestedCompletion: MKLocalSearchCompletion,

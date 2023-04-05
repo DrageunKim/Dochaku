@@ -12,7 +12,11 @@ import RxCocoa
 
 class SubwaySearchListViewController: UIViewController {
     
+    // MARK: Delegate
+    
     var delegate: LocationDataSendable?
+    
+    // MARK: Private Properties
     
     private let viewModel = SubwaySearchListViewModel()
     private let disposeBag = DisposeBag()
@@ -87,6 +91,8 @@ class SubwaySearchListViewController: UIViewController {
         return tableView
     }()
     
+    // MARK: Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -96,6 +102,8 @@ class SubwaySearchListViewController: UIViewController {
         configureTableView()
         configureBinding()
     }
+    
+    // MARK: Private Methods
     
     private func configureTableView() {
         listTableView.delegate = self
@@ -174,7 +182,7 @@ extension SubwaySearchListViewController: UITableViewDataSource {
     }
 }
 
-// MARK: - View & Layout Configure
+// MARK: - Configure View & Layout
 
 extension SubwaySearchListViewController {
     private func configureView() {

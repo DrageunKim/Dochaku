@@ -183,7 +183,7 @@ private enum NameSpace {
     static let bookMarkSettingTitle = "즐겨찾기 추가"
     static let alarmBookMarkSettingTitle = "알람 설정 및 즐겨찾기 추가"
     
-    static let alarmSettingSuccessAlertTitle = "알람 추가 완료"
+    static let alarmSettingSuccessAlertTitle = "설정 추가 완료"
     static let alarmSettingSuccessAlertMessage = "앱을 종료해도 됩니다."
     static let bookmarkSettingSuccessAlertTitle = "즐겨찾기 추가 완료"
     static let bookmarkSettingSuccessAlertMessage = "즐겨찾기 탭에서 확인 가능합니다."

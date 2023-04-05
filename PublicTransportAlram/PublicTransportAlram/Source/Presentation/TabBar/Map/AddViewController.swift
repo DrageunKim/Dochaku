@@ -13,11 +13,16 @@ import RxSwift
 import RxCocoa
 
 class AddViewController: UIViewController {
+    
+    // MARK: SearchType
+    
     enum SearchType: Int {
         case subway = 0
         case bus
         case address
     }
+    
+    // MARK: Private Properties
     
     private let viewModel = AddViewModel()
     private let disposeBag = DisposeBag()
@@ -180,6 +185,8 @@ class AddViewController: UIViewController {
         return button
     }()
     
+    // MARK: Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -195,6 +202,8 @@ class AddViewController: UIViewController {
         
         locationManager.stopUpdatingLocation()
     }
+    
+    // MARK: Private Methods
     
     private func configureLocationManager() {
         locationManager.delegate = self
@@ -240,18 +249,19 @@ class AddViewController: UIViewController {
         setPushAlarm()
     }
     
-    private func setAlarmAndBookMark() {
+    private func setBookMark() {
         let alarm = self.createAlarm()
         
         switch alarm {
         case .success(let data):
             viewModel.save(alarm: data)
+            presentBookmarkSettingSuccessAlert()
         case .failure(_):
             break
         }
     }
     
-    private func setBookMark() {
+    private func setAlarmAndBookMark() {
         let alarm = self.createAlarm()
         
         switch alarm {
@@ -274,7 +284,7 @@ class AddViewController: UIViewController {
         }
         
         if pushArriveAlarm(latitude: latitude, longitude: longitude, times: times, radius: radius) {
-            presentSettingSuccessAlert()
+            presentAlarmSettingSuccessAlert()
         } else {
             presentSettingFailedAlert()
         }
@@ -482,7 +492,7 @@ extension AddViewController {
     }
 }
 
-// MARK: - Configure View & Layout
+// MARK: - Configure Layout
 
 extension AddViewController {
     private func configureStackView() {

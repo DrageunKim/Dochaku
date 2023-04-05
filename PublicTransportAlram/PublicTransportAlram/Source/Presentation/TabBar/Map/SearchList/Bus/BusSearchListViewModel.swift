@@ -11,10 +11,15 @@ import RxCocoa
 
 class BusSearchListViewModel {
     
+    // MARK: Internal Properties
+    
     var searchCompleter = MKLocalSearchCompleter()
     var searchResults = [MKLocalSearchCompletion]()
     var latitude: Double = 0
     var longitude: Double = 0
+    
+    // MARK: Private Properties
+    
     private let disposeBag = DisposeBag()
     private var places: MKMapItem?
     private var localSearch: MKLocalSearch? {
@@ -31,6 +36,8 @@ class BusSearchListViewModel {
     // MARK: Output
     
     let stationName: Observable<[POI]>
+    
+    // MARK: Initializer
     
     init(domain: PublicTransportService = PublicTransportService()) {
         let station = PublishSubject<String>()
@@ -65,6 +72,8 @@ class BusSearchListViewModel {
         stationName = poi
             .map { $0.result.station }
     }
+    
+    // MARK: Internal Methods
 
     func search(
         for suggestedCompletion: MKLocalSearchCompletion,

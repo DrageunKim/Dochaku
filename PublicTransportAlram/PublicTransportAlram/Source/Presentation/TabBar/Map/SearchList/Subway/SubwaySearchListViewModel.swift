@@ -10,7 +10,9 @@ import RxCocoa
 
 class SubwaySearchListViewModel {
     
-    let disposeBag = DisposeBag()
+    // MARK: Private Properties
+    
+    private let disposeBag = DisposeBag()
 
     // MARK: Input
     
@@ -19,6 +21,8 @@ class SubwaySearchListViewModel {
     // MARK: Output
     
     let stationName: Observable<[POI]>
+    
+    // MARK: Initializer
     
     init(domain: PublicTransportService = PublicTransportService()) {
         let station = PublishSubject<String>()

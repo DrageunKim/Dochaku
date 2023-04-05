@@ -11,12 +11,14 @@ import RxCocoa
 
 class ListViewModel {
     
-    let disposeBag = DisposeBag()
+    // MARK: Properties
     
     var alarmList: [AlarmInformation] = []
     var alarm: [String: String] = [:]
     
-    func convertToDiary(from dataArray: [AlarmData]) -> [AlarmInformation] {
+    // MARK: Methods
+    
+    func convertToAlarm(from dataArray: [AlarmData]) -> [AlarmInformation] {
         var alarmArray: [AlarmInformation] = []
         
         dataArray.forEach { data in

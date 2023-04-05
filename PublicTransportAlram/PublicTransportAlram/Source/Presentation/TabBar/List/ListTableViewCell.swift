@@ -9,7 +9,7 @@ import UIKit
 
 class ListTableViewCell: UITableViewCell {
     
-    // MARK: Properties
+    // MARK: Private Properties
     
     private let totalStackView: UIStackView = {
         let stackView = UIStackView()
@@ -66,7 +66,7 @@ class ListTableViewCell: UITableViewCell {
         return label
     }()
     
-    // MARK: LifeCycle
+    // MARK: Initializer
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -91,7 +91,7 @@ class ListTableViewCell: UITableViewCell {
         timesLabel.text = nil
     }
     
-    // MARK: Methods
+    // MARK: Internal Methods
     
     func configureCellText(with alarm: AlarmInformation) {
         typeLabel.text = "[" + alarm.type + "]"

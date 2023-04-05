@@ -12,7 +12,11 @@ import RxCocoa
 
 class BusSearchListViewController: UIViewController {
     
+    // MARK: Delegate
+    
     var delegate: LocationDataSendable?
+    
+    // MARK: Private Properties
     
     private let viewModel = BusSearchListViewModel()
     private let disposeBag = DisposeBag()
@@ -91,6 +95,8 @@ class BusSearchListViewController: UIViewController {
         return tableView
     }()
     
+    // MARK: Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -102,6 +108,8 @@ class BusSearchListViewController: UIViewController {
         configureSearchBar()
         configureBinding()
     }
+    
+    // MARK: Private Methods
     
     private func configureTableView() {
         listTableView.delegate = self
@@ -130,8 +138,6 @@ class BusSearchListViewController: UIViewController {
                 self.stationList = data
             })
             .disposed(by: disposeBag)
-        
-       
     }
 }
 
@@ -224,7 +230,7 @@ extension BusSearchListViewController: MKLocalSearchCompleterDelegate {
     }
 }
 
-// MARK: - View & Layout Configure
+// MARK: - Configure View & Layout
 
 extension BusSearchListViewController {
     private func configureView() {
