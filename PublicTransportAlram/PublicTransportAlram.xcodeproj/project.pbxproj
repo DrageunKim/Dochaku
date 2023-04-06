@@ -257,7 +257,7 @@
 			isa = PBXGroup;
 			children = (
 				D08166AC29A78BF300A67C1C /* CustomTabBarController.swift */,
-				D08316F429C6D60B00E86676 /* Map */,
+				D08316F429C6D60B00E86676 /* Add */,
 				D0FE2BF529B4CA31001C83F7 /* List */,
 				D08166A729A78A1A00A67C1C /* Setting */,
 			);
@@ -330,14 +330,14 @@
 			path = PublicTransportAPI;
 			sourceTree = "<group>";
 		};
-		D08316F429C6D60B00E86676 /* Map */ = {
+		D08316F429C6D60B00E86676 /* Add */ = {
 			isa = PBXGroup;
 			children = (
 				D08316F529C6D65400E86676 /* AddViewController.swift */,
 				D064A12D29D33EC600902AB4 /* AddViewModel.swift */,
 				D08316F829C6E38100E86676 /* SearchList */,
 			);
-			path = Map;
+			path = Add;
 			sourceTree = "<group>";
 		};
 		D08316F829C6E38100E86676 /* SearchList */ = {
