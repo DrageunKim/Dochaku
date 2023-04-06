@@ -33,7 +33,7 @@ class CustomTabBarController: UITabBarController {
         let viewController = SettingViewController()
         
         viewController.view.backgroundColor = .systemBackground
-        viewController.tabBarItem.title = "설정"
+        viewController.tabBarItem.title = "정보"
         viewController.tabBarItem.image = UIImage(systemName: "gearshape")
         
         return viewController
