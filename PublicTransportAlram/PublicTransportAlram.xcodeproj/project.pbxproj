@@ -23,8 +23,6 @@
 		D064A19729DB260100902AB4 /* AlertPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D064A19629DB260100902AB4 /* AlertPresentable.swift */; };
 		D064A19929DBF94300902AB4 /* LocalAlarmPushable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D064A19829DBF94300902AB4 /* LocalAlarmPushable.swift */; };
 		D08122BA29B88DFD00CA5664 /* StationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08122B929B88DFD00CA5664 /* StationInfo.swift */; };
-		D081233729C0DA5800CA5664 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D081233629C0DA5800CA5664 /* RxCocoa */; };
-		D081233929C0DA5800CA5664 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D081233829C0DA5800CA5664 /* RxSwift */; };
 		D081237629C1E5C000CA5664 /* PublicTransitPoi.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081237529C1E5C000CA5664 /* PublicTransitPoi.swift */; };
 		D081237829C1EB3300CA5664 /* PublicTransitPoiDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081237729C1EB3300CA5664 /* PublicTransitPoiDTO.swift */; };
 		D081668D29A77CA700A67C1C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D081668C29A77CA700A67C1C /* AppDelegate.swift */; };
@@ -46,11 +44,11 @@
 		D08316F629C6D65400E86676 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08316F529C6D65400E86676 /* AddViewController.swift */; };
 		D08316FA29C6E3B700E86676 /* AddressSearchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08316F929C6E3B700E86676 /* AddressSearchListViewController.swift */; };
 		D08316FC29C74AE400E86676 /* SearchListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08316FB29C74AE400E86676 /* SearchListTableViewCell.swift */; };
+		D0AD2A3B29DEEC0F00CB463B /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D0AD2A3A29DEEC0F00CB463B /* RxCocoa */; };
+		D0AD2A3D29DEEC0F00CB463B /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D0AD2A3C29DEEC0F00CB463B /* RxSwift */; };
 		D0FE2BF729B4CA69001C83F7 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FE2BF629B4CA69001C83F7 /* ListViewController.swift */; };
 		D0FE2BF929B4CA73001C83F7 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FE2BF829B4CA73001C83F7 /* ListViewModel.swift */; };
 		D0FE2BFB29B4CADA001C83F7 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FE2BFA29B4CADA001C83F7 /* ListTableViewCell.swift */; };
-		D0FE2C0229B4CB48001C83F7 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D0FE2C0129B4CB48001C83F7 /* RxCocoa */; };
-		D0FE2C0A29B4CB48001C83F7 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D0FE2C0929B4CB48001C83F7 /* RxSwift */; };
 		D0FE2C1A29B4CE28001C83F7 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FE2C1929B4CE28001C83F7 /* Identifiable.swift */; };
 /* End PBXBuildFile section */
 
@@ -129,8 +127,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D0FE2C0229B4CB48001C83F7 /* RxCocoa in Frameworks */,
-				D0FE2C0A29B4CB48001C83F7 /* RxSwift in Frameworks */,
+				D0AD2A3D29DEEC0F00CB463B /* RxSwift in Frameworks */,
+				D0AD2A3B29DEEC0F00CB463B /* RxCocoa in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,8 +136,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D081233929C0DA5800CA5664 /* RxSwift in Frameworks */,
-				D081233729C0DA5800CA5664 /* RxCocoa in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,8 +394,8 @@
 			);
 			name = PublicTransportAlram;
 			packageProductDependencies = (
-				D0FE2C0129B4CB48001C83F7 /* RxCocoa */,
-				D0FE2C0929B4CB48001C83F7 /* RxSwift */,
+				D0AD2A3A29DEEC0F00CB463B /* RxCocoa */,
+				D0AD2A3C29DEEC0F00CB463B /* RxSwift */,
 			);
 			productName = PublicTransportAlram;
 			productReference = D081668929A77CA700A67C1C /* PublicTransportAlram.app */;
@@ -420,8 +416,6 @@
 			);
 			name = JSONParsingTests;
 			packageProductDependencies = (
-				D081233629C0DA5800CA5664 /* RxCocoa */,
-				D081233829C0DA5800CA5664 /* RxSwift */,
 			);
 			productName = JSONParsingTests;
 			productReference = D08166C729A7A4C700A67C1C /* JSONParsingTests.xctest */;
@@ -435,7 +429,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					D081668829A77CA700A67C1C = {
 						CreatedOnToolsVersion = 14.2;
@@ -456,7 +450,7 @@
 			);
 			mainGroup = D081668029A77CA700A67C1C;
 			packageReferences = (
-				D0FE2BFC29B4CB48001C83F7 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				D0AD2A3929DEEC0F00CB463B /* XCRemoteSwiftPackageReference "RxSwift" */,
 			);
 			productRefGroup = D081668A29A77CA700A67C1C /* Products */;
 			projectDirPath = "";
@@ -757,6 +751,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = D5VN784N4W;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
@@ -779,6 +774,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = D5VN784N4W;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
@@ -828,35 +824,25 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D0FE2BFC29B4CB48001C83F7 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+		D0AD2A3929DEEC0F00CB463B /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			repositoryURL = "https://github.com/ReactiveX/RxSwift";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D081233629C0DA5800CA5664 /* RxCocoa */ = {
+		D0AD2A3A29DEEC0F00CB463B /* RxCocoa */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0FE2BFC29B4CB48001C83F7 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			package = D0AD2A3929DEEC0F00CB463B /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxCocoa;
 		};
-		D081233829C0DA5800CA5664 /* RxSwift */ = {
+		D0AD2A3C29DEEC0F00CB463B /* RxSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0FE2BFC29B4CB48001C83F7 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxSwift;
-		};
-		D0FE2C0129B4CB48001C83F7 /* RxCocoa */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D0FE2BFC29B4CB48001C83F7 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxCocoa;
-		};
-		D0FE2C0929B4CB48001C83F7 /* RxSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D0FE2BFC29B4CB48001C83F7 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			package = D0AD2A3929DEEC0F00CB463B /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
