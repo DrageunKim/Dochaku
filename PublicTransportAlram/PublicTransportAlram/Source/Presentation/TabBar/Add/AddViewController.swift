@@ -442,7 +442,7 @@ extension AddViewController: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
         case .authorizedAlways:
-            print("항상")
+            break
         case .notDetermined:
             presentLocationAuthAlert()
         case .restricted:
