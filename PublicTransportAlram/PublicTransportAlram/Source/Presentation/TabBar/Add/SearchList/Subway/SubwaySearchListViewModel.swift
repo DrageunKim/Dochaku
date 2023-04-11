@@ -33,6 +33,7 @@ class SubwaySearchListViewModel {
         
         station
             .filter { $0.count > 0 }
+            .map(domain.checkWord)
             .map(domain.fetchStationLatitudeAndLongitude)
             .filter { $0.split(separator: " ").count == 2 }
             .map {

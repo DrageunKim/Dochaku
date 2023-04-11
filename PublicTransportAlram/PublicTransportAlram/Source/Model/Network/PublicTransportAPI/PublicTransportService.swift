@@ -83,4 +83,17 @@ class PublicTransportService {
             return Disposables.create()
         }
     }
+    
+    func checkWord(_ station: String) -> String {
+        var word = station.compactMap { String($0) }
+        let lastWord = word.last
+        
+        if lastWord == "역" {
+            word.removeLast()
+            
+            return word.joined()
+        }
+        
+        return word.joined()
+    }
 }
