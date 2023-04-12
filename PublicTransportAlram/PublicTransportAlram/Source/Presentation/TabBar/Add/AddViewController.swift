@@ -200,6 +200,12 @@ class AddViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
+        checkAlarmEnable()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        
         locationManager.stopUpdatingLocation()
     }
     
@@ -245,7 +251,6 @@ class AddViewController: UIViewController {
     private func setAlarm() {
         checkAlarmRadius()
         checkAlarmTimes()
-        checkAlarmEnable()
         setPushAlarm()
     }
     
@@ -267,7 +272,6 @@ class AddViewController: UIViewController {
         switch alarm {
         case .success(let data):
             viewModel.save(alarm: data)
-            checkAlarmEnable()
             setPushAlarm()
         case .failure(_):
             break
