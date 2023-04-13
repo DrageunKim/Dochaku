@@ -38,7 +38,7 @@ class SettingViewController: UIViewController {
     }()
     private let versionLabel: UILabel = {
         let label = UILabel()
-        label.text = "버전 : 1.0.0"
+        label.text = "버전 : 1.0.1"
         label.textColor = .label
         label.font = .preferredFont(forTextStyle: .headline).withSize(20)
         return label
